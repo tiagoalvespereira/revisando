@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --color-preto: #111111;
+  --color-laranja: #FF6B1A;
+  --color-verde: #0F7B5F;
+  --color-vermelho: #D62828;
+  --color-off: #F5F3EE;
+  --color-cinza: #5c5a55;
+  --color-linha: #dedad1;
+  --font-titulo: "Archivo Black", "Arial Black", sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body { background: var(--color-off); color: var(--color-preto); -webkit-text-size-adjust: 100%; }
+.titulo { font-family: var(--font-titulo); text-transform: uppercase; letter-spacing: -0.01em; line-height: 1.1; }
+.grifo { background: linear-gradient(transparent 52%, var(--color-laranja) 52%, var(--color-laranja) 92%, transparent 92%); padding: 0 2px; }
+
+/* Botões e campos: mesmos da landing (public/landing/styles.css) */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--font-sans); font-weight: 800; font-size: 1rem; text-decoration: none;
+  text-transform: uppercase; letter-spacing: .03em; padding: 16px 26px; border-radius: 10px;
+  border: 2px solid transparent; cursor: pointer; transition: transform .12s ease, background .12s ease; min-height: 52px; }
+.btn:active { transform: scale(.98); }
+.btn-laranja { background: var(--color-laranja); color: var(--color-preto); }
+.btn-laranja:hover { background: #ff7f38; }
+.btn-preto { background: var(--color-preto); color: var(--color-off); }
+.btn-preto:hover { background: #262626; }
+.btn-contorno { border-color: currentColor; background: transparent; color: inherit; }
+.btn-pequeno { padding: 10px 16px; min-height: 40px; font-size: .82rem; }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+
+.campo { width: 100%; min-height: 52px; padding: 15px 16px; border-radius: 10px; border: 2px solid var(--color-preto);
+  background: #fff; font: inherit; }
+.campo:disabled { border-color: var(--color-linha); }
+.campo:focus-visible { outline: 3px solid var(--color-laranja); outline-offset: 2px; }
+.rotulo { display: block; font-size: .85rem; font-weight: 700; margin-bottom: .35rem; }
+.cartao { background: #fff; border: 1px solid var(--color-linha); border-radius: 14px; }
+:focus-visible { outline: 3px solid var(--color-laranja); outline-offset: 2px; }

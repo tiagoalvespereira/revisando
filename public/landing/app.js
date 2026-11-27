@@ -1,0 +1,104 @@
+(function () {
+  "use strict";
+  var C = window.REVISANDO || {};
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  // ---------- matérias (as 20 da 1ª fase) ----------
+  var MATERIAS = [
+    "Ética Profissional", "Filosofia do Direito", "Direito Constitucional", "Direitos Humanos",
+    "Direito Eleitoral", "Direito Internacional", "Direito Financeiro", "Direito Tributário",
+    "Direito Administrativo", "Direito Ambiental", "Direito Civil", "ECA",
+    "Direito do Consumidor", "Direito Empresarial", "Processo Civil", "Direito Penal",
+    "Processo Penal", "Direito Previdenciário", "Direito do Trabalho", "Processo do Trabalho"
+  ];
+  var ul = $("#materias");
+  if (ul) ul.innerHTML = MATERIAS.map(function (m, i) {
+    return "<li><b>" + String(i + 1).padStart(2, "0") + "</b>" + m + "</li>";
+  }).join("");
+
+  // ---------- contagem regressiva ----------
+  var prova = new Date(C.dataProva || "2027-01-10T13:00:00-03:00").getTime();
+  var DIA = 86400000;
+  function tick() {
+    var ms = Math.max(0, prova - Date.now());
+    var d = Math.floor(ms / DIA), h = Math.floor(ms % DIA / 3600000), m = Math.floor(ms % 3600000 / 60000), s = Math.floor(ms % 60000 / 1000);
+    var map = { d: d, h: h, m: m, s: s };
+    $$("[data-c]").forEach(function (el) { el.textContent = String(map[el.getAttribute("data-c")]).padStart(2, "0"); });
+    var b = $("#barra-dias"); if (b) b.textContent = d;
+    return d;
+  }
+  var dias = tick();
+  setInterval(tick, 1000);
+
+  // Recomendação honesta de plano pelo tempo que falta
+  var rec = $("#recomendacao");
+  if (rec && dias > 0) {
+    var fmt = function (t) { return new Date(t).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" }); };
+    if (dias >= 30) rec.textContent = "Faltam " + dias + " dias: dá tempo de fazer os 30 dias completos. Para terminar antes da prova, comece até " + fmt(prova - 30 * DIA) + ". Pague com Pix, cartão parcelado ou boleto.";
+    else if (dias >= 15) rec.textContent = "Faltam " + dias + " dias: o plano de 15 dias cabe inteiro até a prova. Pague com Pix, cartão parcelado ou boleto.";
+  }
+
+  // ---------- planos: preços e links de checkout ----------
+  var planos = C.planos || {};
+  $$("[data-plano]").forEach(function (card) {
+    var cfg = planos[card.getAttribute("data-plano")] || {};
+    if (card.getAttribute("data-plano") === "combo") card.hidden = !cfg.ativo;
+    var preco = $(".preco", card);
+    if (preco) {
+      preco.innerHTML = cfg.preco
+        ? (cfg.parcelas ? '<span class="parc">' + cfg.parcelas + "</span>" : "") + '<span class="valor">R$ ' + cfg.preco + "</span>" + (cfg.parcelas ? '<span class="parc">ou à vista</span>' : "")
+        : '<span class="breve">Preço em breve</span>';
+    }
+    var btn = $("[data-checkout]", card);
+    if (btn) {
+      if (cfg.checkout) { btn.href = cfg.checkout; btn.removeAttribute("aria-disabled"); }
+      else { btn.removeAttribute("href"); btn.setAttribute("aria-disabled", "true"); btn.textContent = "Vendas abrem em breve"; }
+    }
+  });
+
+  $$("[data-garantia]").forEach(function (el) { el.textContent = C.garantiaDias || 7; });
+  if (C.acessoAte) { var a = $("#acesso-ate"); a.hidden = false; a.textContent = "Acesso à área do aluno até " + C.acessoAte + "."; }
+
+  var insta = $("#link-insta");
+  if (insta && C.instagram) insta.href = "https://instagram.com/" + C.instagram;
+
+  var ct = C.contato || {}, partes = [];
+  if (ct.whatsapp) partes.push('<a href="https://wa.me/' + ct.whatsapp + '" target="_blank" rel="noopener">WhatsApp</a>');
+  if (ct.email) partes.push('<a href="mailto:' + ct.email + '">' + ct.email + "</a>");
+  if (partes.length) $("#contato-rodape").innerHTML = "Suporte: " + partes.join(" · ");
+
+  // ---------- barra fixa no celular (aparece depois da abertura, some na seção de planos) ----------
+  var barra = $("#barra-fixa"), abertura = $(".abertura"), secPlanos = $("#planos");
+  if (barra && "IntersectionObserver" in window) {
+    var vendoAbertura = true, vendoPlanos = false;
+    var atualizar = function () { barra.classList.toggle("visivel", !vendoAbertura && !vendoPlanos); };
+    new IntersectionObserver(function (e) { vendoAbertura = e[0].isIntersecting; atualizar(); }).observe(abertura);
+    new IntersectionObserver(function (e) { vendoPlanos = e[0].isIntersecting; atualizar(); }, { threshold: 0.15 }).observe(secPlanos);
+  }
+
+  // ---------- formulário da isca ----------
+  var form = $("#form-isca"), msg = $("#msg-isca");
+  if (form) form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var nome = form.nome.value.trim(), email = form.email.value.trim(), ok = form.consentimento.checked;
+    msg.style.color = "";
+    if (nome.length < 2) return erro("Informe seu nome.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return erro("Informe um e-mail válido.");
+    if (!ok) return erro("Para receber o material, aceite a política de privacidade.");
+    var botao = $("button", form);
+    botao.disabled = true; botao.textContent = "Enviando...";
+    fetch((C.isca && C.isca.endpoint) || "/api/isca", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome: nome, email: email, consentimento: true })
+    }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (r) {
+        if (!r.ok) throw new Error(r.j.erro || "Não foi possível enviar.");
+        form.reset();
+        msg.textContent = "Pronto. Enviamos para " + email + " o link para acessar a Revisão de 3 dias. Confira também o spam.";
+      })
+      .catch(function (e) { erro(e.message || "Não foi possível enviar. Tente de novo."); })
+      .finally(function () { botao.disabled = false; botao.textContent = "Quero os 3 dias grátis"; });
+  });
+  function erro(t) { msg.textContent = t; msg.style.color = "#5a0d0d"; }
+})();
