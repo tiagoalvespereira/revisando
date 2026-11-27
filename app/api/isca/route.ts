@@ -8,6 +8,23 @@ import { configZappfy, enviarZappfy } from "@/lib/zappfy";
 import { aplicarMarcaDagua } from "@/lib/marca-dagua";
 
 export const runtime = "nodejs";
+
+/** Mensagem que acompanha o PDF da amostra no WhatsApp. */
+function legendaAmostra(nome: string) {
+  const site = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://revisando-khaki.vercel.app").replace(/\/$/, "");
+  return [
+    `Olá, ${nome.split(" ")[0]}! Aqui está a sua *amostra grátis do Revisando OAB 2027*.`,
+    "",
+    "São 3 dias do material, com o mesmo método da revisão completa: ★ pontos estratégicos, gatilhos da questão, duelos e questões inéditas com gabarito comentado.",
+    "",
+    "Estude um dia, faça as questões e compare com o que você vem usando.",
+    "",
+    "Gostou? A *Revisão estratégica de 30 dias* tem as 20 matérias, 422 páginas, 196 questões comentadas e 2 simulados, em até 12x:",
+    `${site}/#planos`,
+    "",
+    "Bons estudos!",
+  ].join("\n");
+}
 export const maxDuration = 60;
 
 const Esquema = z.object({
@@ -17,7 +34,7 @@ const Esquema = z.object({
 });
 
 /**
- * Isca: grava o lead (nome + WhatsApp) e entrega a Revisão de 3 dias pelo WhatsApp.
+ * Isca: grava o lead (nome + WhatsApp) e entrega a amostra grátis de 3 dias pelo WhatsApp.
  * - Com a API do WhatsApp configurada: envia o PDF (com marca d'água) automaticamente.
  * - Sem ela: devolve o link da conversa com o WhatsApp de atendimento, com a mensagem pronta.
  */
@@ -39,7 +56,7 @@ export async function POST(req: NextRequest) {
   }
 
   const atendimento = process.env.WHATSAPP_NUMERO_ATENDIMENTO;
-  const conversa = atendimento ? linkWhatsapp(atendimento, `Olá! Sou ${nome} e quero receber a Revisão de 3 dias estratégica.`) : null;
+  const conversa = atendimento ? linkWhatsapp(atendimento, `Olá! Sou ${nome} e quero receber a amostra grátis de 3 dias do Revisando.`) : null;
 
   if (!whatsappAutomatico()) return NextResponse.json({ ok: true, modo: "conversa", link: conversa });
 
@@ -59,12 +76,12 @@ export async function POST(req: NextRequest) {
     if (up.error) throw up.error;
     const { data: url, error: e2 } = await storage.createSignedUrl(destino, 60 * 60 * 24 * 7);
     if (e2 || !url) throw e2 ?? new Error("falha ao assinar URL");
-    const arquivo = "Revisando - Revisao de 3 dias estrategica - 2027.pdf";
+    const arquivo = "Revisando - Amostra gratis - 3 dias - OAB 2027.pdf";
     const zappfy = configZappfy();
     if (zappfy) {
       await enviarZappfy(zappfy, "documento", {
         para: whatsapp, url: url.signedUrl, arquivo,
-        legenda: `Olá, ${nome.split(" ")[0]}! Aqui está a sua Revisão de 3 dias estratégica do Revisando. Comece 3 dias antes da prova: o Dia 3 é a véspera. Bons estudos!`,
+        legenda: legendaAmostra(nome),
       });
     } else {
       await enviarDocumentoModelo(whatsapp, nome, url.signedUrl, arquivo);

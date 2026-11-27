@@ -103,16 +103,16 @@
         if (!r.ok) throw new Error(r.j.erro || "Não foi possível enviar.");
         form.reset();
         if (r.j.modo === "automatico") {
-          msg.textContent = "Pronto. A Revisão de 3 dias está chegando no seu WhatsApp.";
+          msg.textContent = "Pronto! A amostra grátis de 3 dias está chegando no seu WhatsApp.";
         } else if (r.j.link) {
           msg.innerHTML = 'Cadastro feito. Agora toque em <a href="' + r.j.link + '" target="_blank" rel="noopener" style="color:inherit;font-weight:800">abrir o WhatsApp</a> e envie a mensagem para receber o PDF.';
           window.location.href = r.j.link;
         } else {
-          msg.textContent = "Cadastro feito. Você vai receber a Revisão de 3 dias no seu WhatsApp.";
+          msg.textContent = "Cadastro feito. Você vai receber a amostra grátis de 3 dias no seu WhatsApp.";
         }
       })
       .catch(function (e) { erro(e.message || "Não foi possível enviar. Tente de novo."); })
-      .finally(function () { botao.disabled = false; rotuloBotao.textContent = "Receber no WhatsApp"; });
+      .finally(function () { botao.disabled = false; rotuloBotao.textContent = "Quero a amostra grátis"; });
   });
   function erro(t) { msg.textContent = t; msg.style.color = "#5a0d0d"; }
 })();

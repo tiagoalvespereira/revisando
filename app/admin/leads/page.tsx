@@ -20,7 +20,7 @@ export default async function Leads({ searchParams }: { searchParams: Promise<{ 
   const jaCompraram = new Set((compradores ?? []).map((c) => (c.telefone as string).replace(/\D/g, "").replace(/^(?!55)/, "55")));
   const oferta = (nome: string) => {
     const linhas = (produtos ?? []).sort((a, b) => (a.slug < b.slug ? 1 : -1)).map((p) => `• ${p.nome}: ${reais(p.preco_centavos)}${p.checkout_url ? ` ${p.checkout_url}` : ""}`);
-    return `Oi, ${nome.split(" ")[0]}! Aqui é o Tiago, do Revisando. Conseguiu estudar com a Revisão de 3 dias? Se quiser a revisão completa até a prova:\n${linhas.join("\n")}`;
+    return `Oi, ${nome.split(" ")[0]}! Aqui é o Tiago, do Revisando. Conseguiu estudar a amostra de 3 dias? Se quiser a revisão completa até a prova:\n${linhas.join("\n")}`;
   };
 
   return (
