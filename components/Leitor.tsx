@@ -14,7 +14,20 @@ export function Leitor({ arquivoId, paginaInicial = 1 }: { arquivoId: string; pa
   const [proporcao, setProporcao] = useState(1.414);
   const [erro, setErro] = useState<string | null>(null);
   const [atual, setAtual] = useState(paginaInicial);
-  const [zoom, setZoom] = useState(1);
+  // Computador abre em 75% da largura; celular ocupa a largura toda. O zoom escolhido fica salvo no aparelho.
+  const [zoom, setZoomEstado] = useState(1);
+  const setZoom = useCallback((f: (z: number) => number) => {
+    setZoomEstado((z) => {
+      const novo = f(z);
+      try { localStorage.setItem("rv-zoom", String(novo)); } catch {}
+      return novo;
+    });
+  }, []);
+  useEffect(() => {
+    let salvo: number | null = null;
+    try { salvo = Number(localStorage.getItem("rv-zoom")) || null; } catch {}
+    setZoomEstado(salvo ?? (window.innerWidth >= 768 ? 0.75 : 1));
+  }, []);
   const [largura, setLargura] = useState(0);
   const renderizadas = useRef(new Map<number, { cancelar: () => void }>());
 
@@ -159,10 +172,13 @@ export function Leitor({ arquivoId, paginaInicial = 1 }: { arquivoId: string; pa
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center gap-2 px-3 py-2 bg-preto text-off text-sm">
-        <button className="btn btn-contorno btn-pequeno" onClick={() => setZoom((z) => Math.max(0.6, +(z - 0.2).toFixed(1)))} aria-label="Diminuir zoom">
+        <button className="btn btn-contorno btn-icone text-lg" onClick={() => setZoom((z) => Math.max(0.4, +(z - 0.1).toFixed(2)))} aria-label="Diminuir zoom">
           −
         </button>
-        <button className="btn btn-contorno btn-pequeno" onClick={() => setZoom((z) => Math.min(3, +(z + 0.2).toFixed(1)))} aria-label="Aumentar zoom">
+        <button className="min-w-14 text-center font-bold tabular-nums hover:text-laranja" onClick={() => setZoom(() => (window.innerWidth >= 768 ? 0.75 : 1))} title="Voltar ao tamanho padrão">
+          {Math.round(zoom * 100)}%
+        </button>
+        <button className="btn btn-contorno btn-icone text-lg" onClick={() => setZoom((z) => Math.min(3, +(z + 0.1).toFixed(2)))} aria-label="Aumentar zoom">
           +
         </button>
         <form
