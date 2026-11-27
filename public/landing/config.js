@@ -10,13 +10,13 @@ window.REVISANDO = {
   planos: {
     "30-dias": {
       preco: "147,00",
-      parcelas: null,       // ex.: "12x de 30,72"
-      checkout: null        // link do checkout Kiwify, ex.: "https://pay.kiwify.com.br/XXXX"
+      parcelas: null,       // ex.: "12x de 14,70"
+      checkout: "https://pay.kiwify.com.br/9DTdX9t"
     },
     "15-dias": {
       preco: "97,00",
       parcelas: null,
-      checkout: null
+      checkout: "https://pay.kiwify.com.br/3JuYzSE"
     }
   },
 
