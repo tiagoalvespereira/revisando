@@ -4,7 +4,7 @@
 insert into public.products (slug, nome, descricao, icone, preco_centavos, acesso_ate, vitrine, ordem) values
   ('30-dias', 'Revisão estratégica de 30 dias', 'Volume completo, os 30 dias separados, 2 simulados e cronogramas.', 'livro', 14700, '2027-02-10', 'venda', 1),
   ('15-dias', 'Revisão estratégica de 15 dias', 'Caderno estratégico de 15 dias, 2 simulados e cronograma.', 'raio', 9700, '2027-02-10', 'venda', 2),
-  ('3-dias',  'Revisão de 3 dias estratégica', 'Os pontos mais importantes das 12 matérias que mais caem, em 3 dias, para fazer a qualquer momento.', 'alvo', 0, '2027-02-10', 'oculto', 9)
+  ('3-dias',  'Revisão de 3 dias estratégica', 'Amostra estratégica: os temas que a FGV mais cobra, um por matéria, em 3 dias, para estudar quando quiser.', 'alvo', 0, '2027-02-10', 'oculto', 9)
 on conflict (slug) do nothing;
 
 -- Arquivos do plano de 30 dias

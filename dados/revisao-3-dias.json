@@ -3,51 +3,56 @@
  "produto": "3-dias",
  "paginas": 28,
  "deslocamento": 0,
- "observacao": "Pontos mais importantes das 12 matérias que mais caem. Pode ser feita a qualquer momento (sem datas ligadas à prova). PDF sem número impresso: páginas são as do arquivo.",
+ "sem_datas": true,
+ "fonte": "Revisando - Amostra estrategica - 2027.pdf",
+ "observacao": "Amostra estratégica: um tema por matéria, entre os que a FGV mais cobra. Use quando quiser. Páginas são as do arquivo.",
  "dias": [
   {
    "dia": 1,
-   "conteudo": "Ética, Constitucional, Civil e Processo Civil",
+   "conteudo": "Ética e Constitucional",
    "fase": "base",
    "tipo": "conteudo",
    "pagina_inicial": 4,
-   "pagina_final": 12,
-   "pagina_gabarito": 11,
+   "pagina_final": 13,
+   "pagina_questoes": 12,
+   "pagina_gabarito": 13,
+   "questoes": 2,
    "materias": [
     "Ética Profissional",
-    "Direito Constitucional",
-    "Direito Civil",
-    "Processo Civil"
+    "Direito Constitucional"
    ]
   },
   {
    "dia": 2,
-   "conteudo": "Penal, Processo Penal, Administrativo e Tributário",
+   "conteudo": "Penal, Processo Penal e Civil",
    "fase": "virada",
    "tipo": "conteudo",
-   "pagina_inicial": 13,
-   "pagina_final": 20,
+   "pagina_inicial": 14,
+   "pagina_final": 19,
+   "pagina_questoes": 18,
    "pagina_gabarito": 19,
+   "questoes": 2,
    "materias": [
     "Direito Penal",
     "Processo Penal",
-    "Direito Administrativo",
-    "Direito Tributário"
+    "Direito Civil"
    ]
   },
   {
    "dia": 3,
-   "conteudo": "Trabalho, Processo do Trabalho, Empresarial e outros pontos que mais caem",
+   "conteudo": "Processo Civil, Administrativo e Trabalho",
    "fase": "reta",
    "tipo": "conteudo",
-   "pagina_inicial": 21,
-   "pagina_final": 28,
+   "pagina_inicial": 20,
+   "pagina_final": 26,
+   "pagina_questoes": 26,
+   "pagina_gabarito": 26,
+   "questoes": 2,
    "materias": [
-    "Direito do Trabalho",
-    "Processo do Trabalho",
-    "Direito Empresarial"
+    "Processo Civil",
+    "Direito Administrativo",
+    "Direito do Trabalho"
    ]
   }
- ],
- "sem_datas": true
+ ]
 }

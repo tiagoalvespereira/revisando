@@ -14,7 +14,7 @@ function legendaAmostra(nome: string) {
   return [
     `Olá, ${nome.split(" ")[0]}! Boas-vindas ao *Revisando*.`,
     "",
-    "Esta é a sua amostra grátis: os pontos mais importantes das 12 matérias que mais caem na 1ª fase, em 3 dias, para fazer quando quiser. É o mesmo método das nossas revisões de 30 e 15 dias, montadas a partir do que a FGV mais cobra.",
+    "Esta é a sua Amostra estratégica: em 3 dias, os temas que a FGV mais cobra, um por matéria, para estudar quando quiser. É o mesmo método das nossas revisões de 30 e 15 dias, montadas a partir do que mais cai na prova.",
     "",
     "Bons estudos!",
   ].join("\n");
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
     if (up.error) throw up.error;
     const { data: url, error: e2 } = await storage.createSignedUrl(destino, 60 * 60 * 24 * 7);
     if (e2 || !url) throw e2 ?? new Error("falha ao assinar URL");
-    const arquivo = "Revisando - Amostra gratis - 3 dias - OAB 2027.pdf";
+    const arquivo = "Revisando - Amostra estrategica - 2027.pdf";
     const zappfy = configZappfy();
     if (zappfy) {
       await enviarZappfy(zappfy, "documento", {
