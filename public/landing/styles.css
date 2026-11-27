@@ -399,3 +399,5 @@ footer a { color: #c9c6bf; }
   .isca-capa img { width: 150px; }
   .form-isca { padding: 32px 30px; }
 }
+
+@media (max-width: 719px) { .professor .foto { max-width: 240px; margin: 0 auto; } }
