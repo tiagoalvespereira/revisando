@@ -67,6 +67,14 @@
   if (ct.email) partes.push('<a href="mailto:' + ct.email + '">' + ct.email + "</a>");
   if (partes.length) $("#contato-rodape").innerHTML = "Suporte: " + partes.join(" · ");
 
+  // ---------- topo: logo grande no início, barra compacta ao rolar ----------
+  var topo = $(".topo");
+  if (topo) {
+    var aoRolar = function () { topo.classList.toggle("compacto", window.scrollY > 40); };
+    aoRolar();
+    window.addEventListener("scroll", aoRolar, { passive: true });
+  }
+
   // ---------- barra fixa no celular (aparece depois da abertura, some na seção de planos) ----------
   var barra = $("#barra-fixa"), abertura = $(".abertura"), secPlanos = $("#planos");
   if (barra && "IntersectionObserver" in window) {
