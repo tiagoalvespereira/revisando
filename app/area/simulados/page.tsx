@@ -4,12 +4,13 @@ import { CardProduto } from "@/components/CardProduto";
 import { Icone } from "@/components/Icone";
 import { alunoAtual, linkCompra, meusProdutos } from "@/lib/aluno";
 import { dataCurta, dataSimulado, SIMULADOS_DISPONIVEIS, simuladoDados, simuladosLiberados } from "@/lib/dados";
-import { env } from "@/lib/env";
+import { dataProvaAtual } from "@/lib/provas";
 
 export const metadata = { title: "Simulados" };
 
 export default async function Simulados() {
   const { supabase, perfil } = await alunoAtual();
+  const dataProva = await dataProvaAtual();
   const produtos = await meusProdutos();
   const liberados = simuladosLiberados(produtos.filter((p) => p.tem).map((p) => p.slug));
   const { data: feitos } = liberados.length
@@ -28,7 +29,7 @@ export default async function Simulados() {
           const liberado = liberados.includes(n);
           const hist = (feitos ?? []).filter((f) => f.simulado === n);
           const r = hist[0];
-          const quando = dataCurta(dataSimulado(env.dataProva, s.dias_antes_da_prova));
+          const quando = (dataProva ? dataCurta(dataSimulado(dataProva, s.dias_antes_da_prova)) : "data a definir");
           const corpo = (
             <>
               <span className={`relative shrink-0 size-16 rounded-2xl grid place-items-center titulo text-2xl ${liberado ? "bg-preto text-laranja" : "bg-preto/80 text-off/50"}`}>

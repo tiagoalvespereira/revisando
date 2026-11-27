@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { alunoAtual, meusProdutos, type Arquivo } from "@/lib/aluno";
 import { dataCurta, dataSimulado, paginaArquivo, simuladoDados, simuladosLiberados } from "@/lib/dados";
-import { env } from "@/lib/env";
+import { dataProvaAtual } from "@/lib/provas";
 import { SimuladoInterativo } from "@/components/SimuladoInterativo";
 import { AvisoExemplo } from "@/components/AvisoExemplo";
 import { CardProduto } from "@/components/CardProduto";
@@ -22,6 +22,7 @@ export default async function PaginaSimulado({ params, searchParams }: { params:
   if (!s) notFound();
 
   const { supabase, user, perfil } = await alunoAtual();
+  const dataProva = await dataProvaAtual();
   const produtos = await meusProdutos();
   const slugs = produtos.filter((p) => p.tem).map((p) => p.slug);
   const liberados = simuladosLiberados(slugs);
@@ -54,7 +55,7 @@ export default async function PaginaSimulado({ params, searchParams }: { params:
   ]);
   const pdfSimulado = pdfs?.[0] ?? null;
   const principal = (arquivos as Arquivo[] | null)?.find((a) => a.tipo === "volume" || a.tipo === "caderno");
-  const quando = dataCurta(dataSimulado(env.dataProva, s.dias_antes_da_prova));
+  const quando = (dataProva ? dataCurta(dataSimulado(dataProva, s.dias_antes_da_prova)) : "data a definir");
   const mostrarResultado = ultimo && refazer !== "1";
 
   if (!mostrarResultado) {

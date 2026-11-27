@@ -17,10 +17,15 @@
     return "<li><b>" + String(i + 1).padStart(2, "0") + "</b>" + m + "</li>";
   }).join("");
 
-  // ---------- contagem regressiva ----------
-  var prova = new Date(C.dataProva || "2027-01-10T13:00:00-03:00").getTime();
+  // ---------- data da prova: vem do Admin (/api/provas); troca sozinha depois de cada prova ----------
   var DIA = 86400000;
+  var prova = null;
+  var fmtCurta = function (t) { return new Date(t).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", timeZone: "America/Sao_Paulo" }); };
+  var fmtLonga = function (t) { return new Date(t).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "America/Sao_Paulo" }); };
+  var fmtExtenso = function (t) { return new Date(t).toLocaleDateString("pt-BR", { day: "numeric", month: "long", timeZone: "America/Sao_Paulo" }); };
+
   function tick() {
+    if (!prova) return 0;
     var ms = Math.max(0, prova - Date.now());
     var d = Math.floor(ms / DIA), h = Math.floor(ms % DIA / 3600000), m = Math.floor(ms % 3600000 / 60000), s = Math.floor(ms % 60000 / 1000);
     var map = { d: d, h: h, m: m, s: s };
@@ -28,16 +33,36 @@
     var b = $("#barra-dias"); if (b) b.textContent = d;
     return d;
   }
-  var dias = tick();
-  setInterval(tick, 1000);
 
-  // Recomendação honesta de plano pelo tempo que falta
-  var rec = $("#recomendacao");
-  if (rec && dias > 0) {
-    var fmt = function (t) { return new Date(t).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" }); };
-    if (dias >= 30) rec.textContent = "Faltam " + dias + " dias: dá tempo de fazer os 30 dias completos. Para terminar antes da prova, comece até " + fmt(prova - 30 * DIA) + ". Pague com Pix, cartão parcelado ou boleto.";
-    else if (dias >= 15) rec.textContent = "Faltam " + dias + " dias: o plano de 15 dias cabe inteiro até a prova. Pague com Pix, cartão parcelado ou boleto.";
+  function aplicarProva(iso) {
+    var leg = $("#contagem-legenda"), cont = $("#contagem"), barra = $("#barra-fixa .info");
+    if (!iso) {
+      prova = null;
+      if (cont) cont.hidden = true;
+      if (leg) leg.textContent = "Próxima prova: data em breve.";
+      if (barra) barra.innerHTML = "<b>OAB 2027</b>revise com estratégia";
+      $$("[data-prova-curta]").forEach(function (el) { el.textContent = "a prova"; });
+      var f0 = $("#final-data"); if (f0) f0.textContent = "A próxima prova está chegando.";
+      return;
+    }
+    prova = new Date(iso).getTime();
+    if (cont) cont.hidden = false;
+    if (leg) leg.textContent = "até a 1ª fase, em " + fmtLonga(prova) + ".";
+    $$("[data-prova-curta]").forEach(function (el) { el.textContent = fmtLonga(prova); });
+    var f = $("#final-data"); if (f) f.textContent = "A prova é em " + fmtExtenso(prova) + ".";
+    var dias = tick();
+    var rec = $("#recomendacao");
+    if (rec && dias > 0) {
+      if (dias >= 30) rec.textContent = "Faltam " + dias + " dias: dá tempo de fazer os 30 dias completos. Para terminar antes da prova, comece até " + fmtCurta(prova - 30 * DIA) + ". Pague com Pix, cartão parcelado ou boleto.";
+      else if (dias >= 15) rec.textContent = "Faltam " + dias + " dias: o plano de 15 dias cabe inteiro até a prova. Pague com Pix, cartão parcelado ou boleto.";
+    }
   }
+
+  aplicarProva(C.dataProva || null); // valor provisório até a resposta do servidor
+  setInterval(tick, 1000);
+  fetch("/api/provas").then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (j) { if (j && "proxima" in j) aplicarProva(j.proxima); })
+    .catch(function () {});
 
   // ---------- planos: preços e links de checkout ----------
   var planos = C.planos || {};

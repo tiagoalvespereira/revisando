@@ -345,6 +345,20 @@ create policy "lembretes: o próprio aluno" on public.lembretes for all
 drop policy if exists "lembretes: admin lê" on public.lembretes;
 create policy "lembretes: admin lê" on public.lembretes for select using (public.is_admin());
 
+-- ===== supabase/migrations/0006_configuracoes.sql =====
+-- Configurações editáveis no Admin (ex.: datas das provas). Só o servidor lê e grava.
+create table if not exists public.configuracoes (
+  chave text primary key,
+  valor jsonb not null,
+  atualizado_em timestamptz not null default now()
+);
+alter table public.configuracoes enable row level security;
+
+-- Datas da 1ª fase (horário de Brasília). O sistema usa sempre a próxima que ainda não passou.
+insert into public.configuracoes (chave, valor)
+values ('datas_prova', '["2027-01-10T13:00:00-03:00"]'::jsonb)
+on conflict (chave) do nothing;
+
 -- ===== Primeiro administrador =====
 -- Depois de rodar este arquivo: Authentication > Users > Add user > Create new user
 -- (seu e-mail + senha, marque "Auto Confirm User"). Depois rode, trocando o e-mail:

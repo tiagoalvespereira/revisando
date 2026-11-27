@@ -5,6 +5,7 @@ import { AvisoExemplo } from "@/components/AvisoExemplo";
 import { alunoAtual, meusProdutos, type Arquivo } from "@/lib/aluno";
 import { cronogramaDe } from "@/lib/dados";
 import { cardsDoCronograma, diaDeHoje } from "@/lib/cronograma";
+import { dataProvaAtual } from "@/lib/provas";
 
 export const metadata = { title: "Cronograma" };
 const ORDEM = ["30-dias", "15-dias", "3-dias"];
@@ -37,7 +38,7 @@ export default async function PaginaCronograma({ searchParams }: { searchParams:
     // O plano de 15 dias aponta questões no volume de 30: o link só aparece para quem tem o volume.
     p30 ? supabase.from("product_files").select("id").eq("product_id", p30.id).eq("tipo", "volume").maybeSingle() : Promise.resolve({ data: null }),
   ]);
-  const crono = cardsDoCronograma(produto.slug, (data ?? []) as Arquivo[], vol30.data?.id ?? null)!;
+  const crono = cardsDoCronograma(produto.slug, (data ?? []) as Arquivo[], vol30.data?.id ?? null, await dataProvaAtual())!;
   const concluidos = (prog ?? []).map((p) => p.dia as number);
   const pct = Math.round((concluidos.length / crono.cards.length) * 100);
 

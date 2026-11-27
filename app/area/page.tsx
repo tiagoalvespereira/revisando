@@ -4,7 +4,7 @@ import { CardProduto, Vitrine } from "@/components/CardProduto";
 import { Hexagono } from "@/components/Hexagono";
 import { Icone } from "@/components/Icone";
 import { alunoAtual, linkCompra, meusProdutos, type Arquivo } from "@/lib/aluno";
-import { env } from "@/lib/env";
+import { dataProvaAtual } from "@/lib/provas";
 import { cronogramaDe, dataCurta, dataDoDia, dataSimulado, SIMULADOS_DISPONIVEIS, simuladoDados, simuladosLiberados } from "@/lib/dados";
 import { cardsDoCronograma, diaDeHoje } from "@/lib/cronograma";
 
@@ -12,6 +12,7 @@ export const metadata = { title: "Início" };
 
 export default async function Painel() {
   const { perfil, supabase } = await alunoAtual();
+  const dataProva = await dataProvaAtual();
   const produtos = await meusProdutos();
   const meus = produtos.filter((p) => p.tem);
   const comCronograma = meus.filter((p) => cronogramaDe(p.slug));
@@ -45,9 +46,9 @@ export default async function Painel() {
     const c = cronogramaDe(p.slug)!;
     const concl = (prog ?? []).filter((x) => x.product_slug === p.slug).map((x) => x.dia as number);
     const d = diaDeHoje(c.dias.length, concl);
-    const cards = cardsDoCronograma(p.slug, ((arqs ?? []) as Arquivo[]).filter((a) => a.product_id === p.id))?.cards ?? [];
+    const cards = cardsDoCronograma(p.slug, ((arqs ?? []) as Arquivo[]).filter((a) => a.product_id === p.id), null, dataProva)?.cards ?? [];
     const card = d ? cards[d - 1] : null;
-    const inicio = dataDoDia(env.dataProva, c.dias.length, 1);
+    const inicio = dataProva ? dataDoDia(dataProva, c.dias.length, 1) : new Date(0);
     return { p, total: c.dias.length, feitos: concl.length, dia: d, card, inicio: dataCurta(inicio), comecou: Date.now() >= inicio.getTime() };
   });
 
@@ -62,7 +63,7 @@ export default async function Painel() {
             <h1 className="titulo text-4xl sm:text-5xl mt-1">Sua <span className="text-laranja">revisão</span></h1>
             <p className="text-off/60 text-sm mt-2">3 horas por dia. Só o que cai.</p>
           </div>
-          <Contagem data={env.dataProva} />
+          <Contagem data={dataProva} />
         </div>
       </section>
 
@@ -137,7 +138,7 @@ export default async function Painel() {
                     <span className="flex-1">
                       <span className="titulo text-base block">Simulado Estratégico {n}</span>
                       <span className="text-sm text-cinza">
-                        {!liberado ? <span className="text-vermelho font-semibold">Disponível na revisão de 30 dias</span> : r ? <>Último resultado: <b className={r.acertos >= s.margem ? "text-verde" : r.acertos >= s.meta ? "text-laranja" : "text-vermelho"}>{r.acertos}/80</b></> : `Fazer em ${dataCurta(dataSimulado(env.dataProva, s.dias_antes_da_prova))} · ${s.dias_antes_da_prova} dias antes`}
+                        {!liberado ? <span className="text-vermelho font-semibold">Disponível na revisão de 30 dias</span> : r ? <>Último resultado: <b className={r.acertos >= s.margem ? "text-verde" : r.acertos >= s.meta ? "text-laranja" : "text-vermelho"}>{r.acertos}/80</b></> : `Fazer em ${(dataProva ? dataCurta(dataSimulado(dataProva, s.dias_antes_da_prova)) : "data a definir")} · ${s.dias_antes_da_prova} dias antes`}
                       </span>
                     </span>
                     <Icone nome="seta" className="size-5 text-cinza" />

@@ -3,6 +3,7 @@ import { supabaseAdmin } from "@/lib/supabase/admin";
 import { cronogramaDe } from "@/lib/dados";
 import { cardsDoCronograma, diaDeHoje } from "@/lib/cronograma";
 import { env } from "@/lib/env";
+import { dataProvaAtual } from "@/lib/provas";
 import type { Arquivo } from "@/lib/aluno";
 
 const ORDEM = ["30-dias", "15-dias", "3-dias"];
@@ -52,7 +53,7 @@ export async function montarLembrete(userId: string): Promise<Lembrete | null> {
   const dia = diaDeHoje(c.dias.length, (prog ?? []).map((p) => p.dia as number));
   if (!dia) return null; // cronograma concluído
 
-  const card = cardsDoCronograma(produto.slug, (arquivos ?? []) as Arquivo[])!.cards[dia - 1];
+  const card = cardsDoCronograma(produto.slug, (arquivos ?? []) as Arquivo[], null, await dataProvaAtual())!.cards[dia - 1];
   const destino = card.pdfDoDia ?? card.lerNoVolume ?? `/area/cronograma?plano=${produto.slug}#dia-${dia}`;
   return {
     nome: perfil.nome,

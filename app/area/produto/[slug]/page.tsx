@@ -7,6 +7,7 @@ import { Cronograma } from "@/components/Cronograma";
 import { AvisoExemplo } from "@/components/AvisoExemplo";
 import { alunoAtual, linkCompra, meusProdutos, type Arquivo } from "@/lib/aluno";
 import { cardsDoCronograma, diaDeHoje } from "@/lib/cronograma";
+import { dataProvaAtual } from "@/lib/provas";
 
 const numeroSimulado = (a: Arquivo) => Number(a.storage_path.match(/simulado-(\d)/)?.[1]) || null;
 
@@ -54,7 +55,7 @@ export default async function PaginaProduto({ params, searchParams }: { params: 
     p30 ? supabase.from("product_files").select("id").eq("product_id", p30.id).eq("tipo", "volume").maybeSingle() : Promise.resolve({ data: null }),
   ]);
   const arquivos = (data ?? []) as Arquivo[];
-  const crono = cardsDoCronograma(slug, arquivos, vol30.data?.id ?? null);
+  const crono = cardsDoCronograma(slug, arquivos, vol30.data?.id ?? null, await dataProvaAtual());
   const concluidos = (prog ?? []).map((p) => p.dia as number);
   const simulados = arquivos.filter((a) => a.tipo === "simulado");
 

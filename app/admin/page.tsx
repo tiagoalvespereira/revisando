@@ -1,5 +1,8 @@
 import { exigirAdmin, reais, dataBR } from "@/lib/admin";
 import { Integracoes } from "./Integracoes";
+import { DatasProva } from "./DatasProva";
+import { datasProva } from "@/lib/provas";
+import { proximaProva } from "@/lib/provas-regra";
 import { configZappfy, problemaZappfy } from "@/lib/zappfy";
 
 export const dynamic = "force-dynamic";
@@ -15,6 +18,7 @@ export default async function Metricas() {
     db.from("orders").select("id", { count: "exact", head: true }).in("status", ["refunded", "chargeback"]),
     db.from("lembretes").select("user_id", { count: "exact", head: true }).eq("ativo", true),
   ]);
+  const datasLista = await datasProva();
   const totalVendas = (pagos.data ?? []).reduce((s, o) => s + (o.valor_centavos ?? 0), 0);
   const alunos = new Set((ativos.data ?? []).filter((e) => !e.valido_ate || e.valido_ate > agora).map((e) => e.user_id)).size;
 
@@ -38,6 +42,8 @@ export default async function Metricas() {
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
         {cards.map((c) => <div key={c.t} className="cartao p-4"><p className="text-xs uppercase tracking-widest text-cinza">{c.t}</p><p className="titulo text-2xl mt-2">{c.v}</p></div>)}
       </div>
+      <DatasProva datas={datasLista} proxima={proximaProva(datasLista)} />
+
       <Integracoes itens={[
         { nome: "Kiwify (webhook)", ok: Boolean(process.env.KIWIFY_WEBHOOK_TOKEN), detalhe: process.env.KIWIFY_WEBHOOK_TOKEN ? "token configurado" : "falta KIWIFY_WEBHOOK_TOKEN" },
         { nome: "E-mail (Resend)", ok: Boolean(process.env.RESEND_API_KEY), detalhe: process.env.RESEND_API_KEY ? `envia como ${process.env.EMAIL_FROM ?? "(EMAIL_FROM não definido)"}` : "falta RESEND_API_KEY (aguardando domínio)" },

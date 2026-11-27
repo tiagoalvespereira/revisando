@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 
-export function Contagem({ data }: { data: string }) {
-  const alvo = new Date(data).getTime();
+export function Contagem({ data }: { data: string | null }) {
+  const alvo = data ? new Date(data).getTime() : 0;
   const [agora, setAgora] = useState<number | null>(null);
   useEffect(() => {
     setAgora(Date.now());
@@ -16,6 +16,7 @@ export function Contagem({ data }: { data: string }) {
     { n: ms === null ? null : Math.floor((ms % 86_400_000) / 3_600_000), r: "horas" },
     { n: ms === null ? null : Math.floor((ms % 3_600_000) / 60_000), r: "min" },
   ];
+  if (!data) return <p className="text-sm text-off/70">Próxima prova: <b className="text-off">data em breve</b></p>;
   const dataFmt = new Date(data).toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
   return (
     <div>

@@ -167,3 +167,23 @@ export async function testarWhatsapp(_: { ok?: string; erro?: string } | null, f
     return { erro: m.includes("fetch failed") || m.includes("ENOTFOUND") ? "Não foi possível conectar ao endereço da ZAPPFY_URL. Confira o endereço da API no painel da Zappfy." : m };
   }
 }
+
+export async function salvarDatasProva(_: { ok?: string; erro?: string } | null, form: FormData): Promise<{ ok?: string; erro?: string }> {
+  const { db } = await exigirAdmin();
+  const { dataBRparaISO } = await import("@/lib/provas-regra");
+  const { revalidateTag } = await import("next/cache");
+  const linhas = String(form.get("datas") ?? "").split(/[\n,;]+/).map((l) => l.trim()).filter(Boolean);
+  if (!linhas.length) return { erro: "Informe pelo menos uma data, no formato dd/mm/aaaa." };
+  const datas: string[] = [];
+  for (const l of linhas) {
+    const iso = dataBRparaISO(l);
+    if (!iso) return { erro: `Data inválida: "${l}". Use o formato dd/mm/aaaa, uma por linha.` };
+    datas.push(iso);
+  }
+  datas.sort();
+  const { error } = await db.from("configuracoes").upsert({ chave: "datas_prova", valor: datas, atualizado_em: new Date().toISOString() });
+  if (error) return { erro: error.message.includes("configuracoes") ? "Tabela de configurações não existe: rode o SQL 0006_configuracoes.sql no Supabase." : error.message };
+  revalidateTag("provas");
+  revalidatePath("/admin");
+  return { ok: `${datas.length} data(s) salva(s). O site já usa a próxima.` };
+}

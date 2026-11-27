@@ -2,10 +2,9 @@ import "server-only";
 import type { Arquivo } from "@/lib/aluno";
 import type { DiaCard } from "@/components/Cronograma";
 import { cronogramaDe, dataCurta, dataDoDia, paginaArquivo } from "@/lib/dados";
-import { env } from "@/lib/env";
 
 /** Monta os cards do cronograma de um produto com os links certos para os PDFs. */
-export function cardsDoCronograma(slug: string, arquivos: Arquivo[], volume30Id?: string | null): { cards: DiaCard[]; exemplo: boolean } | null {
+export function cardsDoCronograma(slug: string, arquivos: Arquivo[], volume30Id: string | null | undefined, dataProva: string | null): { cards: DiaCard[]; exemplo: boolean } | null {
   const c = cronogramaDe(slug);
   if (!c) return null;
   const desl = c.deslocamento ?? 1;
@@ -32,7 +31,7 @@ export function cardsDoCronograma(slug: string, arquivos: Arquivo[], volume30Id?
       revisao: d.tipo === "revisao",
       especial: d.tipo === "mega" ? "Mega resumo" : d.tipo === "vespera" ? "Véspera" : d.tipo === "revisao" ? "Revisão geral" : null,
       paginas: detalhes.join(" · "),
-      data: dataCurta(dataDoDia(env.dataProva, c.dias.length, d.dia)),
+      data: dataProva ? dataCurta(dataDoDia(dataProva, c.dias.length, d.dia)) : "",
       lerNoVolume: ler(d.pagina_inicial),
       pdfDoDia: porDia.has(d.dia) ? `/area/ler/${porDia.get(d.dia)}` : null,
       questoes: questoesLink,
