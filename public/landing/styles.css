@@ -198,7 +198,9 @@ footer .logo img { height: 52px; }
   background: var(--branco); border: 2px solid var(--linha); border-radius: 18px; padding: 26px 22px;
   display: flex; flex-direction: column;
 }
-.plano.destaque { border-color: var(--laranja); box-shadow: 0 10px 30px rgba(255,107,26,.18); position: relative; }
+.plano.destaque { border-color: var(--laranja); border-width: 3px; box-shadow: 0 18px 44px rgba(255,107,26,.28); position: relative; }
+.plano.destaque .preco .valor { color: var(--laranja); font-size: 2.6rem; }
+.planos-dois { max-width: 880px; }
 .plano .selo {
   position: absolute; top: -13px; left: 22px; background: var(--laranja); color: var(--preto);
   font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 5px 10px; border-radius: 6px;
@@ -302,6 +304,8 @@ footer a { color: #c9c6bf; }
   .pacote { grid-template-columns: 1fr 1fr; }
   .professor { grid-template-columns: 320px 1fr; gap: 48px; }
   .planos { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); align-items: stretch; }
+  .planos-dois { grid-template-columns: 1.12fr 1fr; align-items: center; }
+  .planos-dois .plano.destaque { padding: 34px 28px; }
   footer .wrap { grid-template-columns: 1fr auto; align-items: start; }
 }
 @media (min-width: 1000px) {
@@ -310,4 +314,88 @@ footer a { color: #c9c6bf; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { transition: none !important; }
+}
+
+/* =====================================================================
+   Acabamento (v2): abertura com capa, método numerado, isca WhatsApp
+   ===================================================================== */
+:root { --zap: #25D366; --zap-escuro: #128C7E; }
+.abertura, .isca { position: relative; overflow: hidden; }
+.hex-deco { position: absolute; pointer-events: none; color: var(--laranja); opacity: .22; width: 420px; right: -140px; top: -90px; }
+.ico-zap { width: 1.25em; height: 1.25em; flex-shrink: 0; }
+
+/* ---------- abertura ---------- */
+.abertura-grade { display: grid; gap: 40px; align-items: center; position: relative; }
+.abertura .acoes .btn-contorno .ico-zap { color: var(--zap); }
+.numeros { list-style: none; display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 22px; margin-top: 30px; }
+.numeros b { font-family: var(--titulo); font-weight: 400; font-size: 1.9rem; color: var(--off); display: block; line-height: 1; }
+.numeros span { font-size: .78rem; color: #9d9a93; text-transform: uppercase; letter-spacing: .08em; }
+.capa-destaque { position: relative; justify-self: center; width: min(78vw, 360px); }
+.capa-destaque img { width: 100%; height: auto; border-radius: 14px; box-shadow: 0 40px 80px -30px rgba(255,107,26,.55), 0 20px 40px -20px rgba(0,0,0,.8);
+  transform: rotate(3deg); border: 1px solid #2c2c2c; }
+.capa-selo { position: absolute; left: -12px; bottom: 28px; background: var(--laranja); color: var(--preto); font-weight: 800;
+  font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; padding: 8px 14px; border-radius: 8px; transform: rotate(-4deg);
+  box-shadow: 0 10px 24px -10px rgba(0,0,0,.6); }
+.contagem-caixa { margin-top: 44px; display: flex; flex-wrap: wrap; align-items: center; gap: 18px 26px;
+  background: #181818; border: 1px solid #2a2a2a; border-radius: 18px; padding: 18px; }
+.contagem-caixa .contagem { margin-top: 0; }
+.contagem-caixa .contagem-legenda { margin-top: 0; color: var(--off); font-weight: 600; }
+
+/* ---------- método ---------- */
+.cartao-metodo { position: relative; padding: 26px 22px 22px; border-radius: 18px; transition: transform .15s ease, border-color .15s ease; }
+.cartao-metodo:hover { transform: translateY(-3px); border-color: var(--laranja); }
+.cartao-metodo .num { position: absolute; top: 14px; right: 18px; font-family: var(--titulo); font-size: 2.2rem; color: #262626; line-height: 1; }
+.cartao-metodo .etiqueta { background: var(--laranja); color: var(--preto); }
+
+/* ---------- professor ---------- */
+.foto { position: relative; display: grid; place-items: center; background: #161616; }
+.foto .foto-brasao { width: 72%; height: auto; }
+.foto .foto-autor { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- planos ---------- */
+.plano { border-radius: 22px; }
+.plano .btn { border-radius: 12px; }
+
+/* ---------- isca (WhatsApp) ---------- */
+.isca { background: linear-gradient(140deg, #ff7a2e 0%, var(--laranja) 45%, #f05a0a 100%); }
+.isca .hex-deco { color: var(--preto); opacity: .12; width: 520px; right: -160px; top: -120px; }
+.isca-grade { display: grid; gap: 34px; align-items: center; position: relative; }
+.isca h2 { margin-top: 14px; }
+.selo-gratis { display: inline-flex; align-items: center; gap: 8px; background: var(--preto); color: var(--off); font-weight: 800;
+  font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; padding: 9px 14px; border-radius: 999px; }
+.selo-gratis .ico-zap { color: var(--zap); }
+.isca-capa { display: flex; gap: 18px; align-items: center; margin-top: 24px; }
+.isca-capa img { width: 96px; height: auto; flex-shrink: 0; border-radius: 10px; transform: rotate(-4deg); box-shadow: 0 24px 40px -18px rgba(0,0,0,.65); }
+.isca-lista { list-style: none; display: grid; gap: 10px; }
+.isca-lista li { font-size: .95rem; color: #2b1a10; line-height: 1.35; }
+.isca-lista b { display: inline-block; font-family: var(--titulo); font-weight: 400; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase;
+  background: var(--preto); color: var(--off); padding: 3px 7px; border-radius: 5px; margin-right: 6px; }
+
+.form-isca { background: #fff; border-radius: 22px; padding: 26px 22px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.55); margin-top: 0; max-width: none; gap: 0; }
+.form-isca .form-titulo { font-family: var(--titulo); text-transform: uppercase; font-size: 1.25rem; line-height: 1.1; }
+.form-isca .form-sub { color: var(--cinza); font-size: .92rem; margin: 4px 0 18px; }
+.form-isca .rotulo { display: block; font-size: .82rem; font-weight: 700; margin: 12px 0 6px; }
+.campo-ico { position: relative; }
+.campo-ico svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; color: var(--cinza); pointer-events: none; }
+.campo-zap svg { color: var(--zap); }
+.form-isca .campo-ico input { width: 100%; font: inherit; min-height: 56px; padding: 14px 16px 14px 50px; border-radius: 14px;
+  border: 2px solid #e4e0d7; background: #faf9f6; transition: border-color .12s ease, background .12s ease; }
+.form-isca .campo-ico input:focus { outline: none; border-color: var(--preto); background: #fff; }
+.form-isca .campo-zap input:focus { border-color: var(--zap); }
+.form-isca .aceite { margin: 16px 0 4px; color: var(--cinza); font-size: .84rem; }
+.form-isca .aceite input { accent-color: var(--zap); }
+.form-isca .btn.btn-zap { background: var(--zap); color: #fff; width: 100%; margin-top: 14px; min-height: 58px; font-size: 1rem; border-radius: 14px;
+  box-shadow: 0 14px 30px -12px rgba(37,211,102,.75); }
+.form-isca .btn.btn-zap:hover { background: #20bd5a; }
+.form-isca .btn.btn-zap .ico-zap { width: 1.5em; height: 1.5em; }
+.form-isca .msg-form { margin-top: 10px; color: var(--verde); }
+.form-seguro { display: flex; align-items: center; gap: 6px; justify-content: center; font-size: .78rem; color: var(--cinza); margin-top: 6px; }
+.form-seguro svg { width: 14px; height: 14px; }
+
+@media (min-width: 720px) {
+  .abertura-grade { grid-template-columns: 1.25fr .9fr; }
+  .capa-destaque { width: 100%; max-width: 380px; }
+  .isca-grade { grid-template-columns: 1.1fr .9fr; gap: 56px; }
+  .isca-capa img { width: 150px; }
+  .form-isca { padding: 32px 30px; }
 }

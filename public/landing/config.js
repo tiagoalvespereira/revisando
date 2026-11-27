@@ -17,12 +17,6 @@ window.REVISANDO = {
       preco: "97,00",
       parcelas: null,
       checkout: null
-    },
-    combo: {
-      ativo: false,         // true para mostrar o card do combo 30 + 15
-      preco: null,
-      parcelas: null,
-      checkout: null
     }
   },
 

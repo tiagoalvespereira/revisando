@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { alunoAtual, meusProdutos, type Arquivo } from "@/lib/aluno";
-import { dataCurta, dataSimulado, paginaArquivo, PRODUTOS_COM_SIMULADO, simuladoDados } from "@/lib/dados";
+import { dataCurta, dataSimulado, paginaArquivo, simuladoDados, simuladosLiberados } from "@/lib/dados";
 import { env } from "@/lib/env";
 import { SimuladoInterativo } from "@/components/SimuladoInterativo";
 import { AvisoExemplo } from "@/components/AvisoExemplo";
@@ -23,24 +23,37 @@ export default async function PaginaSimulado({ params, searchParams }: { params:
 
   const { supabase, user, perfil } = await alunoAtual();
   const produtos = await meusProdutos();
-  const meu = PRODUTOS_COM_SIMULADO.map((slug) => produtos.find((p) => p.slug === slug && p.tem)).find(Boolean);
-  if (!meu) {
-    const oferta = produtos.find((p) => p.slug === "15-dias") ?? produtos.find((p) => p.slug === "30-dias");
+  const slugs = produtos.filter((p) => p.tem).map((p) => p.slug);
+  const liberados = simuladosLiberados(slugs);
+  // Plano usado para "onde revisar": o de 30 dias, se tiver; senão o de 15.
+  const meu = produtos.find((p) => p.slug === "30-dias" && p.tem) ?? produtos.find((p) => p.slug === "15-dias" && p.tem);
+  if (!liberados.includes(n) || !meu) {
+    const oferta = produtos.find((p) => p.slug === "30-dias");
     return (
-      <main className="max-w-xl mx-auto px-4 py-10 space-y-4">
-        <h1 className="titulo text-2xl">Simulado Estratégico {n}</h1>
-        <p className="text-cinza">Os simulados fazem parte das revisões de 30 e de 15 dias.</p>
-        {oferta && <div className="max-w-[240px]"><CardProduto p={{ ...oferta, compra: linkCompra(oferta.checkout_url, perfil.email, perfil.nome) }} /></div>}
+      <main>
+        <Cabecalho sobretitulo="Simulado bloqueado" titulo={`Simulado Estratégico ${n}`} voltar={{ href: "/area/simulados", rotulo: "Simulados" }} />
+        <div className="max-w-xl mx-auto px-4 py-8 space-y-5">
+          <div className="cartao p-5 flex gap-4 items-start">
+            <span className="shrink-0 grid place-items-center size-12 rounded-full bg-vermelho text-white"><Icone nome="cadeado" className="size-6" /></span>
+            <p className="text-cinza">
+              {liberados.length
+                ? <>O <b className="text-preto">Simulado {n}</b> faz parte da <b className="text-preto">Revisão estratégica de 30 dias</b>. Com ela, você libera os dois simulados.</>
+                : <>Os simulados fazem parte das revisões. A <b className="text-preto">Revisão estratégica de 30 dias</b> libera os dois; a de 15 dias libera o Simulado 2.</>}
+            </p>
+          </div>
+          {oferta && !oferta.tem && <div className="max-w-[240px]"><CardProduto p={{ ...oferta, compra: linkCompra(oferta.checkout_url, perfil.email, perfil.nome) }} /></div>}
+        </div>
       </main>
     );
   }
 
-  const [{ data: ultimo }, { data: arquivos }] = await Promise.all([
+  const [{ data: ultimo }, { data: arquivos }, { data: pdfs }] = await Promise.all([
     supabase.from("simulado_respostas").select("acertos, por_materia, created_at").eq("user_id", user.id).eq("simulado", n).order("created_at", { ascending: false }).limit(1).maybeSingle(),
-    supabase.from("product_files").select("id, tipo, storage_path, product_id").eq("product_id", meu.id),
+    supabase.from("product_files").select("id, tipo, storage_path, product_id").eq("product_id", meu.id).in("tipo", ["volume", "caderno"]),
+    supabase.from("product_files").select("id").eq("simulado", n).limit(1),
   ]);
+  const pdfSimulado = pdfs?.[0] ?? null;
   const principal = (arquivos as Arquivo[] | null)?.find((a) => a.tipo === "volume" || a.tipo === "caderno");
-  const pdfSimulado = (arquivos as Arquivo[] | null)?.find((a) => a.tipo === "simulado" && a.storage_path.includes(`simulado-${n}`));
   const quando = dataCurta(dataSimulado(env.dataProva, s.dias_antes_da_prova));
   const mostrarResultado = ultimo && refazer !== "1";
 

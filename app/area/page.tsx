@@ -5,7 +5,7 @@ import { Hexagono } from "@/components/Hexagono";
 import { Icone } from "@/components/Icone";
 import { alunoAtual, linkCompra, meusProdutos, type Arquivo } from "@/lib/aluno";
 import { env } from "@/lib/env";
-import { cronogramaDe, dataCurta, dataDoDia, dataSimulado, PRODUTOS_COM_SIMULADO, SIMULADOS_DISPONIVEIS, simuladoDados } from "@/lib/dados";
+import { cronogramaDe, dataCurta, dataDoDia, dataSimulado, SIMULADOS_DISPONIVEIS, simuladoDados, simuladosLiberados } from "@/lib/dados";
 import { cardsDoCronograma, diaDeHoje } from "@/lib/cronograma";
 
 export const metadata = { title: "Início" };
@@ -35,7 +35,8 @@ export default async function Painel() {
     ...meus.map((p) => ({ ...p, progresso: progressoDe(p.slug) })),
     ...produtos.filter((p) => !p.tem && p.vitrine !== "oculto"),
   ];
-  const temSimulado = meus.some((p) => PRODUTOS_COM_SIMULADO.includes(p.slug));
+  const liberados = simuladosLiberados(meus.map((p) => p.slug));
+  const temSimulado = liberados.length > 0;
   const primeiro = perfil.nome?.split(" ")[0];
   const comLink = (p: (typeof produtos)[number]) => ({ ...p, compra: linkCompra(p.checkout_url, perfil.email, perfil.nome) });
 
@@ -114,13 +115,17 @@ export default async function Painel() {
               {SIMULADOS_DISPONIVEIS.map((n) => {
                 const s = simuladoDados(n)!;
                 const r = (feitos ?? []).find((f) => f.simulado === n);
+                const liberado = liberados.includes(n);
                 return (
                   <Link key={n} href={`/area/simulado/${n}`} className="cartao cartao-link p-5 flex gap-4 items-center">
-                    <span className="shrink-0 size-14 rounded-2xl bg-preto text-laranja grid place-items-center titulo text-lg">S{n}</span>
+                    <span className={`relative shrink-0 size-14 rounded-2xl grid place-items-center titulo text-lg ${liberado ? "bg-preto text-laranja" : "bg-preto/80 text-off/50"}`}>
+                      S{n}
+                      <span className={`absolute -right-1.5 -bottom-1.5 grid place-items-center size-7 rounded-full ring-[3px] ring-white text-white ${liberado ? "bg-verde" : "bg-vermelho"}`}><Icone nome={liberado ? "cadeado-aberto" : "cadeado"} className="size-3.5" /></span>
+                    </span>
                     <span className="flex-1">
                       <span className="titulo text-base block">Simulado Estratégico {n}</span>
                       <span className="text-sm text-cinza">
-                        {r ? <>Último resultado: <b className={r.acertos >= s.margem ? "text-verde" : r.acertos >= s.meta ? "text-laranja" : "text-vermelho"}>{r.acertos}/80</b></> : `Fazer em ${dataCurta(dataSimulado(env.dataProva, s.dias_antes_da_prova))} · ${s.dias_antes_da_prova} dias antes`}
+                        {!liberado ? <span className="text-vermelho font-semibold">Disponível na revisão de 30 dias</span> : r ? <>Último resultado: <b className={r.acertos >= s.margem ? "text-verde" : r.acertos >= s.meta ? "text-laranja" : "text-vermelho"}>{r.acertos}/80</b></> : `Fazer em ${dataCurta(dataSimulado(env.dataProva, s.dias_antes_da_prova))} · ${s.dias_antes_da_prova} dias antes`}
                       </span>
                     </span>
                     <Icone nome="seta" className="size-5 text-cinza" />

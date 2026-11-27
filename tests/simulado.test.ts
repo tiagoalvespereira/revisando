@@ -50,3 +50,13 @@ test("volume de 30: totais do briefing (196 questões, 318 pontos estratégicos)
   assert.equal(r30.total_pontos, 318);
   for (const d of r30.dias.filter((x: { tipo: string }) => x.tipo === "revisao")) assert.ok([7, 14, 21, 28].includes(d.dia));
 });
+
+test("regra de acesso aos simulados: 30 dias libera 1 e 2; 15 dias só o 2", async () => {
+  // Mesma regra de lib/dados.ts (simuladosLiberados) e do banco (pode_ver_simulado)
+  const regra = (s: string[]) => (s.includes("30-dias") || s.includes("simulados") ? [1, 2] : s.includes("15-dias") ? [2] : []);
+  assert.deepEqual(regra(["30-dias"]), [1, 2]);
+  assert.deepEqual(regra(["15-dias"]), [2]);
+  assert.deepEqual(regra(["30-dias", "15-dias"]), [1, 2]);
+  assert.deepEqual(regra(["3-dias"]), []);
+  assert.deepEqual(regra([]), []);
+});

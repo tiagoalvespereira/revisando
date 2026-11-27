@@ -40,23 +40,40 @@
 
   <!-- ABERTURA -->
   <section class="abertura escuro">
+    <svg class="hex-deco" viewBox="0 0 100 115" aria-hidden="true"><polygon points="50,2 98,30 98,85 50,113 2,85 2,30" fill="none" stroke="currentColor" stroke-width="2.5"/><polygon points="50,9 92,33.5 92,81.5 50,106 8,81.5 8,33.5" fill="none" stroke="currentColor" stroke-width="1" opacity=".5"/></svg>
+    <div class="wrap abertura-grade">
+      <div>
+        <span class="sobretitulo">OAB 2027 · 1ª fase</span>
+        <h1>30 dias.<br>3 horas por dia.<br><span class="lar">Só o que cai.</span></h1>
+        <p class="lead">Revisão estratégica em PDF para a 1ª fase do Exame da OAB. Cada dia já vem com o plano das 3 horas, os pontos que a banca cobra e questões para fixar. Você só precisa abrir e seguir.</p>
+        <div class="acoes">
+          <a href="#planos" class="btn btn-laranja">Quero revisar com estratégia</a>
+          <a href="#gratis" class="btn btn-contorno"><svg viewBox="0 0 24 24" aria-hidden="true" class="ico-zap"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg> Revisão de 3 dias grátis</a>
+        </div>
+        <ul class="numeros">
+          <li><b>422</b><span>páginas</span></li>
+          <li><b>196</b><span>questões inéditas</span></li>
+          <li><b>318</b><span>pontos estratégicos</span></li>
+        </ul>
+      </div>
+      <div class="capa-destaque">
+        <img src="/landing/img/capa-30-dias.jpg" alt="Capa do Revisando OAB 30, edição 2027" width="637" height="900">
+        <span class="capa-selo">Edição 2027</span>
+      </div>
+    </div>
     <div class="wrap">
-      <span class="sobretitulo">OAB 2027 · 1ª fase</span>
-      <h1>30 dias.<br>3 horas por dia.<br><span class="lar">Só o que cai.</span></h1>
-      <p class="lead">Revisão estratégica em PDF para a 1ª fase do Exame da OAB. Cada dia já vem com o plano das 3 horas, os pontos que a banca cobra e questões para fixar. Você só precisa abrir e seguir.</p>
-      <div class="acoes">
-        <a href="#planos" class="btn btn-laranja">Quero revisar com estratégia</a>
-        <a href="#gratis" class="btn btn-contorno">Revisão de 3 dias grátis</a>
+      <div class="contagem-caixa">
+        <div class="contagem" id="contagem" aria-live="off">
+          <div><strong data-c="d">--</strong><span>dias</span></div>
+          <div><strong data-c="h">--</strong><span>horas</span></div>
+          <div><strong data-c="m">--</strong><span>min</span></div>
+          <div><strong data-c="s">--</strong><span>seg</span></div>
+        </div>
+        <div>
+          <p class="contagem-legenda" id="contagem-legenda">até a 1ª fase, em 10/01/2027.</p>
+          <p class="selo-lei">Legislação atualizada até 21/09/2026.</p>
+        </div>
       </div>
-
-      <div class="contagem" id="contagem" aria-live="off">
-        <div><strong data-c="d">--</strong><span>dias</span></div>
-        <div><strong data-c="h">--</strong><span>horas</span></div>
-        <div><strong data-c="m">--</strong><span>min</span></div>
-        <div><strong data-c="s">--</strong><span>seg</span></div>
-      </div>
-      <p class="contagem-legenda" id="contagem-legenda">até a 1ª fase, em 10/01/2027.</p>
-      <p class="selo-lei">Legislação atualizada até 21/09/2026.</p>
     </div>
   </section>
 
@@ -82,12 +99,12 @@
       <h2>Formatos feitos para a prova</h2>
       <p class="lead">O material não é um resumo. É um roteiro de revisão, com formatos próprios que mostram o que a banca cobra e como ela cobra.</p>
       <div class="grade">
-        <div class="cartao"><span class="etiqueta">Plano de 3h</span><p>Todo dia abre com o plano: 1h45 de leitura, 10 min de pausa, 45 min de questões e 20 min de revisão relâmpago.</p></div>
-        <div class="cartao"><span class="etiqueta">★ Ponto estratégico</span><p>O que a FGV mais cobra e como responder. São 318 no volume.</p></div>
-        <div class="cartao"><span class="etiqueta">Gatilho da questão</span><p>"Se o enunciado trouxer… pense em…": a palavra que entrega a resposta.</p></div>
-        <div class="cartao"><span class="etiqueta">Duelo</span><p>Dois institutos que a FGV troca, lado a lado, para você não confundir na prova.</p></div>
-        <div class="cartao"><span class="etiqueta">Se cair assim, faça assim</span><p>Passo a passo numerado para resolver os tipos de questão que se repetem.</p></div>
-        <div class="cartao"><span class="etiqueta">Revisão relâmpago</span><p>Perguntas e respostas para cobrir e responder no fim do dia.</p></div>
+        <div class="cartao cartao-metodo"><span class="num">01</span><span class="etiqueta">Plano de 3h</span><p>Todo dia abre com o plano: 1h45 de leitura, 10 min de pausa, 45 min de questões e 20 min de revisão relâmpago.</p></div>
+        <div class="cartao cartao-metodo"><span class="num">02</span><span class="etiqueta">★ Ponto estratégico</span><p>O que a FGV mais cobra e como responder. São 318 no volume.</p></div>
+        <div class="cartao cartao-metodo"><span class="num">03</span><span class="etiqueta">Gatilho da questão</span><p>"Se o enunciado trouxer… pense em…": a palavra que entrega a resposta.</p></div>
+        <div class="cartao cartao-metodo"><span class="num">04</span><span class="etiqueta">Duelo</span><p>Dois institutos que a FGV troca, lado a lado, para você não confundir na prova.</p></div>
+        <div class="cartao cartao-metodo"><span class="num">05</span><span class="etiqueta">Se cair assim, faça assim</span><p>Passo a passo numerado para resolver os tipos de questão que se repetem.</p></div>
+        <div class="cartao cartao-metodo"><span class="num">06</span><span class="etiqueta">Revisão relâmpago</span><p>Perguntas e respostas para cobrir e responder no fim do dia.</p></div>
       </div>
     </div>
   </section>
@@ -162,7 +179,8 @@
   <section id="professor" class="escuro">
     <div class="wrap professor">
       <div class="foto">
-        <img src="/landing/img/autor-3x4.jpg" alt="Professor Tiago Alves Pereira" width="600" height="800" loading="lazy" onerror="this.remove()">
+        <img class="foto-brasao" src="/marca/revisando-brasao-hexagono.svg" alt="" width="600" height="600">
+        <img class="foto-autor" src="/landing/img/autor-3x4.jpg" alt="Professor Tiago Alves Pereira" width="600" height="800" loading="lazy" onerror="this.remove()">
       </div>
       <div>
         <span class="sobretitulo">Quem prepara o material</span>
@@ -194,16 +212,16 @@
       <h2>Escolha o seu tempo de revisão</h2>
       <p class="lead" id="recomendacao">Pague com Pix, cartão parcelado ou boleto. O acesso chega no seu e-mail logo após a confirmação.</p>
 
-      <div class="planos">
+      <div class="planos planos-dois">
         <article class="plano destaque" data-plano="30-dias">
-          <span class="selo">Completo</span>
+          <span class="selo">Mais completo · recomendado</span>
           <h3>Revisão estratégica de 30 dias</h3>
           <p class="para">Para quem tem 30 dias ou mais até a prova.</p>
           <div class="preco"></div>
           <ul>
             <li>Volume completo: 422 páginas e 196 questões inéditas comentadas</li>
             <li>Os 30 dias em arquivos separados</li>
-            <li>Simulado Estratégico 1 e 2</li>
+            <li>Simulado Estratégico 1 e 2 (20 e 7 dias antes)</li>
             <li>Cronograma estratégico de 30 dias</li>
             <li>Cronograma em branco e calendário</li>
           </ul>
@@ -217,24 +235,13 @@
           <div class="preco"></div>
           <ul>
             <li>Caderno estratégico de 100 páginas, só com ★ pontos estratégicos, gatilhos, duelos e fluxos</li>
-            <li>Simulado Estratégico 1 e 2</li>
+            <li>Simulado Estratégico 2 (7 dias antes da prova)</li>
             <li>Cronograma estratégico de 15 dias</li>
           </ul>
           <a class="btn btn-laranja btn-bloco" data-checkout>Quero os 15 dias</a>
           <p class="pagamento">Pix · Cartão · Boleto</p>
         </article>
 
-        <article class="plano" data-plano="combo" hidden>
-          <h3>Combo 30 + 15 dias</h3>
-          <p class="para">Os dois materiais: os 30 dias para a base e o caderno de 15 para a reta final.</p>
-          <div class="preco"></div>
-          <ul>
-            <li>Tudo da revisão de 30 dias</li>
-            <li>Tudo da revisão de 15 dias</li>
-          </ul>
-          <a class="btn btn-laranja btn-bloco" data-checkout>Quero o combo</a>
-          <p class="pagamento">Pix · Cartão · Boleto</p>
-        </article>
       </div>
 
       <div class="garantia">
@@ -247,21 +254,42 @@
 
   <!-- ISCA -->
   <section id="gratis" class="isca">
-    <div class="wrap">
-      <span class="sobretitulo" style="color:var(--preto)">Grátis</span>
-      <h2>Revisão de 3 dias estratégica</h2>
-      <p class="lead">Para os 3 dias antes da prova: só os ★ pontos estratégicos das matérias que mais pesam. Deixe seu nome e WhatsApp e receba o PDF no seu WhatsApp.</p>
+    <svg class="hex-deco" viewBox="0 0 100 115" aria-hidden="true"><polygon points="50,2 98,30 98,85 50,113 2,85 2,30" fill="none" stroke="currentColor" stroke-width="2.5"/><polygon points="50,9 92,33.5 92,81.5 50,106 8,81.5 8,33.5" fill="none" stroke="currentColor" stroke-width="1" opacity=".5"/></svg>
+    <div class="wrap isca-grade">
+      <div class="isca-texto">
+        <span class="selo-gratis"><svg viewBox="0 0 24 24" aria-hidden="true" class="ico-zap"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg> Grátis no seu WhatsApp</span>
+        <h2>Revisão de 3 dias estratégica</h2>
+        <p class="lead">Para os 3 dias antes da prova: só os ★ pontos estratégicos das matérias que mais pesam, com questões comentadas e o checklist do dia da prova.</p>
+        <div class="isca-capa">
+          <img src="/landing/img/capa-3-dias.jpg" alt="Capa da Revisão de 3 dias estratégica" width="637" height="900" loading="lazy">
+          <ul class="isca-lista">
+            <li><b>Dia 1</b> Ética, Constitucional, Civil e Processo Civil</li>
+            <li><b>Dia 2</b> Penal, Processo Penal, Administrativo e Tributário</li>
+            <li><b>Dia 3</b> Trabalho, Empresarial, matérias menores e véspera</li>
+          </ul>
+        </div>
+      </div>
+
       <form class="form-isca" id="form-isca" novalidate>
-        <label class="visualmente-oculto" for="isca-nome">Nome</label>
-        <input id="isca-nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" required>
-        <label class="visualmente-oculto" for="isca-whatsapp">WhatsApp com DDD</label>
-        <input id="isca-whatsapp" name="whatsapp" type="tel" placeholder="WhatsApp com DDD" autocomplete="tel-national" inputmode="tel" maxlength="16" required>
+        <p class="form-titulo">Receba agora no WhatsApp</p>
+        <p class="form-sub">Leva 10 segundos. Sem custo.</p>
+        <label class="rotulo" for="isca-nome">Seu nome</label>
+        <div class="campo-ico">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 9a7 7 0 0 1 14 0"/></svg>
+          <input id="isca-nome" name="nome" type="text" placeholder="Como você se chama?" autocomplete="name" required>
+        </div>
+        <label class="rotulo" for="isca-whatsapp">WhatsApp com DDD</label>
+        <div class="campo-ico campo-zap">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="ico-zap"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          <input id="isca-whatsapp" name="whatsapp" type="tel" placeholder="(61) 99999-9999" autocomplete="tel-national" inputmode="tel" maxlength="16" required>
+        </div>
         <label class="aceite">
           <input type="checkbox" name="consentimento" required>
           <span>Concordo em receber o material e mensagens do Revisando no WhatsApp, conforme a <a href="/privacidade">Política de Privacidade</a>. Posso pedir para parar quando quiser.</span>
         </label>
-        <button type="submit" class="btn">Receber no WhatsApp</button>
+        <button type="submit" class="btn btn-zap"><svg viewBox="0 0 24 24" aria-hidden="true" class="ico-zap"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg> <span class="btn-texto">Receber no WhatsApp</span></button>
         <p class="msg-form" id="msg-isca" role="status"></p>
+        <p class="form-seguro"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M6 11h12v10H6zM8 11V7a4 4 0 0 1 8 0v4"/></svg> Seus dados ficam protegidos (LGPD). Nada de spam.</p>
       </form>
     </div>
   </section>
@@ -282,7 +310,7 @@
         </details>
         <details>
           <summary>Qual a diferença entre o plano de 30 e o de 15 dias?</summary>
-          <p>O de 30 dias é a revisão completa, com 422 páginas, os dias separados e todos os cronogramas. O de 15 dias é um caderno de 100 páginas, mais enxuto, para quem tem pouco tempo até a prova. Os dois têm os dois simulados.</p>
+          <p>O de 30 dias é a revisão completa, com 422 páginas, os dias separados e todos os cronogramas. O de 15 dias é um caderno de 100 páginas, mais enxuto, para quem tem pouco tempo até a prova. O de 30 dias inclui os dois simulados (20 e 7 dias antes da prova); o de 15 dias inclui o Simulado 2.</p>
         </details>
         <details>
           <summary>O material serve para qual exame?</summary>

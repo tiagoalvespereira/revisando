@@ -43,7 +43,6 @@
   var planos = C.planos || {};
   $$("[data-plano]").forEach(function (card) {
     var cfg = planos[card.getAttribute("data-plano")] || {};
-    if (card.getAttribute("data-plano") === "combo") card.hidden = !cfg.ativo;
     var preco = $(".preco", card);
     if (preco) {
       preco.innerHTML = cfg.preco
@@ -94,8 +93,8 @@
     if (nome.length < 2) return erro("Informe seu nome.");
     if (zap.length < 10 || zap.length > 11) return erro("Informe o WhatsApp com DDD.");
     if (!ok) return erro("Para receber o material, aceite a política de privacidade.");
-    var botao = $("button", form);
-    botao.disabled = true; botao.textContent = "Enviando...";
+    var botao = $("button", form), rotuloBotao = $(".btn-texto", botao) || botao;
+    botao.disabled = true; rotuloBotao.textContent = "Enviando...";
     fetch((C.isca && C.isca.endpoint) || "/api/isca", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nome: nome, whatsapp: zap, consentimento: true })
@@ -113,7 +112,7 @@
         }
       })
       .catch(function (e) { erro(e.message || "Não foi possível enviar. Tente de novo."); })
-      .finally(function () { botao.disabled = false; botao.textContent = "Receber no WhatsApp"; });
+      .finally(function () { botao.disabled = false; rotuloBotao.textContent = "Receber no WhatsApp"; });
   });
   function erro(t) { msg.textContent = t; msg.style.color = "#5a0d0d"; }
 })();

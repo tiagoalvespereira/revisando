@@ -30,8 +30,18 @@ const SIMULADOS: Record<number, Simulado> = { 1: s1 as unknown as Simulado, 2: s
 export const cronogramaDe = (slug: string): Cronograma | null => CRONOGRAMAS[slug] ?? null;
 export const simuladoDados = (n: number): Simulado | null => SIMULADOS[n] ?? null;
 export const SIMULADOS_DISPONIVEIS = [1, 2];
-/** Produtos que dão direito aos simulados. */
-export const PRODUTOS_COM_SIMULADO = ["30-dias", "15-dias"];
+/** Produtos que dão direito a algum simulado. */
+export const PRODUTOS_COM_SIMULADO = ["30-dias", "15-dias", "simulados"];
+
+/**
+ * Regra de acesso (igual à do banco, em supabase/migrations/0004_simulados.sql):
+ * revisão de 30 dias ou produto "simulados" -> Simulados 1 e 2; revisão de 15 dias -> só o Simulado 2.
+ */
+export function simuladosLiberados(slugsQueTem: string[]): number[] {
+  if (slugsQueTem.includes("30-dias") || slugsQueTem.includes("simulados")) return [1, 2];
+  if (slugsQueTem.includes("15-dias")) return [2];
+  return [];
+}
 
 /** Página do arquivo (com capa) a partir da página impressa no rodapé. */
 export const paginaArquivo = (impressa: number, deslocamento = 1) => impressa + deslocamento;
