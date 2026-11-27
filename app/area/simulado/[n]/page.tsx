@@ -83,6 +83,7 @@ export default async function PaginaSimulado({ params, searchParams }: { params:
         <div className="flex flex-wrap gap-2 mt-4">
           {pdfGabarito && <Link href={`/area/ler/${pdfGabarito.id}`} className="btn btn-laranja btn-pequeno"><Icone nome="olho" className="size-4" /> Gabarito comentado</Link>}
           {pdfSimulado && <Link href={`/area/ler/${pdfSimulado.id}`} className="btn btn-claro btn-pequeno"><Icone nome="documento" className="size-4" /> Caderno de questões</Link>}
+          <Link href={`/area/simulado/${n}?refazer=1`} className="btn btn-preto btn-pequeno"><Icone nome="voltar" className="size-4" /> Refazer simulado</Link>
         </div>
       </Cabecalho>
       <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
@@ -123,6 +124,10 @@ function Resultado(props: {
               : `Você passou dos ${meta} acertos. Agora mire a margem de segurança de ${margem}.`
             : `Faltaram ${meta - acertos} acertos para os ${meta}. Vamos estudar mais! Comece pelas matérias abaixo.`}
         </p>
+        <div className="flex flex-wrap justify-center gap-2 mt-5">
+          <Link href={`/area/simulado/${props.n}?refazer=1`} className="btn btn-pequeno bg-white text-preto hover:bg-off"><Icone nome="voltar" className="size-4" /> Refazer simulado</Link>
+          <a href="#analise" className="btn btn-pequeno btn-contorno text-white">Ver o que revisar</a>
+        </div>
       </section>
       <section className="relative overflow-hidden bg-preto text-off rounded-[18px] p-6">
         <p className="text-xs uppercase tracking-widest text-off/70">Resultado de {new Date(props.quando).toLocaleDateString("pt-BR")}</p>
@@ -162,7 +167,7 @@ function Resultado(props: {
       )}
 
       <section>
-        <h2 className="titulo text-lg mb-3">Acertos por matéria</h2>
+        <h2 id="analise" className="titulo text-lg mb-3 scroll-mt-40">Acertos por matéria</h2>
         <ul className="cartao divide-y divide-linha">
           {props.materias.map((m) => {
             const r = porMateria[m.materia] ?? { acertos: 0, total: 0 };
@@ -179,7 +184,7 @@ function Resultado(props: {
         <p className="text-xs text-cinza mt-2">O gabarito comentado está no PDF do simulado.</p>
       </section>
 
-      <Link href={`/area/simulado/${props.n}?refazer=1`} className="btn btn-claro">Refazer o simulado</Link>
+      <Link href={`/area/simulado/${props.n}?refazer=1`} className="btn btn-preto"><Icone nome="voltar" className="size-5" /> Refazer simulado</Link>
     </div>
   );
 }

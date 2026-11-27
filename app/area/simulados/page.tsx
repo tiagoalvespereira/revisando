@@ -60,9 +60,17 @@ export default async function Simulados() {
             </>
           );
           return (
-            <Link key={n} href={`/area/simulado/${n}`} className={`cartao cartao-link p-5 sm:p-6 flex flex-wrap gap-5 items-center ${liberado ? "" : "bg-[#fbf9f5]"}`}>
-              {corpo}
-            </Link>
+            <div key={n} className={`cartao p-5 sm:p-6 ${liberado ? "" : "bg-[#fbf9f5]"}`}>
+              <Link href={`/area/simulado/${n}`} className="flex flex-wrap gap-5 items-center">
+                {corpo}
+              </Link>
+              {liberado && r && (
+                <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-linha">
+                  <Link href={`/area/simulado/${n}`} className="btn btn-claro btn-pequeno"><Icone nome="olho" className="size-4" /> Ver resultado</Link>
+                  <Link href={`/area/simulado/${n}?refazer=1`} className="btn btn-preto btn-pequeno"><Icone nome="voltar" className="size-4" /> Refazer simulado</Link>
+                </div>
+              )}
+            </div>
           );
         })}
 
