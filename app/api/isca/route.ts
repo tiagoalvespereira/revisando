@@ -9,18 +9,12 @@ import { aplicarMarcaDagua } from "@/lib/marca-dagua";
 
 export const runtime = "nodejs";
 
-/** Mensagem que acompanha o PDF da amostra no WhatsApp. */
+/** Mensagem que acompanha o PDF da amostra no WhatsApp: boas-vindas, sem oferta. */
 function legendaAmostra(nome: string) {
-  const site = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://revisando-khaki.vercel.app").replace(/\/$/, "");
   return [
-    `Olá, ${nome.split(" ")[0]}! Aqui está a sua *amostra grátis do Revisando OAB 2027*.`,
+    `Olá, ${nome.split(" ")[0]}! Boas-vindas ao *Revisando*.`,
     "",
-    "São 3 dias do material, com o mesmo método da revisão completa: ★ pontos estratégicos, gatilhos da questão, duelos e questões inéditas com gabarito comentado.",
-    "",
-    "Estude um dia, faça as questões e compare com o que você vem usando.",
-    "",
-    "Gostou? A *Revisão estratégica de 30 dias* tem as 20 matérias, 422 páginas, 196 questões comentadas e 2 simulados, em até 12x:",
-    `${site}/#planos`,
+    "Esta é a sua amostra grátis: 3 dias do mesmo método das nossas revisões de 30 e 15 dias, montadas a partir do que a FGV mais cobra para você revisar só o que cai, em 3 horas por dia.",
     "",
     "Bons estudos!",
   ].join("\n");
