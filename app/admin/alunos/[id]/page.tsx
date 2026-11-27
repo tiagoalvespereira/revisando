@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { exigirAdmin, dataBR, reais } from "@/lib/admin";
 import { liberarManual, reenviarAcesso, revogarManual } from "../../actions";
+import { LinkAcesso } from "../LinkAcesso";
 
 export const dynamic = "force-dynamic";
 
@@ -34,6 +35,10 @@ export default async function Aluno({ params, searchParams }: { params: Promise<
         </p>
       </div>
 
+      {!process.env.RESEND_API_KEY && (
+        <p className="rounded-xl border-2 border-laranja bg-laranja-claro px-4 py-3 text-sm"><b>E-mails ainda não configurados.</b> Use o link de acesso abaixo e envie pelo WhatsApp.</p>
+      )}
+      <LinkAcesso userId={id} />
       <form action={reenviarAcesso}>
         <input type="hidden" name="user_id" value={id} />
         <button className="btn btn-preto">Reenviar e-mail de acesso</button>

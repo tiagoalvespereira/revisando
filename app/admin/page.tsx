@@ -25,6 +25,12 @@ export default async function Metricas() {
   return (
     <div className="space-y-8">
       <h1 className="titulo text-2xl">Métricas</h1>
+      {!process.env.RESEND_API_KEY && (
+        <p className="rounded-xl border-2 border-laranja bg-laranja-claro px-4 py-3 text-sm">
+          <b>Os e-mails de acesso ainda não estão configurados</b> (falta o Resend). Até lá, os alunos não recebem o e-mail para criar a senha:
+          em <b>Alunos</b>, abra o aluno e use <b>Gerar link</b> para enviar o acesso pelo WhatsApp.
+        </p>
+      )}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
         {cards.map((c) => <div key={c.t} className="cartao p-4"><p className="text-xs uppercase tracking-widest text-cinza">{c.t}</p><p className="titulo text-2xl mt-2">{c.v}</p></div>)}
       </div>

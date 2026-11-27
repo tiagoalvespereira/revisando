@@ -136,3 +136,16 @@ export async function marcarContatado(form: FormData) {
   await db.from("leads").update({ contatado_em: new Date().toISOString() }).eq("id", s(form, "id"));
   revalidatePath("/admin/leads");
 }
+
+/** Gera o link de uso único para o aluno criar a senha (para enviar por WhatsApp ou testar). */
+export async function gerarLinkAcesso(userId: string): Promise<{ link: string; telefone: string | null; nome: string | null } | { erro: string }> {
+  const { db } = await exigirAdmin();
+  const { data: p } = await db.from("profiles").select("email, nome, telefone").eq("id", userId).single();
+  if (!p) return { erro: "aluno não encontrado" };
+  try {
+    const { linkDeSenha } = await import("@/lib/acesso");
+    return { link: await linkDeSenha(p.email), telefone: p.telefone, nome: p.nome };
+  } catch (e) {
+    return { erro: String((e as Error).message ?? e) };
+  }
+}
