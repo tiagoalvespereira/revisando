@@ -55,6 +55,7 @@ export function Leitor({ arquivoId, paginaInicial = 1 }: { arquivoId: string; pa
             window.location.href = `/entrar?volta=${encodeURIComponent(location.pathname + location.search)}`;
             throw new Error("login");
           }
+          if (r.status === 404) throw new Error("Este PDF ainda não foi publicado.");
           if (r.status !== 206 && !r.ok) throw new Error(`Falha ao carregar (${r.status})`);
           return r;
         };
@@ -182,7 +183,7 @@ export function Leitor({ arquivoId, paginaInicial = 1 }: { arquivoId: string; pa
     if (doc) requestAnimationFrame(() => irPara(Math.min(paginaInicial, doc.numPages), false));
   }, [doc, paginaInicial, irPara]);
 
-  if (erro) return <div className="p-6 text-vermelho font-semibold">{erro}</div>;
+  if (erro) return <div className="h-full grid place-items-center bg-[#2a2a2a] p-8 text-center text-off/80 font-semibold">{erro}</div>;
 
   return (
     <div className="flex flex-col h-full">

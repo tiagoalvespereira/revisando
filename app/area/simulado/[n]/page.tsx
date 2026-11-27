@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { alunoAtual, meusProdutos, type Arquivo } from "@/lib/aluno";
 import { dataCurta, dataSimulado, paginaArquivo, PRODUTOS_COM_SIMULADO, simuladoDados } from "@/lib/dados";
 import { env } from "@/lib/env";
-import { CartaoResposta } from "@/components/CartaoResposta";
+import { SimuladoInterativo } from "@/components/SimuladoInterativo";
 import { AvisoExemplo } from "@/components/AvisoExemplo";
 import { CardProduto } from "@/components/CardProduto";
 import { linkCompra } from "@/lib/aluno";
@@ -44,21 +44,32 @@ export default async function PaginaSimulado({ params, searchParams }: { params:
   const quando = dataCurta(dataSimulado(env.dataProva, s.dias_antes_da_prova));
   const mostrarResultado = ultimo && refazer !== "1";
 
+  if (!mostrarResultado) {
+    // Modo de resolver: barra compacta + PDF e gabarito ocupando a tela
+    return (
+      <main>
+        <div className="bg-preto text-off border-t border-white/10">
+          <div className="max-w-6xl mx-auto px-4 h-[52px] flex items-center gap-3">
+            <Link href="/area/simulados" aria-label="Voltar para simulados" className="btn btn-fantasma btn-icone text-off"><Icone nome="voltar" className="size-5" /></Link>
+            <p className="titulo text-sm sm:text-base flex-1 truncate">Simulado Estratégico {n} <span className="text-laranja">· 80 questões</span></p>
+            {s.exemplo && <span className="selo bg-vermelho text-white" title="A correção ainda não usa o gabarito oficial">Gabarito de exemplo</span>}
+            <span className="hidden sm:inline text-xs text-off/60">fazer em {quando}</span>
+          </div>
+        </div>
+        <SimuladoInterativo n={n} materias={s.materias.map((m) => ({ materia: m.materia, questoes: m.questoes }))} arquivoId={pdfSimulado?.id ?? null} />
+      </main>
+    );
+  }
+
   return (
     <main>
-      <Cabecalho sobretitulo={`80 questões · fazer em ${quando}`} titulo={`Simulado Estratégico ${n}`} voltar={{ href: "/area/simulados", rotulo: "Simulados" }}>
-        <p className="text-off/60 text-sm mt-2">Resolva no PDF, sem consulta, e marque aqui suas respostas.</p>
-        {pdfSimulado && <Link href={`/area/ler/${pdfSimulado.id}`} className="btn btn-claro btn-pequeno mt-4"><Icone nome="olho" className="size-4" /> Abrir o PDF do simulado</Link>}
+      <Cabecalho sobretitulo={`Resultado · fazer em ${quando}`} titulo={`Simulado Estratégico ${n}`} voltar={{ href: "/area/simulados", rotulo: "Simulados" }}>
+        {pdfSimulado && <Link href={`/area/ler/${pdfSimulado.id}`} className="btn btn-claro btn-pequeno mt-4"><Icone nome="olho" className="size-4" /> Gabarito comentado no PDF</Link>}
       </Cabecalho>
       <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
-      {s.exemplo && <AvisoExemplo>Gabarito de exemplo: a correção ainda não usa o gabarito oficial do simulado.</AvisoExemplo>}
-
-      {mostrarResultado ? (
+        {s.exemplo && <AvisoExemplo>Gabarito de exemplo: a correção ainda não usa o gabarito oficial do simulado.</AvisoExemplo>}
         <Resultado acertos={ultimo.acertos} porMateria={ultimo.por_materia as PorMateria} quando={ultimo.created_at} n={n}
           meta={s.meta} margem={s.margem} materias={s.materias} slug={meu.slug} volumeId={principal?.id ?? null} />
-      ) : (
-        <CartaoResposta n={n} materias={s.materias.map((m) => ({ materia: m.materia, questoes: m.questoes }))} />
-      )}
       </div>
     </main>
   );
@@ -77,8 +88,23 @@ function Resultado(props: {
       : { cor: "text-vermelho", texto: `Abaixo da meta de ${meta}. Use a lista abaixo para decidir o que revisar primeiro.` };
   const fracas = props.materias.filter((m) => { const r = porMateria[m.materia]; return r && r.acertos < r.total / 2; });
 
+  const aprovado = acertos >= meta;
   return (
     <div className="space-y-6">
+      <section className={`rounded-[18px] p-6 text-center ${aprovado ? "bg-verde text-white" : "bg-vermelho text-white"}`}>
+        <span className="mx-auto grid place-items-center size-16 rounded-full bg-white/15 mb-3">
+          <Icone nome={aprovado ? "trofeu" : "livro"} className="size-8" />
+        </span>
+        <p className="text-sm font-bold uppercase tracking-widest opacity-85">Nota prevista: {acertos} de 80 ({Math.round((acertos / 80) * 100)}%)</p>
+        <p className="titulo text-3xl sm:text-4xl mt-2">{aprovado ? "Aprovado no simulado!" : "Reprovado no simulado"}</p>
+        <p className="mt-2 text-white/90">
+          {aprovado
+            ? acertos >= margem
+              ? "Você passou da margem de segurança. Continue revisando para chegar firme na prova."
+              : `Você passou dos ${meta} acertos. Agora mire a margem de segurança de ${margem}.`
+            : `Faltaram ${meta - acertos} acertos para os ${meta}. Vamos estudar mais! Comece pelas matérias abaixo.`}
+        </p>
+      </section>
       <section className="relative overflow-hidden bg-preto text-off rounded-[18px] p-6">
         <p className="text-xs uppercase tracking-widest text-off/70">Resultado de {new Date(props.quando).toLocaleDateString("pt-BR")}</p>
         <p className="titulo text-6xl mt-2"><span className={status.cor}>{acertos}</span><span className="text-2xl text-off/60">/80</span></p>
