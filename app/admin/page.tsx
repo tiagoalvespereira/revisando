@@ -41,7 +41,7 @@ export default async function Metricas() {
       <Integracoes itens={[
         { nome: "Kiwify (webhook)", ok: Boolean(process.env.KIWIFY_WEBHOOK_TOKEN), detalhe: process.env.KIWIFY_WEBHOOK_TOKEN ? "token configurado" : "falta KIWIFY_WEBHOOK_TOKEN" },
         { nome: "E-mail (Resend)", ok: Boolean(process.env.RESEND_API_KEY), detalhe: process.env.RESEND_API_KEY ? `envia como ${process.env.EMAIL_FROM ?? "(EMAIL_FROM não definido)"}` : "falta RESEND_API_KEY (aguardando domínio)" },
-        { nome: "WhatsApp (Zappfy)", ok: Boolean(configZappfy()), detalhe: configZappfy() ? `conectando em ${configZappfy()!.url}` : problemaZappfy() ?? "não configurada" },
+        { nome: "WhatsApp (Zappfy)", ok: Boolean(configZappfy()), detalhe: configZappfy() ? `token configurado · ${configZappfy()!.url}` : problemaZappfy() ?? "não configurada" },
         { nome: "Agendador dos lembretes", ok: Boolean(process.env.CRON_SECRET), detalhe: process.env.CRON_SECRET ? "CRON_SECRET configurado" : "falta CRON_SECRET" },
       ]} />
 
