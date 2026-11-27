@@ -1,9 +1,10 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { timingSafeEqual } from "node:crypto";
 import { supabaseAdmin } from "@/lib/supabase/admin";
-import { agoraBrasilia, montarLembrete } from "@/lib/lembretes";
+import { agoraBrasilia, montarLembrete, textoLembrete } from "@/lib/lembretes";
 import { emailLembrete, enviarEmail } from "@/lib/email";
-import { enviarLembreteWhatsapp, whatsappAutomatico } from "@/lib/whatsapp";
+import { enviarLembreteWhatsapp, metaConfigurada } from "@/lib/whatsapp";
+import { configZappfy, enviarZappfy } from "@/lib/zappfy";
 import { env } from "@/lib/env";
 
 export const runtime = "nodejs";
@@ -41,7 +42,8 @@ export async function GET(req: NextRequest) {
     .limit(LOTE);
   if (error) return NextResponse.json({ erro: error.message }, { status: 500 });
 
-  const zapLigado = whatsappAutomatico() && Boolean(process.env.WHATSAPP_TEMPLATE_LEMBRETE);
+  const zappfy = configZappfy();
+  const zapLigado = Boolean(zappfy) || (metaConfigurada() && Boolean(process.env.WHATSAPP_TEMPLATE_LEMBRETE));
   const linkConfig = `${env.siteUrl}/area/conta#lembretes`;
   const res = { hora: horaAlvo, candidatos: fila?.length ?? 0, emails: 0, whatsapps: 0, semConteudo: 0, erros: 0 };
 
@@ -58,7 +60,8 @@ export async function GET(req: NextRequest) {
         }
         if (l.por_whatsapp && l.whatsapp && zapLigado) {
           try {
-            await enviarLembreteWhatsapp(l.whatsapp, lem.nome, `${lem.dia} de ${lem.total}`, lem.conteudo, lem.link);
+            if (zappfy) await enviarZappfy(zappfy, "texto", { para: l.whatsapp, texto: `*Revisando · Dia ${String(lem.dia).padStart(2, "0")}*\n\n${textoLembrete(lem)}\n\n_Para mudar o horário ou parar: ${linkConfig}_` });
+            else await enviarLembreteWhatsapp(l.whatsapp, lem.nome, `${lem.dia} de ${lem.total}`, lem.conteudo, lem.link);
             res.whatsapps++;
           } catch (e) { erros.push(`whatsapp: ${(e as Error).message}`); }
         }

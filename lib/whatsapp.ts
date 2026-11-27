@@ -1,4 +1,5 @@
 import "server-only";
+import { configZappfy } from "@/lib/zappfy";
 
 /**
  * WhatsApp Cloud API (Meta). Opcional: sem as variáveis abaixo, a isca usa o modo "conversa"
@@ -8,7 +9,11 @@ import "server-only";
  * WHATSAPP_PHONE_NUMBER_ID  ID do número que envia
  * WHATSAPP_TEMPLATE_ISCA    modelo aprovado com cabeçalho DOCUMENTO e {{1}} = nome no corpo
  */
-export const whatsappAutomatico = () => Boolean(process.env.WHATSAPP_TOKEN && process.env.WHATSAPP_PHONE_NUMBER_ID);
+
+/** Meta (API oficial) configurada? */
+export const metaConfigurada = () => Boolean(process.env.WHATSAPP_TOKEN && process.env.WHATSAPP_PHONE_NUMBER_ID);
+/** Algum provedor de WhatsApp configurado? A Zappfy tem preferência. */
+export const whatsappAutomatico = () => Boolean(configZappfy()) || metaConfigurada();
 
 export async function enviarDocumentoModelo(para: string, nome: string, urlDocumento: string, nomeArquivo: string) {
   const versao = process.env.WHATSAPP_API_VERSION ?? "v21.0";

@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase/admin";
 import { dentroDoLimite } from "@/lib/limite";
 import { normalizarWhatsapp, formatarWhatsapp, linkWhatsapp } from "@/lib/telefone";
 import { enviarDocumentoModelo, whatsappAutomatico } from "@/lib/whatsapp";
+import { configZappfy, enviarZappfy } from "@/lib/zappfy";
 import { aplicarMarcaDagua } from "@/lib/marca-dagua";
 
 export const runtime = "nodejs";
@@ -55,7 +56,16 @@ export async function POST(req: NextRequest) {
     if (up.error) throw up.error;
     const { data: url, error: e2 } = await storage.createSignedUrl(destino, 60 * 60 * 24 * 7);
     if (e2 || !url) throw e2 ?? new Error("falha ao assinar URL");
-    await enviarDocumentoModelo(whatsapp, nome, url.signedUrl, "Revisando - Revisao de 3 dias estrategica - 2027.pdf");
+    const arquivo = "Revisando - Revisao de 3 dias estrategica - 2027.pdf";
+    const zappfy = configZappfy();
+    if (zappfy) {
+      await enviarZappfy(zappfy, "documento", {
+        para: whatsapp, url: url.signedUrl, arquivo,
+        legenda: `Olá, ${nome.split(" ")[0]}! Aqui está a sua Revisão de 3 dias estratégica do Revisando. Comece 3 dias antes da prova: o Dia 3 é a véspera. Bons estudos!`,
+      });
+    } else {
+      await enviarDocumentoModelo(whatsapp, nome, url.signedUrl, arquivo);
+    }
     await db.from("leads").update({ envio: "enviado" }).eq("id", lead.id);
     return NextResponse.json({ ok: true, modo: "automatico" });
   } catch (e) {
