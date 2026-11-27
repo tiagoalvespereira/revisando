@@ -62,3 +62,22 @@ export function emailRecuperacao(link: string) {
     texto: `${paragrafos.join("\n\n")}\n\n${link}`,
   };
 }
+
+export function emailLembrete(l: { nome: string | null; dia: number; total: number; conteudo: string; detalhes: string; link: string; plano: string }, linkConfig: string) {
+  const ola = l.nome ? `Bom estudo, ${l.nome.split(" ")[0]}.` : "Bom estudo.";
+  const dia = String(l.dia).padStart(2, "0");
+  const paragrafos = [
+    ola,
+    `Hoje é o Dia ${dia} de ${l.total} da ${l.plano}: ${l.conteudo}.`,
+    `${l.detalhes}.`,
+    "Plano de 3 horas: leitura com foco nos pontos estratégicos, pausa, questões sem consulta e revisão relâmpago. Ao terminar, marque o dia como concluído.",
+  ];
+  const html = modelo(`Dia ${dia} · ${l.conteudo}`, paragrafos, { texto: `Estudar o Dia ${dia}`, url: l.link })
+    .replace("O link vale por 24 horas. Se você não fez este pedido, ignore este e-mail.",
+      `Você recebe este lembrete porque ativou os lembretes diários. <a href="${esc(linkConfig)}" style="color:#777">Mudar horário ou desativar</a>.`);
+  return {
+    assunto: `Dia ${dia}: ${l.conteudo}`,
+    html,
+    texto: `${paragrafos.join("\n\n")}\n\nEstudar o Dia ${dia}: ${l.link}\n\nMudar horário ou desativar: ${linkConfig}`,
+  };
+}

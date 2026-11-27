@@ -1,6 +1,8 @@
 import { alunoAtual } from "@/lib/aluno";
 import Link from "next/link";
 import { FormDados, FormSenha } from "./Forms";
+import { FormLembretes } from "./FormLembretes";
+import { montarLembrete, textoLembrete } from "@/lib/lembretes";
 import { Cabecalho } from "@/components/Cabecalho";
 import { Icone } from "@/components/Icone";
 
@@ -12,6 +14,10 @@ export default async function Conta() {
   const { supabase, user, perfil } = await alunoAtual();
   const { data: pedidos } = await supabase.from("orders").select("id, status, valor_centavos, metodo, created_at, kiwify_product_id").eq("user_id", user.id).order("created_at", { ascending: false });
   const suporte = process.env.NEXT_PUBLIC_SUPORTE_EMAIL;
+  const [{ data: lembrete }, lem] = await Promise.all([
+    supabase.from("lembretes").select("ativo, hora, por_whatsapp, por_email, whatsapp").eq("user_id", user.id).maybeSingle(),
+    montarLembrete(user.id).catch(() => null),
+  ]);
 
   return (
     <main>
@@ -33,6 +39,8 @@ export default async function Conta() {
           </button>
         </form>
       </div>
+      <FormLembretes config={lembrete ? { ...lembrete, whatsapp: lembrete.whatsapp ?? perfil.telefone } : perfil.telefone ? { ativo: true, hora: 7, por_whatsapp: true, por_email: true, whatsapp: perfil.telefone } : null}
+        email={perfil.email} previa={lem ? textoLembrete(lem) : null} />
       <FormDados perfil={perfil} />
       <FormSenha />
       <section className="cartao p-5">

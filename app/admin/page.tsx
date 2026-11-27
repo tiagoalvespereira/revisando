@@ -5,12 +5,13 @@ export const dynamic = "force-dynamic";
 export default async function Metricas() {
   const { db } = await exigirAdmin();
   const agora = new Date().toISOString();
-  const [pagos, leads, ativos, eventos, reembolsos] = await Promise.all([
+  const [pagos, leads, ativos, eventos, reembolsos, lembretes] = await Promise.all([
     db.from("orders").select("valor_centavos").eq("status", "paid"),
     db.from("leads").select("id", { count: "exact", head: true }),
     db.from("entitlements").select("user_id, valido_ate").is("revogado_em", null).neq("origem", "isca"),
     db.from("webhook_events").select("event_id, erro, recebido_em").not("erro", "is", null).order("recebido_em", { ascending: false }).limit(10),
     db.from("orders").select("id", { count: "exact", head: true }).in("status", ["refunded", "chargeback"]),
+    db.from("lembretes").select("user_id", { count: "exact", head: true }).eq("ativo", true),
   ]);
   const totalVendas = (pagos.data ?? []).reduce((s, o) => s + (o.valor_centavos ?? 0), 0);
   const alunos = new Set((ativos.data ?? []).filter((e) => !e.valido_ate || e.valido_ate > agora).map((e) => e.user_id)).size;
@@ -21,6 +22,7 @@ export default async function Metricas() {
     { t: "Alunos ativos", v: String(alunos) },
     { t: "Leads da isca", v: String(leads.count ?? 0) },
     { t: "Reembolsos e chargebacks", v: String(reembolsos.count ?? 0) },
+    { t: "Lembretes diários ativos", v: String(lembretes.count ?? 0) },
   ];
   return (
     <div className="space-y-8">
@@ -31,7 +33,7 @@ export default async function Metricas() {
           em <b>Alunos</b>, abra o aluno e use <b>Gerar link</b> para enviar o acesso pelo WhatsApp.
         </p>
       )}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
         {cards.map((c) => <div key={c.t} className="cartao p-4"><p className="text-xs uppercase tracking-widest text-cinza">{c.t}</p><p className="titulo text-2xl mt-2">{c.v}</p></div>)}
       </div>
       <section>

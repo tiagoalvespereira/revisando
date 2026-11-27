@@ -17,12 +17,13 @@ export default async function Painel() {
   const comCronograma = meus.filter((p) => cronogramaDe(p.slug));
 
   // Tudo em paralelo: uma ida ao banco por tabela
-  const [{ data: prog }, { data: feitos }, { data: arqs }] = await Promise.all([
+  const [{ data: prog }, { data: feitos }, { data: arqs }, { data: lembrete }] = await Promise.all([
     supabase.from("progress").select("product_slug, dia"),
     supabase.from("simulado_respostas").select("simulado, acertos, created_at").order("created_at", { ascending: false }),
     comCronograma.length
       ? supabase.from("product_files").select("id, product_id, titulo, tipo, dia, ordem, storage_path, atualizado_em").in("product_id", comCronograma.map((p) => p.id))
       : Promise.resolve({ data: [] as Arquivo[] }),
+    supabase.from("lembretes").select("ativo").maybeSingle(),
   ]);
 
   // Vitrine: liberados primeiro (com progresso), depois os bloqueados à venda
@@ -104,6 +105,17 @@ export default async function Painel() {
             </div>
           </section>
         ))}
+
+        {comCronograma.length > 0 && !lembrete?.ativo && (
+          <Link href="/area/conta#lembretes" className="cartao cartao-link p-4 sm:p-5 flex items-center gap-4 border-2 border-dashed border-laranja">
+            <span className="grid place-items-center size-12 rounded-2xl bg-[#25D366] text-white shrink-0"><Icone nome="relogio" className="size-6" /></span>
+            <span className="flex-1">
+              <span className="font-bold block">Receba o estudo do dia no WhatsApp e no e-mail</span>
+              <span className="text-sm text-cinza">Escolha o horário e receba todo dia o que estudar, com o link direto do material.</span>
+            </span>
+            <span className="btn btn-laranja btn-pequeno hidden sm:inline-flex">Ativar</span>
+          </Link>
+        )}
 
         {temSimulado && (
           <section>

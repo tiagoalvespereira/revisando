@@ -31,3 +31,36 @@ export async function enviarDocumentoModelo(para: string, nome: string, urlDocum
   });
   if (!r.ok) throw new Error(`WhatsApp ${r.status}: ${(await r.text()).slice(0, 300)}`);
 }
+
+/**
+ * Lembrete diário por WhatsApp. Precisa de um modelo aprovado na Meta (WHATSAPP_TEMPLATE_LEMBRETE),
+ * em pt_BR, com 4 variáveis no corpo: {{1}} primeiro nome, {{2}} dia (ex.: "13 de 30"),
+ * {{3}} conteúdo do dia, {{4}} link do material.
+ */
+export async function enviarLembreteWhatsapp(para: string, nome: string | null, dia: string, conteudo: string, link: string) {
+  const versao = process.env.WHATSAPP_API_VERSION ?? "v21.0";
+  const corta = (s: string, n: number) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
+  const r = await fetch(`https://graph.facebook.com/${versao}/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      messaging_product: "whatsapp",
+      to: para,
+      type: "template",
+      template: {
+        name: process.env.WHATSAPP_TEMPLATE_LEMBRETE ?? "lembrete_estudo",
+        language: { code: "pt_BR" },
+        components: [{
+          type: "body",
+          parameters: [
+            { type: "text", text: (nome ?? "aluno").split(" ")[0] },
+            { type: "text", text: dia },
+            { type: "text", text: corta(conteudo, 200) },
+            { type: "text", text: link },
+          ],
+        }],
+      },
+    }),
+  });
+  if (!r.ok) throw new Error(`WhatsApp ${r.status}: ${(await r.text()).slice(0, 300)}`);
+}
