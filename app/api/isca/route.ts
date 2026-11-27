@@ -45,11 +45,14 @@ export async function POST(req: NextRequest) {
 
   try {
     const storage = db.storage.from("materiais");
-    const { data: isca } = await db.from("products").select("product_files(storage_path, tipo)").eq("slug", "3-dias").single();
-    const caminho = (isca?.product_files as { storage_path: string; tipo: string }[] | undefined)?.find((f) => f.tipo === "isca")?.storage_path;
-    if (!caminho) throw new Error("PDF da isca não cadastrado");
+    // PDF da revisão de 3 dias: o arquivo do tipo "isca" ou, se não houver, o primeiro PDF do produto "3-dias".
+    const { data: prod } = await db.from("products").select("id").eq("slug", "3-dias").maybeSingle();
+    if (!prod) throw new Error("produto 'Revisão de 3 dias' não existe (rode o seed.sql)");
+    const { data: arquivos } = await db.from("product_files").select("storage_path, tipo, ordem").eq("product_id", prod.id).order("ordem");
+    const caminho = (arquivos ?? []).find((f) => f.tipo === "isca")?.storage_path ?? arquivos?.[0]?.storage_path;
+    if (!caminho) throw new Error("nenhum arquivo cadastrado em Admin → Produtos → Revisão de 3 dias");
     const { data: blob, error: e1 } = await storage.download(caminho);
-    if (e1 || !blob) throw e1 ?? new Error("PDF da isca não encontrado no storage");
+    if (e1 || !blob) throw new Error("PDF da Revisão de 3 dias ainda não foi enviado (Admin → Produtos → Revisão de 3 dias → Enviar PDF)");
     const pdf = await aplicarMarcaDagua(new Uint8Array(await blob.arrayBuffer()), { nome, email: formatarWhatsapp(whatsapp), cpf: null });
     const destino = `_isca/${lead.id}.pdf`;
     const up = await storage.upload(destino, pdf, { contentType: "application/pdf", upsert: true });
