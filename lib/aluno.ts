@@ -20,13 +20,16 @@ export const alunoAtual = cache(async () => {
 
 /** Todos os produtos ativos, cada um marcado com acesso ou não. */
 export const meusProdutos = cache(async () => {
-  const { supabase, user } = await alunoAtual();
+  const { supabase, user, perfil } = await alunoAtual();
   const agora = new Date().toISOString();
   const [{ data: produtos }, { data: acessos }] = await Promise.all([
     supabase.from("products").select("id, slug, nome, descricao, icone, checkout_url, vitrine, ordem, preco_centavos").eq("ativo", true).order("ordem"),
     supabase.from("entitlements").select("product_id, valido_ate, revogado_em").eq("user_id", user.id).is("revogado_em", null),
   ]);
   const validos = new Map((acessos ?? []).filter((a) => !a.valido_ate || a.valido_ate > agora).map((a) => [a.product_id, a.valido_ate as string | null]));
+  // Administrador vê tudo liberado, sem prazo, para conferir e editar qualquer material.
+  // (No banco, as políticas de RLS também liberam os arquivos para is_admin.)
+  if (perfil.is_admin) return (produtos as Produto[] ?? []).map((p) => ({ ...p, tem: true, validoAte: null }));
   return (produtos as Produto[] ?? []).map((p) => ({ ...p, tem: validos.has(p.id), validoAte: validos.get(p.id) ?? null }));
 });
 
