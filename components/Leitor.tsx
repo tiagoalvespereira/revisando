@@ -14,9 +14,12 @@ export function Leitor({ arquivoId, paginaInicial = 1 }: { arquivoId: string; pa
   const [proporcao, setProporcao] = useState(1.414);
   const [erro, setErro] = useState<string | null>(null);
   const [atual, setAtual] = useState(paginaInicial);
-  // Computador abre em 75% da largura; celular ocupa a largura toda. O zoom escolhido fica salvo no aparelho.
+  // Computador: abre com a página inteira na tela (ajustada à altura). Celular: largura toda.
+  // Se o aluno mexer no zoom, a escolha fica salva no aparelho.
   const [zoom, setZoomEstado] = useState(1);
+  const [ajustar, setAjustar] = useState(false);
   const setZoom = useCallback((f: (z: number) => number) => {
+    setAjustar(false);
     setZoomEstado((z) => {
       const novo = f(z);
       try { localStorage.setItem("rv-zoom", String(novo)); } catch {}
@@ -26,7 +29,13 @@ export function Leitor({ arquivoId, paginaInicial = 1 }: { arquivoId: string; pa
   useEffect(() => {
     let salvo: number | null = null;
     try { salvo = Number(localStorage.getItem("rv-zoom")) || null; } catch {}
-    setZoomEstado(salvo ?? (window.innerWidth >= 768 ? 0.75 : 1));
+    if (salvo) setZoomEstado(salvo);
+    else if (window.innerWidth >= 768) setAjustar(true);
+  }, []);
+  const ajustarPagina = useCallback(() => {
+    try { localStorage.removeItem("rv-zoom"); } catch {}
+    if (window.innerWidth >= 768) setAjustar(true);
+    else { setAjustar(false); setZoomEstado(1); }
   }, []);
   const [largura, setLargura] = useState(0);
   const renderizadas = useRef(new Map<number, { cancelar: () => void }>());
@@ -87,12 +96,18 @@ export function Leitor({ arquivoId, paginaInicial = 1 }: { arquivoId: string; pa
   useEffect(() => {
     const el = caixa.current;
     if (!el) return;
-    const ro = new ResizeObserver(() => setLargura(el.clientWidth));
+    const ro = new ResizeObserver(() => { setLargura(el.clientWidth); setAltura(el.clientHeight); });
     ro.observe(el);
     setLargura(el.clientWidth);
+    setAltura(el.clientHeight);
     return () => ro.disconnect();
   }, []);
 
+  const [altura, setAltura] = useState(0);
+  useEffect(() => {
+    if (!ajustar || !largura || !altura) return;
+    setZoomEstado(Math.min(1, Math.max(0.3, (altura - 24) / (proporcao * (largura - 16)))));
+  }, [ajustar, largura, altura, proporcao]);
   const larguraPagina = Math.max(200, Math.round((largura - 16) * zoom));
 
   const renderizar = useCallback(
@@ -175,12 +190,17 @@ export function Leitor({ arquivoId, paginaInicial = 1 }: { arquivoId: string; pa
         <button className="btn btn-contorno btn-icone text-lg" onClick={() => setZoom((z) => Math.max(0.4, +(z - 0.1).toFixed(2)))} aria-label="Diminuir zoom">
           −
         </button>
-        <button className="min-w-14 text-center font-bold tabular-nums hover:text-laranja" onClick={() => setZoom(() => (window.innerWidth >= 768 ? 0.75 : 1))} title="Voltar ao tamanho padrão">
+        <button className="min-w-14 text-center font-bold tabular-nums hover:text-laranja" onClick={ajustarPagina} title="Ajustar a página inteira na tela">
           {Math.round(zoom * 100)}%
         </button>
         <button className="btn btn-contorno btn-icone text-lg" onClick={() => setZoom((z) => Math.min(3, +(z + 0.1).toFixed(2)))} aria-label="Aumentar zoom">
           +
         </button>
+        <span className="hidden md:block">
+          <button className={`btn btn-pequeno ${ajustar ? "bg-laranja text-preto" : "btn-contorno"}`} onClick={ajustarPagina}>
+            Página inteira
+          </button>
+        </span>
         <form
           className="ml-auto flex items-center gap-2"
           onSubmit={(e) => {
@@ -193,7 +213,7 @@ export function Leitor({ arquivoId, paginaInicial = 1 }: { arquivoId: string; pa
             Ir para a página
           </label>
           <input id="ir-p" name="p" inputMode="numeric" key={atual} defaultValue={atual} className="w-14 rounded-md bg-[#222] px-2 py-1 text-center" />
-          <span className="text-off/70">de {doc?.numPages ?? "…"}</span>
+          <span className="text-off/70 whitespace-nowrap">de {doc?.numPages ?? "…"}</span>
         </form>
       </div>
       <div ref={caixa} className="flex-1 overflow-auto bg-[#2a2a2a] py-3" style={{ WebkitOverflowScrolling: "touch" }}>
