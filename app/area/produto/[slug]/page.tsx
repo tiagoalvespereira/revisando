@@ -72,7 +72,7 @@ export default async function PaginaProduto({ params, searchParams }: { params: 
         {produto.validoAte && <p className="text-sm text-off/60 mt-2">Acesso até {new Date(produto.validoAte).toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" })}</p>}
       </Cabecalho>
 
-      <nav aria-label="Seções" className="sticky top-[76px] z-20 bg-off/95 backdrop-blur border-b border-linha">
+      <nav aria-label="Seções" className="sticky top-[76px] md:top-[120px] z-20 bg-off/95 backdrop-blur border-b border-linha">
         <div className="max-w-6xl mx-auto px-4 flex gap-1 overflow-x-auto">
           {abas.map((a) => (
             <Link key={a.id} href={`?aba=${a.id}`} scroll={false} aria-current={aba === a.id ? "page" : undefined}

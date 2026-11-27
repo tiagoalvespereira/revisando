@@ -18,7 +18,7 @@ export default async function LayoutArea({ children }: { children: React.ReactNo
   return (
     <div className="min-h-dvh flex flex-col">
       <header className="bg-preto text-off sticky top-0 z-30 border-b border-white/10">
-        <div className="max-w-6xl mx-auto px-4 h-[76px] flex items-center gap-6">
+        <div className="max-w-6xl mx-auto px-4 h-[76px] md:h-[120px] flex items-center gap-6">
           <Logo href="/area" claro />
           <MenuTopo itens={ITENS} />
           <div className="ml-auto flex items-center gap-2">

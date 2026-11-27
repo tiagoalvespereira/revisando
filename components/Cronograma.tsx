@@ -74,7 +74,7 @@ export function Cronograma({ slug, dias, concluidos, hoje }: { slug: string; dia
               const principal = d.pdfDoDia ?? d.lerNoVolume;
               return (
                 <li key={d.dia} id={`dia-${d.dia}`}
-                  className={`scroll-mt-40 cartao overflow-hidden flex transition ${eHoje ? "ring-[3px] ring-laranja border-transparent shadow-[0_14px_30px_-20px_rgba(255,107,26,.9)]" : ""} ${d.revisao ? "border-2 border-dashed border-laranja" : ""} ${feito && !eHoje ? "opacity-75" : ""}`}>
+                  className={`scroll-mt-40 md:scroll-mt-52 cartao overflow-hidden flex transition ${eHoje ? "ring-[3px] ring-laranja border-transparent shadow-[0_14px_30px_-20px_rgba(255,107,26,.9)]" : ""} ${d.revisao ? "border-2 border-dashed border-laranja" : ""} ${feito && !eHoje ? "opacity-75" : ""}`}>
                   <div className={`${tema.faixa} ${tema.texto} w-[68px] shrink-0 flex flex-col items-center justify-center py-4`}>
                     <span className="text-[10px] uppercase tracking-widest font-bold opacity-75">Dia</span>
                     <span className="titulo text-[28px] leading-none mt-0.5">{String(d.dia).padStart(2, "0")}</span>
