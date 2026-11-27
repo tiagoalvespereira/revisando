@@ -31,7 +31,7 @@ export function cardsDoCronograma(slug: string, arquivos: Arquivo[], volume30Id:
       revisao: d.tipo === "revisao",
       especial: d.tipo === "mega" ? "Mega resumo" : d.tipo === "vespera" ? "Véspera" : d.tipo === "revisao" ? "Revisão geral" : null,
       paginas: detalhes.join(" · "),
-      data: dataProva ? dataCurta(dataDoDia(dataProva, c.dias.length, d.dia)) : "",
+      data: dataProva && !c.sem_datas ? dataCurta(dataDoDia(dataProva, c.dias.length, d.dia)) : "",
       lerNoVolume: ler(d.pagina_inicial),
       pdfDoDia: porDia.has(d.dia) ? `/area/ler/${porDia.get(d.dia)}` : null,
       questoes: questoesLink,

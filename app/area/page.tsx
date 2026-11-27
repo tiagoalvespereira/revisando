@@ -49,7 +49,7 @@ export default async function Painel() {
     const cards = cardsDoCronograma(p.slug, ((arqs ?? []) as Arquivo[]).filter((a) => a.product_id === p.id), null, dataProva)?.cards ?? [];
     const card = d ? cards[d - 1] : null;
     const inicio = dataProva ? dataDoDia(dataProva, c.dias.length, 1) : new Date(0);
-    return { p, total: c.dias.length, feitos: concl.length, dia: d, card, inicio: dataCurta(inicio), comecou: Date.now() >= inicio.getTime() };
+    return { p, total: c.dias.length, feitos: concl.length, dia: d, card, inicio: dataCurta(inicio), comecou: Boolean(c.sem_datas) || Date.now() >= inicio.getTime() };
   });
 
   return (

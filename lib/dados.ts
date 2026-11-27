@@ -12,7 +12,7 @@ export type Dia = {
   questoes_no_volume?: [number, number][];
 };
 /** deslocamento: quanto somar à página impressa para achar a página do arquivo (1 = capa sem número). */
-export type Cronograma = { exemplo: boolean; produto: string; paginas: number; deslocamento?: number; dias: Dia[] };
+export type Cronograma = { exemplo: boolean; produto: string; paginas: number; deslocamento?: number; sem_datas?: boolean; dias: Dia[] };
 type Revisar = { dia: number; pagina: number };
 export type MateriaSimulado = { materia: string; questoes: [number, number]; onde_revisar: Record<string, Revisar[]> };
 export type Simulado = {

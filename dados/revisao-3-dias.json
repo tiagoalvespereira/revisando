@@ -3,7 +3,7 @@
  "produto": "3-dias",
  "paginas": 28,
  "deslocamento": 0,
- "observacao": "PDF sem número impresso: páginas são as do arquivo.",
+ "observacao": "Pontos mais importantes das 12 matérias que mais caem. Pode ser feita a qualquer momento (sem datas ligadas à prova). PDF sem número impresso: páginas são as do arquivo.",
  "dias": [
   {
    "dia": 1,
@@ -37,9 +37,9 @@
   },
   {
    "dia": 3,
-   "conteudo": "Véspera: Trabalho, Processo do Trabalho, Empresarial e as matérias menores",
+   "conteudo": "Trabalho, Processo do Trabalho, Empresarial e outros pontos que mais caem",
    "fase": "reta",
-   "tipo": "vespera",
+   "tipo": "conteudo",
    "pagina_inicial": 21,
    "pagina_final": 28,
    "materias": [
@@ -48,5 +48,6 @@
     "Direito Empresarial"
    ]
   }
- ]
+ ],
+ "sem_datas": true
 }

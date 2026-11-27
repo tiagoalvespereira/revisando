@@ -14,7 +14,7 @@ function legendaAmostra(nome: string) {
   return [
     `Olá, ${nome.split(" ")[0]}! Boas-vindas ao *Revisando*.`,
     "",
-    "Esta é a sua amostra grátis: 3 dias do mesmo método das nossas revisões de 30 e 15 dias, montadas a partir do que a FGV mais cobra para você revisar só o que cai, em 3 horas por dia.",
+    "Esta é a sua amostra grátis: os pontos mais importantes das 12 matérias que mais caem na 1ª fase, em 3 dias, para fazer quando quiser. É o mesmo método das nossas revisões de 30 e 15 dias, montadas a partir do que a FGV mais cobra.",
     "",
     "Bons estudos!",
   ].join("\n");
