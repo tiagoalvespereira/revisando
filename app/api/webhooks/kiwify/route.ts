@@ -8,6 +8,10 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
+  if (!process.env.KIWIFY_WEBHOOK_TOKEN) {
+    console.error("[kiwify] KIWIFY_WEBHOOK_TOKEN não configurado na Vercel");
+    return NextResponse.json({ erro: "webhook ainda não configurado" }, { status: 503 });
+  }
   const corpo = await req.text();
   const assinatura = req.nextUrl.searchParams.get("signature") ?? req.headers.get("x-kiwify-signature");
 
