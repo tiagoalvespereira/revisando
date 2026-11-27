@@ -1,76 +1,120 @@
+import Link from "next/link";
 import { Contagem } from "@/components/Contagem";
 import { CardProduto } from "@/components/CardProduto";
-import { alunoAtual, linkCompra, meusProdutos } from "@/lib/aluno";
-import { env } from "@/lib/env";
-import Link from "next/link";
-import { cronogramaDe, dataCurta, dataDoDia, dataSimulado, PRODUTOS_COM_SIMULADO, SIMULADOS_DISPONIVEIS, simuladoDados } from "@/lib/dados";
-import { diaDeHoje } from "@/lib/cronograma";
+import { Hexagono } from "@/components/Hexagono";
 import { Icone } from "@/components/Icone";
+import { alunoAtual, linkCompra, meusProdutos, type Arquivo } from "@/lib/aluno";
+import { env } from "@/lib/env";
+import { cronogramaDe, dataCurta, dataDoDia, dataSimulado, PRODUTOS_COM_SIMULADO, SIMULADOS_DISPONIVEIS, simuladoDados } from "@/lib/dados";
+import { cardsDoCronograma, diaDeHoje } from "@/lib/cronograma";
 
-export const metadata = { title: "Painel" };
+export const metadata = { title: "Início" };
 
 export default async function Painel() {
   const { perfil, supabase } = await alunoAtual();
   const produtos = await meusProdutos();
-  const { data: prog } = await supabase.from("progress").select("product_slug, dia");
-  const { data: feitos } = await supabase.from("simulado_respostas").select("simulado, acertos, created_at").order("created_at", { ascending: false });
-  const temSimulado = produtos.some((p) => p.tem && PRODUTOS_COM_SIMULADO.includes(p.slug));
-  const hoje = produtos.filter((p) => p.tem).flatMap((p) => {
-    const c = cronogramaDe(p.slug);
-    if (!c) return [];
-    const concl = (prog ?? []).filter((x) => x.product_slug === p.slug).map((x) => x.dia as number);
-    const d = diaDeHoje(c.dias.length, concl);
-    const info = d ? c.dias[d - 1] : null;
-    const inicio = dataDoDia(env.dataProva, c.dias.length, 1);
-    return [{ slug: p.slug, nome: p.nome, total: c.dias.length, feitos: concl.length, dia: d, conteudo: info?.conteudo ?? null, inicio: dataCurta(inicio), comecou: Date.now() >= inicio.getTime() }];
-  });
   const meus = produtos.filter((p) => p.tem);
+  const comCronograma = meus.filter((p) => cronogramaDe(p.slug));
+
+  // Tudo em paralelo: uma ida ao banco por tabela
+  const [{ data: prog }, { data: feitos }, { data: arqs }] = await Promise.all([
+    supabase.from("progress").select("product_slug, dia"),
+    supabase.from("simulado_respostas").select("simulado, acertos, created_at").order("created_at", { ascending: false }),
+    comCronograma.length
+      ? supabase.from("product_files").select("id, product_id, titulo, tipo, dia, ordem, storage_path, atualizado_em").in("product_id", comCronograma.map((p) => p.id))
+      : Promise.resolve({ data: [] as Arquivo[] }),
+  ]);
+
   const bloqueados = produtos.filter((p) => !p.tem && p.vitrine !== "oculto");
+  const temSimulado = meus.some((p) => PRODUTOS_COM_SIMULADO.includes(p.slug));
   const primeiro = perfil.nome?.split(" ")[0];
   const comLink = (p: (typeof produtos)[number]) => ({ ...p, compra: linkCompra(p.checkout_url, perfil.email, perfil.nome) });
 
+  const hoje = comCronograma.map((p) => {
+    const c = cronogramaDe(p.slug)!;
+    const concl = (prog ?? []).filter((x) => x.product_slug === p.slug).map((x) => x.dia as number);
+    const d = diaDeHoje(c.dias.length, concl);
+    const cards = cardsDoCronograma(p.slug, ((arqs ?? []) as Arquivo[]).filter((a) => a.product_id === p.id))?.cards ?? [];
+    const card = d ? cards[d - 1] : null;
+    const inicio = dataDoDia(env.dataProva, c.dias.length, 1);
+    return { p, total: c.dias.length, feitos: concl.length, dia: d, card, inicio: dataCurta(inicio), comecou: Date.now() >= inicio.getTime() };
+  });
+
   return (
     <main>
-      <section className="bg-preto text-off">
-        <div className="max-w-5xl mx-auto px-4 py-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <section className="relative overflow-hidden bg-preto text-off">
+        <Hexagono className="absolute -right-20 -top-16 w-80 text-laranja/25" />
+        <Hexagono className="absolute right-56 bottom-[-40px] w-28 text-white/10 hidden md:block" />
+        <div className="relative max-w-6xl mx-auto px-4 pt-7 pb-9 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-sm text-off/70">{primeiro ? `Olá, ${primeiro}.` : "Olá."}</p>
-            <h1 className="titulo text-3xl mt-1">Sua revisão</h1>
+            <p className="text-off/70">{primeiro ? `Olá, ${primeiro}.` : "Olá."}</p>
+            <h1 className="titulo text-4xl sm:text-5xl mt-1">Sua <span className="text-laranja">revisão</span></h1>
+            <p className="text-off/60 text-sm mt-2">3 horas por dia. Só o que cai.</p>
           </div>
           <Contagem data={env.dataProva} />
         </div>
       </section>
 
-      <div className="max-w-5xl mx-auto px-4 py-8 space-y-10">
+      <div className="max-w-6xl mx-auto px-4 -mt-4 relative space-y-10">
         {hoje.map((h) => (
-          <section key={h.slug} className="cartao p-5 border-2 border-laranja">
-            <p className="text-xs font-bold uppercase tracking-widest text-laranja">{h.dia ? "Dia de hoje" : "Cronograma concluído"} · {h.nome}</p>
-            {h.dia ? (
-              <>
-                <p className="titulo text-2xl mt-2">Dia {String(h.dia).padStart(2, "0")}: {h.conteudo}</p>
-                {!h.comecou && h.feitos === 0 && <p className="text-sm text-cinza mt-1">Para terminar na véspera da prova, o plano começa em {h.inicio}. Se quiser, comece antes.</p>}
-              </>
-            ) : <p className="titulo text-2xl mt-2">Todos os dias concluídos</p>}
-            <div className="mt-3 h-2.5 rounded-full bg-linha overflow-hidden"><div className="h-full bg-verde" style={{ width: `${(h.feitos / h.total) * 100}%` }} /></div>
-            <p className="text-xs text-cinza mt-1">{h.feitos} de {h.total} dias concluídos</p>
-            <Link href={`/area/produto/${h.slug}${h.dia ? `#dia-${h.dia}` : ""}`} className="btn btn-laranja mt-4">{h.dia ? "Estudar agora" : "Ver cronograma"} <Icone nome="seta" className="size-5" /></Link>
+          <section key={h.p.slug} className="cartao overflow-hidden shadow-[0_18px_40px_-28px_rgba(17,17,17,.6)]">
+            <div className="flex">
+              <div className="w-2 bg-laranja shrink-0" />
+              <div className="flex-1 p-5 sm:p-6">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="selo bg-laranja text-preto">{h.dia ? "Dia de hoje" : "Concluído"}</span>
+                  <span className="text-xs text-cinza font-semibold">{h.p.nome}</span>
+                </div>
+                {h.dia && h.card ? (
+                  <>
+                    <p className="titulo text-2xl sm:text-3xl mt-3 leading-tight">
+                      <span className="text-laranja">Dia {String(h.dia).padStart(2, "0")}</span> · {h.card.conteudo}
+                    </p>
+                    <p className="text-sm text-cinza mt-2">{h.card.paginas}</p>
+                    {!h.comecou && h.feitos === 0 && (
+                      <p className="text-sm mt-2">Para terminar na véspera da prova, o plano começa em <b>{h.inicio}</b>. Pode começar antes.</p>
+                    )}
+                    <div className="flex flex-wrap gap-2 mt-5">
+                      {(h.card.pdfDoDia ?? h.card.lerNoVolume) && (
+                        <Link href={(h.card.pdfDoDia ?? h.card.lerNoVolume)!} className="btn btn-laranja"><Icone nome="play" className="size-5" /> Estudar agora</Link>
+                      )}
+                      <Link href={`/area/produto/${h.p.slug}#dia-${h.dia}`} className="btn btn-claro"><Icone nome="calendario" className="size-5" /> Cronograma</Link>
+                    </div>
+                  </>
+                ) : (
+                  <p className="titulo text-2xl mt-3">Todos os dias concluídos. Boa prova!</p>
+                )}
+                <div className="mt-6">
+                  <div className="flex justify-between text-xs font-semibold mb-1.5">
+                    <span>Progresso</span><span className="text-verde">{h.feitos} de {h.total} dias</span>
+                  </div>
+                  <div className="h-2.5 rounded-full bg-off overflow-hidden"><div className="h-full rounded-full bg-verde transition-all" style={{ width: `${(h.feitos / h.total) * 100}%` }} /></div>
+                </div>
+              </div>
+            </div>
           </section>
         ))}
 
         {temSimulado && (
           <section>
-            <h2 className="titulo text-lg mb-4">Simulados</h2>
+            <div className="flex items-end justify-between mb-4">
+              <h2 className="titulo text-xl">Simulados</h2>
+              <Link href="/area/simulados" className="text-sm font-semibold underline underline-offset-4">Ver todos</Link>
+            </div>
             <div className="grid gap-3 sm:grid-cols-2">
               {SIMULADOS_DISPONIVEIS.map((n) => {
                 const s = simuladoDados(n)!;
                 const r = (feitos ?? []).find((f) => f.simulado === n);
                 return (
-                  <Link key={n} href={`/area/simulado/${n}`} className="cartao p-5 flex gap-4 items-center hover:border-preto">
-                    <span className="shrink-0 size-12 rounded-xl bg-preto text-laranja grid place-items-center titulo">S{n}</span>
+                  <Link key={n} href={`/area/simulado/${n}`} className="cartao cartao-link p-5 flex gap-4 items-center">
+                    <span className="shrink-0 size-14 rounded-2xl bg-preto text-laranja grid place-items-center titulo text-lg">S{n}</span>
                     <span className="flex-1">
                       <span className="titulo text-base block">Simulado Estratégico {n}</span>
-                      <span className="text-sm text-cinza">{r ? <>Último resultado: <b className={r.acertos >= s.margem ? "text-verde" : r.acertos >= s.meta ? "text-laranja" : "text-vermelho"}>{r.acertos}/80</b></> : `Fazer em ${dataCurta(dataSimulado(env.dataProva, s.dias_antes_da_prova))} (${s.dias_antes_da_prova} dias antes)`}</span>
+                      <span className="text-sm text-cinza">
+                        {r ? <>Último resultado: <b className={r.acertos >= s.margem ? "text-verde" : r.acertos >= s.meta ? "text-laranja" : "text-vermelho"}>{r.acertos}/80</b></> : `Fazer em ${dataCurta(dataSimulado(env.dataProva, s.dias_antes_da_prova))} · ${s.dias_antes_da_prova} dias antes`}
+                      </span>
                     </span>
+                    <Icone nome="seta" className="size-5 text-cinza" />
                   </Link>
                 );
               })}
@@ -79,18 +123,21 @@ export default async function Painel() {
         )}
 
         <section>
-          <h2 className="titulo text-lg mb-4">Meus materiais</h2>
-          {meus.length ? (
+          <h2 className="titulo text-xl mb-4">Meus materiais</h2>
+          {meus.filter((p) => p.vitrine !== "oculto" || p.tem).length ? (
             <div className="grid gap-3 sm:grid-cols-2">{meus.map((p) => <CardProduto key={p.id} p={comLink(p)} />)}</div>
           ) : (
-            <p className="cartao p-5 text-cinza">Nenhum material liberado ainda. Se você acabou de comprar, a liberação leva alguns minutos depois da confirmação do pagamento.</p>
+            <div className="cartao p-6 flex gap-4 items-start">
+              <span className="shrink-0 grid place-items-center size-12 rounded-2xl bg-laranja-claro text-laranja"><Icone nome="relogio" className="size-6" /></span>
+              <p className="text-cinza">Nenhum material liberado ainda. Se você acabou de comprar, a liberação acontece em poucos minutos depois da confirmação do pagamento.</p>
+            </div>
           )}
         </section>
 
         {bloqueados.length > 0 && (
           <section>
-            <h2 className="titulo text-lg mb-1">Desbloqueie mais</h2>
-            <p className="text-sm text-cinza mb-4">Materiais que você ainda não tem. Ao comprar, eles aparecem aqui no mesmo login.</p>
+            <h2 className="titulo text-xl">Desbloqueie mais</h2>
+            <p className="text-sm text-cinza mt-1 mb-4">Ao comprar, o material aparece aqui no mesmo login.</p>
             <div className="grid gap-3 sm:grid-cols-2">{bloqueados.map((p) => <CardProduto key={p.id} p={comLink(p)} />)}</div>
           </section>
         )}

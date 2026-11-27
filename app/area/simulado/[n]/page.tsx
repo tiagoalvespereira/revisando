@@ -7,6 +7,8 @@ import { CartaoResposta } from "@/components/CartaoResposta";
 import { AvisoExemplo } from "@/components/AvisoExemplo";
 import { CardProduto } from "@/components/CardProduto";
 import { linkCompra } from "@/lib/aluno";
+import { Cabecalho } from "@/components/Cabecalho";
+import { Icone } from "@/components/Icone";
 
 export const metadata = { title: "Simulado" };
 
@@ -43,13 +45,12 @@ export default async function PaginaSimulado({ params, searchParams }: { params:
   const mostrarResultado = ultimo && refazer !== "1";
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-8 space-y-6">
-      <div>
-        <Link href="/area" className="text-sm text-cinza">← Painel</Link>
-        <h1 className="titulo text-2xl sm:text-3xl mt-2">Simulado Estratégico {n}</h1>
-        <p className="text-sm text-cinza mt-1">80 questões · para fazer {s.dias_antes_da_prova} dias antes da prova ({quando}). Resolva no PDF e marque aqui suas respostas.</p>
-        {pdfSimulado && <Link href={`/area/ler/${pdfSimulado.id}`} className="btn btn-contorno btn-pequeno mt-3">Abrir o PDF do simulado</Link>}
-      </div>
+    <main>
+      <Cabecalho sobretitulo={`80 questões · fazer em ${quando}`} titulo={`Simulado Estratégico ${n}`} voltar={{ href: "/area/simulados", rotulo: "Simulados" }}>
+        <p className="text-off/60 text-sm mt-2">Resolva no PDF, sem consulta, e marque aqui suas respostas.</p>
+        {pdfSimulado && <Link href={`/area/ler/${pdfSimulado.id}`} className="btn btn-claro btn-pequeno mt-4"><Icone nome="olho" className="size-4" /> Abrir o PDF do simulado</Link>}
+      </Cabecalho>
+      <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
       {s.exemplo && <AvisoExemplo>Gabarito de exemplo: a correção ainda não usa o gabarito oficial do simulado.</AvisoExemplo>}
 
       {mostrarResultado ? (
@@ -58,6 +59,7 @@ export default async function PaginaSimulado({ params, searchParams }: { params:
       ) : (
         <CartaoResposta n={n} materias={s.materias.map((m) => ({ materia: m.materia, questoes: m.questoes }))} />
       )}
+      </div>
     </main>
   );
 }
@@ -77,7 +79,7 @@ function Resultado(props: {
 
   return (
     <div className="space-y-6">
-      <section className="bg-preto text-off rounded-2xl p-5">
+      <section className="relative overflow-hidden bg-preto text-off rounded-[18px] p-6">
         <p className="text-xs uppercase tracking-widest text-off/70">Resultado de {new Date(props.quando).toLocaleDateString("pt-BR")}</p>
         <p className="titulo text-6xl mt-2"><span className={status.cor}>{acertos}</span><span className="text-2xl text-off/60">/80</span></p>
         <div className="relative h-4 rounded-full bg-[#2a2a2a] mt-5">
@@ -132,7 +134,7 @@ function Resultado(props: {
         <p className="text-xs text-cinza mt-2">O gabarito comentado está no PDF do simulado.</p>
       </section>
 
-      <Link href={`/area/simulado/${props.n}?refazer=1`} className="btn btn-contorno">Refazer o simulado</Link>
+      <Link href={`/area/simulado/${props.n}?refazer=1`} className="btn btn-claro">Refazer o simulado</Link>
     </div>
   );
 }

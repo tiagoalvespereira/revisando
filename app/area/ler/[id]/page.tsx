@@ -14,7 +14,7 @@ export default async function Ler({ params, searchParams }: { params: Promise<{ 
   const p = Math.max(1, Number.parseInt(pagina ?? "1", 10) || 1);
 
   return (
-    <div className="flex flex-col" style={{ height: "calc(100dvh - 4rem)" }}>
+    <div className="flex flex-col h-[calc(100dvh-76px-4.5rem)] md:h-[calc(100dvh-76px)] -mb-24 md:-mb-10">
       <div className="flex items-center gap-3 px-4 py-2 bg-white border-b border-linha">
         <Link href={prod ? `/area/produto/${prod.slug}` : "/area"} className="text-sm text-cinza shrink-0">
           ← Voltar

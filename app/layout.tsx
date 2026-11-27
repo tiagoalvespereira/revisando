@@ -1,4 +1,7 @@
 import type { Metadata, Viewport } from "next";
+// Fontes servidas pelo próprio site (sem esperar o Google Fonts)
+import "@fontsource/archivo-black/latin-400.css";
+import "@fontsource-variable/inter/index.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -12,12 +15,6 @@ export const viewport: Viewport = { themeColor: "#111111", width: "device-width"
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
-      </head>
       <body className="font-sans antialiased min-h-dvh">{children}</body>
     </html>
   );

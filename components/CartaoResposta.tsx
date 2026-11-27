@@ -40,7 +40,7 @@ export function CartaoResposta({ n, materias }: { n: number; materias: Materia[]
   };
 
   return (
-    <div className="space-y-5 pb-24">
+    <div className="space-y-5 pb-28">
       {materias.map((m) => (
         <fieldset key={m.materia} className="cartao p-4">
           <legend className="titulo text-sm px-1">{m.materia}</legend>
@@ -53,7 +53,7 @@ export function CartaoResposta({ n, materias }: { n: number; materias: Materia[]
                     const sel = resp[q] === l;
                     return (
                       <button key={l} type="button" role="radio" aria-checked={sel} onClick={() => marcar(q, l)}
-                        className={`size-11 rounded-full border-2 font-extrabold transition ${sel ? "bg-preto border-preto text-laranja" : "border-linha bg-white hover:border-preto"}`}>
+                        className={`size-12 rounded-full border-2 font-extrabold text-lg transition active:scale-90 ${sel ? "bg-preto border-preto text-laranja" : "border-linha bg-white hover:border-preto"}`}>
                         {l}
                       </button>
                     );
@@ -65,7 +65,7 @@ export function CartaoResposta({ n, materias }: { n: number; materias: Materia[]
         </fieldset>
       ))}
 
-      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-[#2a2a2a] bg-preto px-4 py-3" style={{ paddingBottom: "calc(12px + env(safe-area-inset-bottom))" }}>
+      <div className="fixed inset-x-0 bottom-[calc(4.5rem+env(safe-area-inset-bottom))] md:bottom-0 z-30 border-t border-white/10 bg-grafite px-4 py-3 md:pb-[calc(12px+env(safe-area-inset-bottom))]">
         <div className="max-w-3xl mx-auto flex items-center gap-3">
           <div className="flex-1 text-off text-sm leading-tight">
             <b className="titulo text-laranja text-lg block">{marcadas}/{total}</b>marcadas

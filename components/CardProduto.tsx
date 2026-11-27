@@ -1,53 +1,40 @@
 import Link from "next/link";
 import { Icone } from "@/components/Icone";
+import { Hexagono } from "@/components/Hexagono";
 
-type P = {
-  slug: string;
-  nome: string;
-  descricao: string | null;
-  icone: string;
-  tem: boolean;
-  vitrine: string;
-  compra: string | null;
-  preco_centavos: number | null;
-};
+type P = { slug: string; nome: string; descricao: string | null; icone: string; tem: boolean; vitrine: string; compra: string | null; preco_centavos: number | null };
 
 const reais = (c: number) => (c / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
 export function CardProduto({ p }: { p: P }) {
   if (p.tem) {
     return (
-      <Link href={`/area/produto/${p.slug}`} className="cartao p-5 flex gap-4 items-start hover:border-preto transition">
-        <span className="shrink-0 size-12 rounded-xl bg-preto text-laranja grid place-items-center">
-          <Icone nome={p.icone} />
+      <Link href={`/area/produto/${p.slug}`} className="cartao cartao-link group p-5 flex gap-4 items-center">
+        <span className="shrink-0 size-14 rounded-2xl bg-preto text-laranja grid place-items-center"><Icone nome={p.icone} className="size-7" /></span>
+        <span className="flex-1 min-w-0">
+          <span className="titulo text-base block leading-tight">{p.nome}</span>
+          {p.descricao && <span className="text-sm text-cinza block mt-1 line-clamp-2">{p.descricao}</span>}
         </span>
-        <span className="flex-1">
-          <span className="titulo text-base block">{p.nome}</span>
-          {p.descricao && <span className="text-sm text-cinza block mt-1">{p.descricao}</span>}
-          <span className="inline-flex items-center gap-1 text-sm font-bold mt-3">
-            Acessar <Icone nome="seta" className="size-4" />
-          </span>
-        </span>
+        <span className="shrink-0 grid place-items-center size-10 rounded-full bg-off group-hover:bg-laranja transition"><Icone nome="seta" className="size-5" /></span>
       </Link>
     );
   }
   const emBreve = p.vitrine === "em_breve" || !p.compra;
   return (
-    <div className="cartao p-5 flex gap-4 items-start bg-[#efece5] border-dashed relative">
-      <span className="shrink-0 size-12 rounded-xl bg-[#d9d5cc] text-cinza grid place-items-center relative">
-        <Icone nome={p.icone} />
-        <span className="absolute -right-1.5 -bottom-1.5 size-6 rounded-full bg-preto text-off grid place-items-center">
-          <Icone nome="cadeado" className="size-3.5" />
-        </span>
+    <div className="relative overflow-hidden rounded-[18px] bg-preto text-off p-5 flex gap-4 items-start">
+      <Hexagono className="absolute -right-10 -bottom-12 w-40 text-laranja/20" />
+      <span className="relative shrink-0 size-14 rounded-2xl bg-white/10 text-off/70 grid place-items-center">
+        <Icone nome={p.icone} className="size-7" />
+        <span className="absolute -right-1.5 -bottom-1.5 size-7 rounded-full bg-laranja text-preto grid place-items-center ring-4 ring-preto"><Icone nome="cadeado" className="size-3.5" /></span>
       </span>
-      <span className="flex-1">
-        <span className="titulo text-base block text-cinza">{p.nome}</span>
-        {p.descricao && <span className="text-sm text-cinza block mt-1">{p.descricao}</span>}
+      <span className="relative flex-1 min-w-0">
+        <span className="titulo text-base block leading-tight">{p.nome}</span>
+        {p.descricao && <span className="text-sm text-off/65 block mt-1">{p.descricao}</span>}
         {emBreve ? (
-          <span className="inline-block mt-3 text-xs font-bold uppercase tracking-widest bg-preto text-off px-2 py-1 rounded">Em breve</span>
+          <span className="selo mt-3 bg-white/10 text-off/80">Em breve</span>
         ) : (
-          <a href={p.compra!} className="btn btn-laranja mt-3 btn-pequeno" target="_blank" rel="noopener">
-            Desbloquear{p.preco_centavos ? ` por ${reais(p.preco_centavos)}` : ""}
+          <a href={p.compra!} className="btn btn-laranja btn-pequeno mt-4" target="_blank" rel="noopener">
+            <Icone nome="cadeado" className="size-4" /> Desbloquear{p.preco_centavos ? ` · ${reais(p.preco_centavos)}` : ""}
           </a>
         )}
       </span>

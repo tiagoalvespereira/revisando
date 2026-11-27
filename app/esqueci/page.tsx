@@ -15,7 +15,7 @@ export default function Esqueci() {
           <input id="email" name="email" type="email" autoComplete="email" inputMode="email" required className="campo" />
         </div>
         <Mensagem estado={estado} />
-        <button className="btn btn-laranja w-full" disabled={pendente}>{pendente ? "Enviando..." : "Enviar link"}</button>
+        <button className="btn btn-laranja btn-bloco" disabled={pendente}>{pendente ? "Enviando..." : "Enviar link"}</button>
         <p className="text-sm text-center"><Link href="/entrar" className="underline">Voltar para o login</Link></p>
       </form>
     </CaixaAuth>

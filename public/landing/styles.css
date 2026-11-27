@@ -55,7 +55,9 @@ section { padding: 72px 0; }
   font-family: var(--titulo); font-size: 1.3rem; letter-spacing: .02em;
   text-decoration: none; display: inline-flex; align-items: center;
 }
-.logo img { height: 24px; width: auto; }
+.logo img { height: 44px; width: auto; }
+footer .logo img { height: 52px; }
+@media (min-width: 720px) { .topo .logo img { height: 50px; } }
 .logo .grifo {
   background: linear-gradient(transparent 52%, var(--laranja) 52%, var(--laranja) 92%, transparent 92%);
   padding: 0 2px;
@@ -67,7 +69,7 @@ section { padding: 72px 0; }
   background: rgba(17,17,17,.96); color: var(--off);
   backdrop-filter: saturate(140%) blur(6px);
 }
-.topo .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+.topo .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 12px; }
 .topo nav { display: none; gap: 26px; font-size: .92rem; }
 .topo .topo-planos { display: none; }
 .topo nav a { text-decoration: none; opacity: .8; }

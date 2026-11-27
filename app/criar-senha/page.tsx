@@ -18,7 +18,7 @@ export default function CriarSenha() {
           <input id="confirma" name="confirma" type="password" autoComplete="new-password" minLength={8} required className="campo" />
         </div>
         <Mensagem estado={estado} />
-        <button className="btn btn-laranja w-full" disabled={pendente}>{pendente ? "Salvando..." : "Salvar e entrar"}</button>
+        <button className="btn btn-laranja btn-bloco" disabled={pendente}>{pendente ? "Salvando..." : "Salvar e entrar"}</button>
       </form>
     </CaixaAuth>
   );

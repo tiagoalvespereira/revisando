@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 
-const TRECHO = 256 * 1024;
+const TRECHO = 1024 * 1024;
 
 /**
  * Leitor de PDF que busca o arquivo em trechos pela rota protegida /api/arquivos/[id]/conteudo.

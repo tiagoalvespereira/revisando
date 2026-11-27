@@ -2,6 +2,7 @@ import "server-only";
 import { cache } from "react";
 import { redirect } from "next/navigation";
 import { supabaseServidor } from "@/lib/supabase/server";
+import { usuarioDaSessao } from "@/lib/auth";
 
 export type Produto = {
   id: string; slug: string; nome: string; descricao: string | null; icone: string;
@@ -11,10 +12,10 @@ export type Arquivo = { id: string; product_id: string; titulo: string; tipo: st
 
 export const alunoAtual = cache(async () => {
   const supabase = await supabaseServidor();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await usuarioDaSessao(supabase);
   if (!user) redirect("/entrar");
   const { data: perfil } = await supabase.from("profiles").select("*").eq("id", user.id).maybeSingle();
-  return { supabase, user, perfil: perfil ?? { id: user.id, email: user.email!, nome: null, cpf: null, telefone: null, is_admin: false } };
+  return { supabase, user, perfil: perfil ?? { id: user.id, email: user.email, nome: null, cpf: null, telefone: null, is_admin: false } };
 });
 
 /** Todos os produtos ativos, cada um marcado com acesso ou não. */
@@ -43,7 +44,7 @@ export function linkCompra(url: string | null, email: string, nome?: string | nu
 /** Busca o arquivo respeitando RLS: só retorna se o aluno tiver acesso ao produto. */
 export async function arquivoPermitido(id: string) {
   const supabase = await supabaseServidor();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await usuarioDaSessao(supabase);
   if (!user) return { user: null, arquivo: null };
   if (!/^[0-9a-f-]{36}$/i.test(id)) return { user, arquivo: null };
   const { data } = await supabase.from("product_files").select("id, product_id, titulo, tipo, dia, ordem, storage_path, atualizado_em").eq("id", id).maybeSingle();

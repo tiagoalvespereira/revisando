@@ -21,7 +21,7 @@ export function FormEntrar({ volta, aviso }: { volta: string; aviso?: string }) 
         <input type="checkbox" name="lembrar" defaultChecked className="size-5 accent-preto" /> Lembrar de mim
       </label>
       <Mensagem estado={estado} />
-      <button className="btn btn-laranja w-full" disabled={pendente}>{pendente ? "Entrando..." : "Entrar"}</button>
+      <button className="btn btn-laranja btn-bloco" disabled={pendente}>{pendente ? "Entrando..." : "Entrar"}</button>
       <p className="text-sm text-center"><Link href="/esqueci" className="underline">Esqueci minha senha</Link></p>
       <p className="text-sm text-center text-cinza">Primeiro acesso? Use o link do e-mail que você recebeu depois da compra, ou clique em &quot;Esqueci minha senha&quot;.</p>
     </form>

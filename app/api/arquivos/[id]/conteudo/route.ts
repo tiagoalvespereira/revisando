@@ -7,6 +7,18 @@ export const dynamic = "force-dynamic";
 
 const MAX_TRECHO = 2 * 1024 * 1024;
 
+// URLs assinadas reaproveitadas por alguns segundos: o leitor pede vários trechos seguidos do mesmo arquivo.
+const cacheUrls = new Map<string, { url: string; ate: number }>();
+async function urlAssinada(caminho: string) {
+  const c = cacheUrls.get(caminho);
+  if (c && c.ate > Date.now()) return c.url;
+  const { data, error } = await supabaseAdmin().storage.from("materiais").createSignedUrl(caminho, 120);
+  if (error || !data) return null;
+  cacheUrls.set(caminho, { url: data.signedUrl, ate: Date.now() + 90_000 });
+  if (cacheUrls.size > 500) cacheUrls.delete(cacheUrls.keys().next().value!);
+  return data.signedUrl;
+}
+
 /**
  * Entrega trechos do PDF para o leitor (só requisições com Range, até 2 MB cada).
  * Confere login e acesso a cada trecho; a URL do storage nunca chega ao navegador.
@@ -23,10 +35,10 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   if (!user) return NextResponse.json({ erro: "faça login" }, { status: 401 });
   if (!arquivo) return NextResponse.json({ erro: "sem acesso" }, { status: 403 });
 
-  const { data, error } = await supabaseAdmin().storage.from("materiais").createSignedUrl(arquivo.storage_path, 60);
-  if (error || !data) return NextResponse.json({ erro: "arquivo indisponível" }, { status: 404 });
+  const url = await urlAssinada(arquivo.storage_path);
+  if (!url) return NextResponse.json({ erro: "arquivo indisponível" }, { status: 404 });
 
-  const origem = await fetch(data.signedUrl, { headers: { Range: range! }, signal: req.signal });
+  const origem = await fetch(url, { headers: { Range: range! }, signal: req.signal });
   if (origem.status !== 206 && !origem.ok) return NextResponse.json({ erro: "arquivo indisponível" }, { status: 404 });
 
   const h = new Headers({ "Content-Type": "application/pdf", "Cache-Control": "private, no-store" });

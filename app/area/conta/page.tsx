@@ -1,5 +1,8 @@
 import { alunoAtual } from "@/lib/aluno";
+import Link from "next/link";
 import { FormDados, FormSenha } from "./Forms";
+import { Cabecalho } from "@/components/Cabecalho";
+import { Icone } from "@/components/Icone";
 
 export const metadata = { title: "Minha conta" };
 
@@ -11,8 +14,25 @@ export default async function Conta() {
   const suporte = process.env.NEXT_PUBLIC_SUPORTE_EMAIL;
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-8 space-y-6">
-      <h1 className="titulo text-2xl">Minha conta</h1>
+    <main>
+      <Cabecalho sobretitulo="Minha conta" titulo={perfil.nome ?? "Seus dados"}>
+        <p className="text-off/60 text-sm mt-2">{perfil.email}</p>
+      </Cabecalho>
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
+      <div className="grid gap-3 sm:grid-cols-2">
+        {perfil.is_admin && (
+          <Link href="/admin" className="cartao cartao-link p-4 flex items-center gap-3">
+            <span className="grid place-items-center size-11 rounded-xl bg-laranja text-preto"><Icone nome="escudo" className="size-5" /></span>
+            <span className="flex-1 font-bold">Painel do administrador</span><Icone nome="seta" className="size-5 text-cinza" />
+          </Link>
+        )}
+        <form action="/auth/sair" method="post" className={perfil.is_admin ? "" : "sm:col-span-2"}>
+          <button className="cartao cartao-link w-full p-4 flex items-center gap-3 text-left">
+            <span className="grid place-items-center size-11 rounded-xl bg-off"><Icone nome="sair" className="size-5" /></span>
+            <span className="flex-1 font-bold">Sair da conta</span>
+          </button>
+        </form>
+      </div>
       <FormDados perfil={perfil} />
       <FormSenha />
       <section className="cartao p-5">
@@ -34,6 +54,7 @@ export default async function Conta() {
       <section className="text-sm text-cinza">
         <p>Para pedir a exclusão dos seus dados (LGPD){suporte ? <> escreva para <a className="underline" href={`mailto:${suporte}?subject=Exclusão de dados`}>{suporte}</a></> : " fale com o suporte"}, usando o e-mail da conta.</p>
       </section>
+      </div>
     </main>
   );
 }

@@ -12,6 +12,15 @@ const caminhos: Record<string, string> = {
   olho: "M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Zm10 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z",
   seta: "M5 12h14m-5-5 5 5-5 5",
   check: "M5 13l4 4L19 7",
+  casa: "M3 11 12 4l9 7M5 10v10h5v-6h4v6h5V10",
+  usuario: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 9a7 7 0 0 1 14 0",
+  escudo: "M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Zm-3 9 2 2 4-4",
+  sair: "M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11",
+  pilha: "M12 3 3 8l9 5 9-5-9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5",
+  relogio: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-13v5l3 2",
+  voltar: "M19 12H5m5-5-5 5 5 5",
+  lista: "M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01",
+  play: "M8 5v14l11-7L8 5Z",
 };
 export function Icone({ nome, className = "size-6" }: { nome: string; className?: string }) {
   return (
@@ -20,4 +29,4 @@ export function Icone({ nome, className = "size-6" }: { nome: string; className?
     </svg>
   );
 }
-export const ICONES = Object.keys(caminhos).filter((k) => !["cadeado", "download", "olho", "seta", "check"].includes(k));
+export const ICONES = ["livro", "calendario", "alvo", "balanca", "raio", "trofeu", "documento", "pilha", "escudo"];
