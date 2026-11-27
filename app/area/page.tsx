@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Contagem } from "@/components/Contagem";
-import { CardProduto } from "@/components/CardProduto";
+import { CardProduto, Vitrine } from "@/components/CardProduto";
 import { Hexagono } from "@/components/Hexagono";
 import { Icone } from "@/components/Icone";
 import { alunoAtual, linkCompra, meusProdutos, type Arquivo } from "@/lib/aluno";
@@ -25,7 +25,16 @@ export default async function Painel() {
       : Promise.resolve({ data: [] as Arquivo[] }),
   ]);
 
-  const bloqueados = produtos.filter((p) => !p.tem && p.vitrine !== "oculto");
+  // Vitrine: liberados primeiro (com progresso), depois os bloqueados à venda
+  const progressoDe = (slug: string) => {
+    const c = cronogramaDe(slug);
+    if (!c) return null;
+    return Math.round(((prog ?? []).filter((x) => x.product_slug === slug).length / c.dias.length) * 100);
+  };
+  const vitrine = [
+    ...meus.map((p) => ({ ...p, progresso: progressoDe(p.slug) })),
+    ...produtos.filter((p) => !p.tem && p.vitrine !== "oculto"),
+  ];
   const temSimulado = meus.some((p) => PRODUTOS_COM_SIMULADO.includes(p.slug));
   const primeiro = perfil.nome?.split(" ")[0];
   const comLink = (p: (typeof produtos)[number]) => ({ ...p, compra: linkCompra(p.checkout_url, perfil.email, perfil.nome) });
@@ -55,7 +64,7 @@ export default async function Painel() {
         </div>
       </section>
 
-      <div className="max-w-6xl mx-auto px-4 -mt-4 relative space-y-10">
+      <div className="max-w-6xl mx-auto px-4 pt-8 space-y-10">
         {hoje.map((h) => (
           <section key={h.p.slug} className="cartao overflow-hidden shadow-[0_18px_40px_-28px_rgba(17,17,17,.6)]">
             <div className="flex">
@@ -123,24 +132,23 @@ export default async function Painel() {
         )}
 
         <section>
-          <h2 className="titulo text-xl mb-4">Meus materiais</h2>
-          {meus.filter((p) => p.vitrine !== "oculto" || p.tem).length ? (
-            <div className="grid gap-3 sm:grid-cols-2">{meus.map((p) => <CardProduto key={p.id} p={comLink(p)} />)}</div>
-          ) : (
-            <div className="cartao p-6 flex gap-4 items-start">
-              <span className="shrink-0 grid place-items-center size-12 rounded-2xl bg-laranja-claro text-laranja"><Icone nome="relogio" className="size-6" /></span>
-              <p className="text-cinza">Nenhum material liberado ainda. Se você acabou de comprar, a liberação acontece em poucos minutos depois da confirmação do pagamento.</p>
+          <div className="flex items-end justify-between mb-4">
+            <div>
+              <h2 className="titulo text-xl">Seus materiais</h2>
+              <p className="text-sm text-cinza mt-1 flex flex-wrap gap-x-4 gap-y-1">
+                <span className="inline-flex items-center gap-1.5"><span className="grid place-items-center size-5 rounded-full bg-verde text-white"><Icone nome="cadeado-aberto" className="size-3" /></span> liberado</span>
+                <span className="inline-flex items-center gap-1.5"><span className="grid place-items-center size-5 rounded-full bg-vermelho text-white"><Icone nome="cadeado" className="size-3" /></span> bloqueado</span>
+              </p>
             </div>
+            <Link href="/area/materiais" className="text-sm font-semibold underline underline-offset-4 shrink-0">Ver todos</Link>
+          </div>
+          <Vitrine>
+            {vitrine.map((p) => <CardProduto key={p.id} p={comLink(p)} />)}
+          </Vitrine>
+          {!meus.length && (
+            <p className="text-sm text-cinza mt-3 flex items-center gap-2"><Icone nome="relogio" className="size-4 text-laranja" /> Acabou de comprar? A liberação acontece em poucos minutos depois da confirmação do pagamento.</p>
           )}
         </section>
-
-        {bloqueados.length > 0 && (
-          <section>
-            <h2 className="titulo text-xl">Desbloqueie mais</h2>
-            <p className="text-sm text-cinza mt-1 mb-4">Ao comprar, o material aparece aqui no mesmo login.</p>
-            <div className="grid gap-3 sm:grid-cols-2">{bloqueados.map((p) => <CardProduto key={p.id} p={comLink(p)} />)}</div>
-          </section>
-        )}
       </div>
     </main>
   );

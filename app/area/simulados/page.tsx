@@ -24,7 +24,7 @@ export default async function Simulados() {
         {!tem && oferta && (
           <>
             <p className="text-cinza">Os simulados fazem parte das revisões de 30 e de 15 dias.</p>
-            <CardProduto p={{ ...oferta, compra: linkCompra(oferta.checkout_url, perfil.email, perfil.nome) }} />
+            <div className="max-w-[240px]"><CardProduto p={{ ...oferta, compra: linkCompra(oferta.checkout_url, perfil.email, perfil.nome) }} /></div>
           </>
         )}
         {tem && SIMULADOS_DISPONIVEIS.map((n) => {

@@ -41,7 +41,7 @@ export default async function PaginaProduto({ params, searchParams }: { params: 
     return (
       <main>
         <Cabecalho sobretitulo="Material bloqueado" titulo={produto.nome} voltar={{ href: "/area/materiais", rotulo: "Materiais" }} />
-        <div className="max-w-xl mx-auto px-4 py-8"><CardProduto p={{ ...produto, compra: linkCompra(produto.checkout_url, perfil.email, perfil.nome) }} /></div>
+        <div className="max-w-[260px] mx-auto px-4 py-8"><CardProduto p={{ ...produto, compra: linkCompra(produto.checkout_url, perfil.email, perfil.nome) }} /></div>
       </main>
     );
   }

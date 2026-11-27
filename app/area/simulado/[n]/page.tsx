@@ -30,7 +30,7 @@ export default async function PaginaSimulado({ params, searchParams }: { params:
       <main className="max-w-xl mx-auto px-4 py-10 space-y-4">
         <h1 className="titulo text-2xl">Simulado Estratégico {n}</h1>
         <p className="text-cinza">Os simulados fazem parte das revisões de 30 e de 15 dias.</p>
-        {oferta && <CardProduto p={{ ...oferta, compra: linkCompra(oferta.checkout_url, perfil.email, perfil.nome) }} />}
+        {oferta && <div className="max-w-[240px]"><CardProduto p={{ ...oferta, compra: linkCompra(oferta.checkout_url, perfil.email, perfil.nome) }} /></div>}
       </main>
     );
   }
