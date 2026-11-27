@@ -46,7 +46,7 @@
     var preco = $(".preco", card);
     if (preco) {
       preco.innerHTML = cfg.preco
-        ? (cfg.parcelas ? '<span class="parc">' + cfg.parcelas + "</span>" : "") + '<span class="valor">R$ ' + cfg.preco + "</span>" + (cfg.parcelas ? '<span class="parc">ou à vista</span>' : "")
+        ? '<span class="valor">R$ ' + cfg.preco + "</span>" + (cfg.parcelas ? '<span class="parc">à vista no Pix ou ' + cfg.parcelas + "</span>" : "")
         : '<span class="breve">Preço em breve</span>';
     }
     var btn = $("[data-checkout]", card);

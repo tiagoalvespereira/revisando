@@ -10,12 +10,12 @@ window.REVISANDO = {
   planos: {
     "30-dias": {
       preco: "147,00",
-      parcelas: null,       // ex.: "12x de 14,70"
+      parcelas: "em até 12x no cartão",
       checkout: "https://pay.kiwify.com.br/9DTdX9t"
     },
     "15-dias": {
       preco: "97,00",
-      parcelas: null,
+      parcelas: "em até 12x no cartão",
       checkout: "https://pay.kiwify.com.br/3JuYzSE"
     }
   },
