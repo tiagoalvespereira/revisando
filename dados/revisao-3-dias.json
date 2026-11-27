@@ -1,0 +1,52 @@
+{
+ "exemplo": false,
+ "produto": "3-dias",
+ "paginas": 28,
+ "deslocamento": 0,
+ "observacao": "PDF sem número impresso: páginas são as do arquivo.",
+ "dias": [
+  {
+   "dia": 1,
+   "conteudo": "Ética, Constitucional, Civil e Processo Civil",
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 4,
+   "pagina_final": 12,
+   "pagina_gabarito": 11,
+   "materias": [
+    "Ética Profissional",
+    "Direito Constitucional",
+    "Direito Civil",
+    "Processo Civil"
+   ]
+  },
+  {
+   "dia": 2,
+   "conteudo": "Penal, Processo Penal, Administrativo e Tributário",
+   "fase": "virada",
+   "tipo": "conteudo",
+   "pagina_inicial": 13,
+   "pagina_final": 20,
+   "pagina_gabarito": 19,
+   "materias": [
+    "Direito Penal",
+    "Processo Penal",
+    "Direito Administrativo",
+    "Direito Tributário"
+   ]
+  },
+  {
+   "dia": 3,
+   "conteudo": "Véspera: Trabalho, Processo do Trabalho, Empresarial e as matérias menores",
+   "fase": "reta",
+   "tipo": "vespera",
+   "pagina_inicial": 21,
+   "pagina_final": 28,
+   "materias": [
+    "Direito do Trabalho",
+    "Processo do Trabalho",
+    "Direito Empresarial"
+   ]
+  }
+ ]
+}

@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: { default: "Revisando", template: "%s · Revisando" },
   description: "Área do aluno do Revisando OAB.",
   robots: { index: false },
+  icons: { icon: "/marca/revisando-icone-laranja.svg", apple: "/marca/revisando-icone-laranja.png" },
 };
 export const viewport: Viewport = { themeColor: "#111111", width: "device-width", initialScale: 1, viewportFit: "cover" };
 

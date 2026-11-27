@@ -1,0 +1,388 @@
+{
+ "exemplo": false,
+ "produto": "15-dias",
+ "paginas": 100,
+ "dias": [
+  {
+   "dia": 1,
+   "conteudo": "Ética Profissional",
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 1,
+   "pagina_final": 6,
+   "pontos_estrategicos": 12,
+   "dias_origem_30": [
+    1,
+    2
+   ],
+   "materias": [
+    "Ética Profissional"
+   ],
+   "questoes_no_volume": [
+    [
+     15,
+     17
+    ],
+    [
+     30,
+     33
+    ]
+   ],
+   "questoes": 16
+  },
+  {
+   "dia": 2,
+   "conteudo": "Ética (reta final) + Direito Constitucional",
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 7,
+   "pagina_final": 12,
+   "pontos_estrategicos": 11,
+   "dias_origem_30": [
+    27,
+    3
+   ],
+   "materias": [
+    "Direito Constitucional",
+    "Ética Profissional"
+   ],
+   "questoes_no_volume": [
+    [
+     387,
+     396
+    ],
+    [
+     46,
+     47
+    ]
+   ],
+   "questoes": 18
+  },
+  {
+   "dia": 3,
+   "conteudo": "Direito Constitucional + Direito Civil",
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 13,
+   "pagina_final": 19,
+   "pontos_estrategicos": 13,
+   "dias_origem_30": [
+    4,
+    5
+   ],
+   "materias": [
+    "Direito Civil",
+    "Direito Constitucional"
+   ],
+   "questoes_no_volume": [
+    [
+     61,
+     62
+    ],
+    [
+     76,
+     77
+    ]
+   ],
+   "questoes": 16
+  },
+  {
+   "dia": 4,
+   "conteudo": "Direito Civil + Direito Processual Civil",
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 20,
+   "pagina_final": 27,
+   "pontos_estrategicos": 13,
+   "dias_origem_30": [
+    6,
+    8
+   ],
+   "materias": [
+    "Direito Civil",
+    "Processo Civil"
+   ],
+   "questoes_no_volume": [
+    [
+     91,
+     92
+    ],
+    [
+     115,
+     117
+    ]
+   ],
+   "questoes": 16
+  },
+  {
+   "dia": 5,
+   "conteudo": "Direito Processual Civil + Direito Penal",
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 28,
+   "pagina_final": 34,
+   "pontos_estrategicos": 14,
+   "dias_origem_30": [
+    9,
+    10
+   ],
+   "materias": [
+    "Direito Penal",
+    "Processo Civil"
+   ],
+   "questoes_no_volume": [
+    [
+     131,
+     132
+    ],
+    [
+     146,
+     147
+    ]
+   ],
+   "questoes": 16
+  },
+  {
+   "dia": 6,
+   "conteudo": "Direito Penal + Direito Processual Penal",
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 35,
+   "pagina_final": 40,
+   "pontos_estrategicos": 13,
+   "dias_origem_30": [
+    11,
+    12
+   ],
+   "materias": [
+    "Direito Penal",
+    "Processo Penal"
+   ],
+   "questoes_no_volume": [
+    [
+     161,
+     163
+    ],
+    [
+     176,
+     177
+    ]
+   ],
+   "questoes": 16
+  },
+  {
+   "dia": 7,
+   "conteudo": "Revisão geral estratégica 1",
+   "fase": "base",
+   "tipo": "revisao",
+   "pagina_inicial": 41,
+   "pagina_final": 47,
+   "pontos_estrategicos": 0,
+   "dias_origem_30": [],
+   "materias": [],
+   "questoes_no_volume": [],
+   "questoes": 0
+  },
+  {
+   "dia": 8,
+   "conteudo": "Direito Processual Penal + Direito Administrativo",
+   "fase": "virada",
+   "tipo": "conteudo",
+   "pagina_inicial": 48,
+   "pagina_final": 54,
+   "pontos_estrategicos": 13,
+   "dias_origem_30": [
+    13,
+    16
+   ],
+   "materias": [
+    "Direito Administrativo",
+    "Processo Penal"
+   ],
+   "questoes_no_volume": [
+    [
+     191,
+     192
+    ],
+    [
+     233,
+     235
+    ]
+   ],
+   "questoes": 16
+  },
+  {
+   "dia": 9,
+   "conteudo": "Direito Administrativo + Direito Tributário",
+   "fase": "virada",
+   "tipo": "conteudo",
+   "pagina_inicial": 55,
+   "pagina_final": 61,
+   "pontos_estrategicos": 13,
+   "dias_origem_30": [
+    17,
+    18
+   ],
+   "materias": [
+    "Direito Administrativo",
+    "Direito Tributário"
+   ],
+   "questoes_no_volume": [
+    [
+     248,
+     250
+    ],
+    [
+     264,
+     265
+    ]
+   ],
+   "questoes": 16
+  },
+  {
+   "dia": 10,
+   "conteudo": "Direito Tributário + Direito do Trabalho",
+   "fase": "virada",
+   "tipo": "conteudo",
+   "pagina_inicial": 62,
+   "pagina_final": 68,
+   "pontos_estrategicos": 13,
+   "dias_origem_30": [
+    19,
+    20
+   ],
+   "materias": [
+    "Direito Tributário",
+    "Direito do Trabalho"
+   ],
+   "questoes_no_volume": [
+    [
+     279,
+     280
+    ],
+    [
+     293,
+     295
+    ]
+   ],
+   "questoes": 16
+  },
+  {
+   "dia": 11,
+   "conteudo": "Direito do Trabalho + Direito Processual do Trabalho",
+   "fase": "virada",
+   "tipo": "conteudo",
+   "pagina_inicial": 69,
+   "pagina_final": 74,
+   "pontos_estrategicos": 13,
+   "dias_origem_30": [
+    23,
+    24
+   ],
+   "materias": [
+    "Direito do Trabalho",
+    "Processo do Trabalho"
+   ],
+   "questoes_no_volume": [
+    [
+     337,
+     339
+    ],
+    [
+     353,
+     354
+    ]
+   ],
+   "questoes": 16
+  },
+  {
+   "dia": 12,
+   "conteudo": "Direito Processual do Trabalho + Direito Empresarial",
+   "fase": "virada",
+   "tipo": "conteudo",
+   "pagina_inicial": 75,
+   "pagina_final": 80,
+   "pontos_estrategicos": 13,
+   "dias_origem_30": [
+    25,
+    26
+   ],
+   "materias": [
+    "Direito Empresarial",
+    "Processo do Trabalho"
+   ],
+   "questoes_no_volume": [
+    [
+     368,
+     369
+    ],
+    [
+     383,
+     384
+    ]
+   ],
+   "questoes": 16
+  },
+  {
+   "dia": 13,
+   "conteudo": "Mega Resumo I + Mega Resumo II",
+   "fase": "virada",
+   "tipo": "conteudo",
+   "pagina_inicial": 81,
+   "pagina_final": 87,
+   "pontos_estrategicos": 18,
+   "dias_origem_30": [
+    15,
+    22
+   ],
+   "materias": [
+    "Direito Ambiental",
+    "Direito Eleitoral",
+    "Direito Financeiro",
+    "Direito Internacional",
+    "Direito Previdenciário",
+    "Direito do Consumidor",
+    "Direitos Humanos",
+    "ECA",
+    "Filosofia do Direito"
+   ],
+   "questoes_no_volume": [
+    [
+     206,
+     220
+    ],
+    [
+     322,
+     324
+    ]
+   ],
+   "questoes": 18
+  },
+  {
+   "dia": 14,
+   "conteudo": "Revisão geral estratégica 2",
+   "fase": "reta",
+   "tipo": "revisao",
+   "pagina_inicial": 88,
+   "pagina_final": 94,
+   "pontos_estrategicos": 0,
+   "dias_origem_30": [],
+   "materias": [],
+   "questoes_no_volume": [],
+   "questoes": 0
+  },
+  {
+   "dia": 15,
+   "conteudo": "Véspera: pegadinhas top, estratégia de prova e checklist",
+   "fase": "reta",
+   "tipo": "vespera",
+   "pagina_inicial": 95,
+   "pagina_final": 100,
+   "pontos_estrategicos": 0,
+   "dias_origem_30": [],
+   "materias": [],
+   "questoes_no_volume": [],
+   "questoes": 0
+  }
+ ]
+}

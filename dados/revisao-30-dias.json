@@ -1,0 +1,485 @@
+{
+ "exemplo": false,
+ "produto": "30-dias",
+ "fonte": "c183b63d-Revisando_OAB_30_-_2027_-_Volume_completo.pdf",
+ "paginas": 422,
+ "total_questoes": 196,
+ "total_pontos": 318,
+ "dias": [
+  {
+   "dia": 1,
+   "conteudo": "Ética I — EAOAB: atividade de advocacia, direitos e prerrogativas, inscrição",
+   "materias": [
+    "Ética Profissional"
+   ],
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 5,
+   "pagina_final": 19,
+   "pagina_questoes": 15,
+   "pagina_gabarito": 18,
+   "questoes": 8,
+   "pontos_estrategicos": 6,
+   "pdf": "Revisando OAB 30 - Dia 01.pdf"
+  },
+  {
+   "dia": 2,
+   "conteudo": "Ética II — sociedade de advogados, advogado empregado, honorários, incompatibilidades e impedimentos, CED, infrações e sanções, processo disciplinar, órgãos da OAB",
+   "materias": [
+    "Ética Profissional"
+   ],
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 20,
+   "pagina_final": 34,
+   "pagina_questoes": 30,
+   "pagina_gabarito": 34,
+   "questoes": 8,
+   "pontos_estrategicos": 6,
+   "pdf": "Revisando OAB 30 - Dia 02.pdf"
+  },
+  {
+   "dia": 3,
+   "conteudo": "Constitucional I — teoria, direitos e garantias fundamentais, remédios, nacionalidade, direitos políticos",
+   "materias": [
+    "Direito Constitucional"
+   ],
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 35,
+   "pagina_final": 49,
+   "pagina_questoes": 46,
+   "pagina_gabarito": 48,
+   "questoes": 8,
+   "pontos_estrategicos": 6,
+   "pdf": "Revisando OAB 30 - Dia 03.pdf"
+  },
+  {
+   "dia": 4,
+   "conteudo": "Constitucional II — organização do Estado, Poderes, processo legislativo, controle de constitucionalidade",
+   "materias": [
+    "Direito Constitucional"
+   ],
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 50,
+   "pagina_final": 64,
+   "pagina_questoes": 61,
+   "pagina_gabarito": 63,
+   "questoes": 8,
+   "pontos_estrategicos": 6,
+   "pdf": "Revisando OAB 30 - Dia 04.pdf"
+  },
+  {
+   "dia": 5,
+   "conteudo": "Civil I — parte geral, obrigações, contratos",
+   "materias": [
+    "Direito Civil"
+   ],
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 65,
+   "pagina_final": 79,
+   "pagina_questoes": 76,
+   "pagina_gabarito": 78,
+   "questoes": 8,
+   "pontos_estrategicos": 7,
+   "pdf": "Revisando OAB 30 - Dia 05.pdf"
+  },
+  {
+   "dia": 6,
+   "conteudo": "Civil II — responsabilidade civil, coisas, família, sucessões",
+   "materias": [
+    "Direito Civil"
+   ],
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 80,
+   "pagina_final": 94,
+   "pagina_questoes": 91,
+   "pagina_gabarito": 93,
+   "questoes": 8,
+   "pontos_estrategicos": 6,
+   "pdf": "Revisando OAB 30 - Dia 06.pdf"
+  },
+  {
+   "dia": 7,
+   "conteudo": "REVISÃO GERAL ESTRATÉGICA 1 (Ética, Constitucional, Civil)",
+   "materias": [],
+   "fase": "base",
+   "tipo": "revisao",
+   "pagina_inicial": 95,
+   "pagina_final": 104,
+   "pagina_questoes": null,
+   "pagina_gabarito": null,
+   "questoes": 0,
+   "pontos_estrategicos": 37,
+   "pdf": "Revisando OAB 30 - Dia 07.pdf"
+  },
+  {
+   "dia": 8,
+   "conteudo": "Processo Civil I — normas fundamentais, competência, partes, tutelas, procedimento comum",
+   "materias": [
+    "Processo Civil"
+   ],
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 105,
+   "pagina_final": 119,
+   "pagina_questoes": 115,
+   "pagina_gabarito": 118,
+   "questoes": 8,
+   "pontos_estrategicos": 7,
+   "pdf": "Revisando OAB 30 - Dia 08.pdf"
+  },
+  {
+   "dia": 9,
+   "conteudo": "Processo Civil II — sentença, coisa julgada, recursos, cumprimento de sentença e execução, procedimentos especiais relevantes",
+   "materias": [
+    "Processo Civil"
+   ],
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 120,
+   "pagina_final": 134,
+   "pagina_questoes": 131,
+   "pagina_gabarito": 133,
+   "questoes": 8,
+   "pontos_estrategicos": 7,
+   "pdf": "Revisando OAB 30 - Dia 09.pdf"
+  },
+  {
+   "dia": 10,
+   "conteudo": "Penal I — parte geral (lei penal, crime, excludentes, concurso de pessoas)",
+   "materias": [
+    "Direito Penal"
+   ],
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 135,
+   "pagina_final": 149,
+   "pagina_questoes": 146,
+   "pagina_gabarito": 148,
+   "questoes": 8,
+   "pontos_estrategicos": 7,
+   "pdf": "Revisando OAB 30 - Dia 10.pdf"
+  },
+  {
+   "dia": 11,
+   "conteudo": "Penal II — penas, extinção da punibilidade, parte especial e leis especiais mais cobradas",
+   "materias": [
+    "Direito Penal"
+   ],
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 150,
+   "pagina_final": 164,
+   "pagina_questoes": 161,
+   "pagina_gabarito": 164,
+   "questoes": 8,
+   "pontos_estrategicos": 7,
+   "pdf": "Revisando OAB 30 - Dia 11.pdf"
+  },
+  {
+   "dia": 12,
+   "conteudo": "Processo Penal I — inquérito, ação penal, competência, provas",
+   "materias": [
+    "Processo Penal"
+   ],
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 165,
+   "pagina_final": 179,
+   "pagina_questoes": 176,
+   "pagina_gabarito": 178,
+   "questoes": 8,
+   "pontos_estrategicos": 6,
+   "pdf": "Revisando OAB 30 - Dia 12.pdf"
+  },
+  {
+   "dia": 13,
+   "conteudo": "Processo Penal II — prisões e cautelares, procedimentos, júri, nulidades, recursos, HC",
+   "materias": [
+    "Processo Penal"
+   ],
+   "fase": "base",
+   "tipo": "conteudo",
+   "pagina_inicial": 180,
+   "pagina_final": 194,
+   "pagina_questoes": 191,
+   "pagina_gabarito": 193,
+   "questoes": 8,
+   "pontos_estrategicos": 6,
+   "pdf": "Revisando OAB 30 - Dia 13.pdf"
+  },
+  {
+   "dia": 14,
+   "conteudo": "REVISÃO GERAL ESTRATÉGICA 2 (Processo Civil, Penal, Processo Penal)",
+   "materias": [],
+   "fase": "base",
+   "tipo": "revisao",
+   "pagina_inicial": 195,
+   "pagina_final": 205,
+   "pagina_questoes": null,
+   "pagina_gabarito": null,
+   "questoes": 0,
+   "pontos_estrategicos": 40,
+   "pdf": "Revisando OAB 30 - Dia 14.pdf"
+  },
+  {
+   "dia": 15,
+   "conteudo": "MEGA RESUMO I — Filosofia do Direito, Direitos Humanos, Direito Eleitoral, Direito Financeiro, Direito Previdenciário",
+   "materias": [
+    "Filosofia do Direito",
+    "Direitos Humanos",
+    "Direito Eleitoral",
+    "Direito Financeiro",
+    "Direito Previdenciário"
+   ],
+   "fase": "virada",
+   "tipo": "mega",
+   "pagina_inicial": 206,
+   "pagina_final": 222,
+   "pagina_questoes": null,
+   "pagina_gabarito": 221,
+   "questoes": 10,
+   "pontos_estrategicos": 10,
+   "pdf": "Revisando OAB 30 - Dia 15.pdf"
+  },
+  {
+   "dia": 16,
+   "conteudo": "Administrativo I — princípios, organização, atos, poderes, agentes públicos",
+   "materias": [
+    "Direito Administrativo"
+   ],
+   "fase": "virada",
+   "tipo": "conteudo",
+   "pagina_inicial": 223,
+   "pagina_final": 237,
+   "pagina_questoes": 233,
+   "pagina_gabarito": 236,
+   "questoes": 8,
+   "pontos_estrategicos": 7,
+   "pdf": "Revisando OAB 30 - Dia 16.pdf"
+  },
+  {
+   "dia": 17,
+   "conteudo": "Administrativo II — licitações e contratos (Lei 14.133), improbidade, responsabilidade civil do Estado, bens, intervenção na propriedade",
+   "materias": [
+    "Direito Administrativo"
+   ],
+   "fase": "virada",
+   "tipo": "conteudo",
+   "pagina_inicial": 238,
+   "pagina_final": 252,
+   "pagina_questoes": 248,
+   "pagina_gabarito": 251,
+   "questoes": 8,
+   "pontos_estrategicos": 7,
+   "pdf": "Revisando OAB 30 - Dia 17.pdf"
+  },
+  {
+   "dia": 18,
+   "conteudo": "Tributário I — sistema tributário, competência, limitações ao poder de tributar, espécies tributárias",
+   "materias": [
+    "Direito Tributário"
+   ],
+   "fase": "virada",
+   "tipo": "conteudo",
+   "pagina_inicial": 253,
+   "pagina_final": 267,
+   "pagina_questoes": 264,
+   "pagina_gabarito": 266,
+   "questoes": 8,
+   "pontos_estrategicos": 6,
+   "pdf": "Revisando OAB 30 - Dia 18.pdf"
+  },
+  {
+   "dia": 19,
+   "conteudo": "Tributário II — obrigação, crédito, suspensão/extinção/exclusão, garantias, execução fiscal",
+   "materias": [
+    "Direito Tributário"
+   ],
+   "fase": "virada",
+   "tipo": "conteudo",
+   "pagina_inicial": 268,
+   "pagina_final": 282,
+   "pagina_questoes": 279,
+   "pagina_gabarito": 281,
+   "questoes": 8,
+   "pontos_estrategicos": 6,
+   "pdf": "Revisando OAB 30 - Dia 19.pdf"
+  },
+  {
+   "dia": 20,
+   "conteudo": "Trabalho I — relação de emprego, contrato, jornada, remuneração, férias",
+   "materias": [
+    "Direito do Trabalho"
+   ],
+   "fase": "virada",
+   "tipo": "conteudo",
+   "pagina_inicial": 283,
+   "pagina_final": 297,
+   "pagina_questoes": 293,
+   "pagina_gabarito": 296,
+   "questoes": 8,
+   "pontos_estrategicos": 7,
+   "pdf": "Revisando OAB 30 - Dia 20.pdf"
+  },
+  {
+   "dia": 21,
+   "conteudo": "REVISÃO GERAL ESTRATÉGICA 3 (Mega Resumo I, Administrativo, Tributário, Trabalho I)",
+   "materias": [],
+   "fase": "virada",
+   "tipo": "revisao",
+   "pagina_inicial": 298,
+   "pagina_final": 309,
+   "pagina_questoes": null,
+   "pagina_gabarito": null,
+   "questoes": 0,
+   "pontos_estrategicos": 43,
+   "pdf": "Revisando OAB 30 - Dia 21.pdf"
+  },
+  {
+   "dia": 22,
+   "conteudo": "MEGA RESUMO II — ECA, Consumidor, Ambiental, Internacional",
+   "materias": [
+    "ECA",
+    "Direito do Consumidor",
+    "Direito Ambiental",
+    "Direito Internacional"
+   ],
+   "fase": "reta",
+   "tipo": "mega",
+   "pagina_inicial": 310,
+   "pagina_final": 326,
+   "pagina_questoes": 322,
+   "pagina_gabarito": 325,
+   "questoes": 8,
+   "pontos_estrategicos": 8,
+   "pdf": "Revisando OAB 30 - Dia 22.pdf"
+  },
+  {
+   "dia": 23,
+   "conteudo": "Trabalho II — alteração, suspensão/interrupção, extinção do contrato, estabilidades, direito coletivo, teletrabalho",
+   "materias": [
+    "Direito do Trabalho"
+   ],
+   "fase": "reta",
+   "tipo": "conteudo",
+   "pagina_inicial": 327,
+   "pagina_final": 341,
+   "pagina_questoes": 337,
+   "pagina_gabarito": 340,
+   "questoes": 8,
+   "pontos_estrategicos": 7,
+   "pdf": "Revisando OAB 30 - Dia 23.pdf"
+  },
+  {
+   "dia": 24,
+   "conteudo": "Processo do Trabalho I — organização da JT, competência, partes, procedimentos, audiência, provas",
+   "materias": [
+    "Processo do Trabalho"
+   ],
+   "fase": "reta",
+   "tipo": "conteudo",
+   "pagina_inicial": 342,
+   "pagina_final": 356,
+   "pagina_questoes": 353,
+   "pagina_gabarito": 355,
+   "questoes": 8,
+   "pontos_estrategicos": 6,
+   "pdf": "Revisando OAB 30 - Dia 24.pdf"
+  },
+  {
+   "dia": 25,
+   "conteudo": "Processo do Trabalho II — sentença, recursos trabalhistas, execução",
+   "materias": [
+    "Processo do Trabalho"
+   ],
+   "fase": "reta",
+   "tipo": "conteudo",
+   "pagina_inicial": 357,
+   "pagina_final": 371,
+   "pagina_questoes": 368,
+   "pagina_gabarito": 370,
+   "questoes": 8,
+   "pontos_estrategicos": 6,
+   "pdf": "Revisando OAB 30 - Dia 25.pdf"
+  },
+  {
+   "dia": 26,
+   "conteudo": "Empresarial — empresário e sociedades, títulos de crédito, falência e recuperação",
+   "materias": [
+    "Direito Empresarial"
+   ],
+   "fase": "reta",
+   "tipo": "conteudo",
+   "pagina_inicial": 372,
+   "pagina_final": 386,
+   "pagina_questoes": 383,
+   "pagina_gabarito": 385,
+   "questoes": 8,
+   "pontos_estrategicos": 7,
+   "pdf": "Revisando OAB 30 - Dia 26.pdf"
+  },
+  {
+   "dia": 27,
+   "conteudo": "Ética — reta final (pontos quentes, quadros, questões)",
+   "materias": [
+    "Ética Profissional"
+   ],
+   "fase": "reta",
+   "tipo": "conteudo",
+   "pagina_inicial": 387,
+   "pagina_final": 399,
+   "pagina_questoes": null,
+   "pagina_gabarito": 397,
+   "questoes": 10,
+   "pontos_estrategicos": 5,
+   "pdf": "Revisando OAB 30 - Dia 27.pdf"
+  },
+  {
+   "dia": 28,
+   "conteudo": "REVISÃO GERAL ESTRATÉGICA 4 (Mega Resumo II, Trabalho II, Processo do Trabalho, Empresarial, Ética)",
+   "materias": [],
+   "fase": "reta",
+   "tipo": "revisao",
+   "pagina_inicial": 400,
+   "pagina_final": 409,
+   "pagina_questoes": null,
+   "pagina_gabarito": null,
+   "questoes": 0,
+   "pontos_estrategicos": 39,
+   "pdf": "Revisando OAB 30 - Dia 28.pdf"
+  },
+  {
+   "dia": 29,
+   "conteudo": "Pontos quentes das grandes matérias",
+   "materias": [],
+   "fase": "reta",
+   "tipo": "conteudo",
+   "pagina_inicial": 410,
+   "pagina_final": 416,
+   "pagina_questoes": null,
+   "pagina_gabarito": null,
+   "questoes": 0,
+   "pontos_estrategicos": 0,
+   "pdf": "Revisando OAB 30 - Dia 29.pdf"
+  },
+  {
+   "dia": 30,
+   "conteudo": "VÉSPERA — revisão final, pegadinhas top e checklist do dia da prova",
+   "materias": [],
+   "fase": "reta",
+   "tipo": "vespera",
+   "pagina_inicial": 417,
+   "pagina_final": 422,
+   "pagina_questoes": null,
+   "pagina_gabarito": null,
+   "questoes": 0,
+   "pontos_estrategicos": 0,
+   "pdf": "Revisando OAB 30 - Dia 30.pdf"
+  }
+ ]
+}

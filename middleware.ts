@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { sessaoValida, sessionIdDoToken } from "@/lib/sessoes";
 
 export async function middleware(req: NextRequest) {
   let res = NextResponse.next({ request: req });
@@ -27,6 +28,21 @@ export async function middleware(req: NextRequest) {
     url.pathname = "/entrar";
     url.search = `?volta=${encodeURIComponent(rota + req.nextUrl.search)}`;
     return NextResponse.redirect(url);
+  }
+
+  // Limite de aparelhos: só nas áreas logadas
+  if (user && (rota.startsWith("/area") || rota.startsWith("/admin") || rota.startsWith("/api/arquivos"))) {
+    const { data: { session } } = await supabase.auth.getSession();
+    const sid = sessionIdDoToken(session?.access_token);
+    if (sid && !(await sessaoValida(user.id, sid, req.headers.get("user-agent")))) {
+      await supabase.auth.signOut({ scope: "local" });
+      const url = req.nextUrl.clone();
+      url.pathname = "/entrar";
+      url.search = "?erro=sessao";
+      const r = NextResponse.redirect(url);
+      res.cookies.getAll().forEach((c) => r.cookies.set(c));
+      return r;
+    }
   }
   return res;
 }

@@ -130,3 +130,9 @@ export async function confirmarEnvio(arquivoId: string, productId: string) {
   await db.from("product_files").update({ atualizado_em: new Date().toISOString() }).eq("id", arquivoId);
   revalidatePath(`/admin/produtos/${productId}`);
 }
+
+export async function marcarContatado(form: FormData) {
+  const { db } = await exigirAdmin();
+  await db.from("leads").update({ contatado_em: new Date().toISOString() }).eq("id", s(form, "id"));
+  revalidatePath("/admin/leads");
+}

@@ -77,28 +77,43 @@
     new IntersectionObserver(function (e) { vendoPlanos = e[0].isIntersecting; atualizar(); }, { threshold: 0.15 }).observe(secPlanos);
   }
 
-  // ---------- formulário da isca ----------
+  // ---------- formulário da isca (WhatsApp) ----------
   var form = $("#form-isca"), msg = $("#msg-isca");
+  var campoZap = form && form.whatsapp;
+  if (campoZap) campoZap.addEventListener("input", function () {
+    // máscara (61) 99999-9999
+    var d = campoZap.value.replace(/\D/g, "").slice(0, 11), f = d;
+    if (d.length > 2) f = "(" + d.slice(0, 2) + ") " + d.slice(2);
+    if (d.length > 7) f = "(" + d.slice(0, 2) + ") " + d.slice(2, d.length - 4) + "-" + d.slice(-4);
+    campoZap.value = f;
+  });
   if (form) form.addEventListener("submit", function (ev) {
     ev.preventDefault();
-    var nome = form.nome.value.trim(), email = form.email.value.trim(), ok = form.consentimento.checked;
+    var nome = form.nome.value.trim(), zap = campoZap.value.replace(/\D/g, ""), ok = form.consentimento.checked;
     msg.style.color = "";
     if (nome.length < 2) return erro("Informe seu nome.");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return erro("Informe um e-mail válido.");
+    if (zap.length < 10 || zap.length > 11) return erro("Informe o WhatsApp com DDD.");
     if (!ok) return erro("Para receber o material, aceite a política de privacidade.");
     var botao = $("button", form);
     botao.disabled = true; botao.textContent = "Enviando...";
     fetch((C.isca && C.isca.endpoint) || "/api/isca", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nome: nome, email: email, consentimento: true })
+      body: JSON.stringify({ nome: nome, whatsapp: zap, consentimento: true })
     }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (r) {
         if (!r.ok) throw new Error(r.j.erro || "Não foi possível enviar.");
         form.reset();
-        msg.textContent = "Pronto. Enviamos para " + email + " o link para acessar a Revisão de 3 dias. Confira também o spam.";
+        if (r.j.modo === "automatico") {
+          msg.textContent = "Pronto. A Revisão de 3 dias está chegando no seu WhatsApp.";
+        } else if (r.j.link) {
+          msg.innerHTML = 'Cadastro feito. Agora toque em <a href="' + r.j.link + '" target="_blank" rel="noopener" style="color:inherit;font-weight:800">abrir o WhatsApp</a> e envie a mensagem para receber o PDF.';
+          window.location.href = r.j.link;
+        } else {
+          msg.textContent = "Cadastro feito. Você vai receber a Revisão de 3 dias no seu WhatsApp.";
+        }
       })
       .catch(function (e) { erro(e.message || "Não foi possível enviar. Tente de novo."); })
-      .finally(function () { botao.disabled = false; botao.textContent = "Quero os 3 dias grátis"; });
+      .finally(function () { botao.disabled = false; botao.textContent = "Receber no WhatsApp"; });
   });
   function erro(t) { msg.textContent = t; msg.style.color = "#5a0d0d"; }
 })();

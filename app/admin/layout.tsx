@@ -16,7 +16,7 @@ export default async function LayoutAdmin({ children }: { children: React.ReactN
             <Link href="/admin">Métricas</Link>
             <Link href="/admin/alunos">Alunos</Link>
             <Link href="/admin/produtos">Produtos</Link>
-            <a href="/admin/leads.csv">Leads (CSV)</a>
+            <Link href="/admin/leads">Leads</Link>
             <Link href="/area" className="opacity-70">Área do aluno</Link>
           </nav>
         </div>

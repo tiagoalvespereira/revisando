@@ -53,8 +53,9 @@ section { padding: 72px 0; }
 /* ---------- logo ---------- */
 .logo {
   font-family: var(--titulo); font-size: 1.3rem; letter-spacing: .02em;
-  text-decoration: none; display: inline-flex; align-items: baseline;
+  text-decoration: none; display: inline-flex; align-items: center;
 }
+.logo img { height: 24px; width: auto; }
 .logo .grifo {
   background: linear-gradient(transparent 52%, var(--laranja) 52%, var(--laranja) 92%, transparent 92%);
   padding: 0 2px;
