@@ -149,3 +149,19 @@ export async function gerarLinkAcesso(userId: string): Promise<{ link: string; t
     return { erro: String((e as Error).message ?? e) };
   }
 }
+
+export async function testarWhatsapp(_: { ok?: string; erro?: string } | null, form: FormData): Promise<{ ok?: string; erro?: string }> {
+  await exigirAdmin();
+  const { normalizarWhatsapp } = await import("@/lib/telefone");
+  const { configZappfy, enviarZappfy } = await import("@/lib/zappfy");
+  const para = normalizarWhatsapp(String(form.get("numero") ?? ""));
+  if (!para) return { erro: "Número inválido. Use DDD + número." };
+  const c = configZappfy();
+  if (!c) return { erro: "Zappfy não configurada: faltam ZAPPFY_URL, ZAPPFY_INSTANCIA ou ZAPPFY_APIKEY na Vercel (e o Redeploy)." };
+  try {
+    await enviarZappfy(c, "texto", { para, texto: "*Revisando*\nTeste de envio: o WhatsApp do sistema está conectado." });
+    return { ok: `Mensagem enviada para ${para}. Confira o WhatsApp.` };
+  } catch (e) {
+    return { erro: String((e as Error).message ?? e) };
+  }
+}

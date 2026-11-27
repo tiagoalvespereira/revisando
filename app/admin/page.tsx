@@ -1,4 +1,6 @@
 import { exigirAdmin, reais, dataBR } from "@/lib/admin";
+import { Integracoes } from "./Integracoes";
+import { configZappfy } from "@/lib/zappfy";
 
 export const dynamic = "force-dynamic";
 
@@ -36,6 +38,13 @@ export default async function Metricas() {
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
         {cards.map((c) => <div key={c.t} className="cartao p-4"><p className="text-xs uppercase tracking-widest text-cinza">{c.t}</p><p className="titulo text-2xl mt-2">{c.v}</p></div>)}
       </div>
+      <Integracoes itens={[
+        { nome: "Kiwify (webhook)", ok: Boolean(process.env.KIWIFY_WEBHOOK_TOKEN), detalhe: process.env.KIWIFY_WEBHOOK_TOKEN ? "token configurado" : "falta KIWIFY_WEBHOOK_TOKEN" },
+        { nome: "E-mail (Resend)", ok: Boolean(process.env.RESEND_API_KEY), detalhe: process.env.RESEND_API_KEY ? `envia como ${process.env.EMAIL_FROM ?? "(EMAIL_FROM não definido)"}` : "falta RESEND_API_KEY (aguardando domínio)" },
+        { nome: "WhatsApp (Zappfy)", ok: Boolean(configZappfy()), detalhe: configZappfy() ? `instância ${configZappfy()!.instancia} · ${configZappfy()!.url}` : "falta ZAPPFY_URL, ZAPPFY_INSTANCIA ou ZAPPFY_APIKEY" },
+        { nome: "Agendador dos lembretes", ok: Boolean(process.env.CRON_SECRET), detalhe: process.env.CRON_SECRET ? "CRON_SECRET configurado" : "falta CRON_SECRET" },
+      ]} />
+
       <section>
         <h2 className="titulo text-lg mb-3">Webhooks com problema</h2>
         {eventos.data?.length ? (
