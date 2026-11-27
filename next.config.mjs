@@ -6,6 +6,7 @@ const config = {
     return [
       { source: "/", destination: "/landing/index.html" },
       { source: "/termos", destination: "/landing/termos.html" },
+      { source: "/amostra", destination: "/landing/amostra.html" },
       { source: "/privacidade", destination: "/landing/privacidade.html" },
     ];
   },

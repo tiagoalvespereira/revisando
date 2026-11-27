@@ -9,7 +9,7 @@ const ENVIO: Record<string, string> = { enviado: "PDF enviado", manual: "Pediu n
 export default async function Leads({ searchParams }: { searchParams: Promise<{ filtro?: string }> }) {
   const { filtro } = await searchParams;
   const { db } = await exigirAdmin();
-  let q = db.from("leads").select("id, nome, whatsapp, email, envio, envio_erro, contatado_em, created_at").order("created_at", { ascending: false }).limit(300);
+  let q = db.from("leads").select("id, nome, whatsapp, email, envio, envio_erro, contatado_em, created_at, origem").order("created_at", { ascending: false }).limit(300);
   if (filtro === "nao-contatados") q = q.is("contatado_em", null);
   const [{ data: leads }, { data: produtos }, { data: compradores }] = await Promise.all([
     q,
@@ -40,7 +40,7 @@ export default async function Leads({ searchParams }: { searchParams: Promise<{ 
             <li key={l.id} className="cartao p-4 flex flex-wrap items-center gap-3">
               <span className="flex-1 min-w-52 text-sm">
                 <b className="block">{l.nome}</b>
-                {formatarWhatsapp(l.whatsapp)}{l.email ? ` · ${l.email}` : ""} · {dataBR(l.created_at)}
+                {formatarWhatsapp(l.whatsapp)}{l.email ? ` · ${l.email}` : ""} · {dataBR(l.created_at)}{l.origem ? <span className="ml-2 selo bg-off text-cinza">{String(l.origem).replace(/^amostra:/, "")}</span> : null}
                 <span className="block text-xs mt-1">
                   <span className={l.envio === "falhou" ? "text-vermelho" : "text-cinza"} title={l.envio_erro ?? undefined}>{ENVIO[l.envio] ?? l.envio}</span>
                   {comprou && <span className="ml-2 text-verde font-bold">já comprou</span>}

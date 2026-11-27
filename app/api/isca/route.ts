@@ -25,6 +25,7 @@ const Esquema = z.object({
   nome: z.string().trim().min(2).max(120),
   whatsapp: z.string().trim().min(8).max(30),
   consentimento: z.literal(true),
+  origem: z.string().regex(/^[a-z0-9-]{1,40}$/).optional(),
 });
 
 /**
@@ -42,7 +43,7 @@ export async function POST(req: NextRequest) {
 
   const db = supabaseAdmin();
   const { data: lead, error } = await db.from("leads")
-    .insert({ nome, whatsapp, consentimento_lgpd: true, origem: "isca-3-dias", envio: whatsappAutomatico() ? "pendente" : "manual" })
+    .insert({ nome, whatsapp, consentimento_lgpd: true, origem: r.data.origem ? `amostra:${r.data.origem}` : "amostra:landing", envio: whatsappAutomatico() ? "pendente" : "manual" })
     .select("id").single();
   if (error) {
     console.error("[isca]", error);

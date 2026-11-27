@@ -122,7 +122,7 @@
     botao.disabled = true; rotuloBotao.textContent = "Enviando...";
     fetch((C.isca && C.isca.endpoint) || "/api/isca", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nome: nome, whatsapp: zap, consentimento: true })
+      body: JSON.stringify({ nome: nome, whatsapp: zap, consentimento: true, origem: origemLead() })
     }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (r) {
         if (!r.ok) throw new Error(r.j.erro || "Não foi possível enviar.");
@@ -139,5 +139,10 @@
       .catch(function (e) { erro(e.message || "Não foi possível enviar. Tente de novo."); })
       .finally(function () { botao.disabled = false; rotuloBotao.textContent = "Quero a amostra grátis"; });
   });
+  function origemLead() {
+    var pagina = (document.body && document.body.getAttribute("data-origem")) || "landing";
+    var utm = ""; try { utm = new URLSearchParams(location.search).get("utm_source") || ""; } catch (e) {}
+    return (pagina + (utm ? "-" + utm : "")).toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 40);
+  }
   function erro(t) { msg.textContent = t; msg.style.color = "#5a0d0d"; }
 })();
