@@ -87,7 +87,7 @@ export default async function Painel() {
                       {(h.card.pdfDoDia ?? h.card.lerNoVolume) && (
                         <Link href={(h.card.pdfDoDia ?? h.card.lerNoVolume)!} className="btn btn-laranja"><Icone nome="play" className="size-5" /> Estudar agora</Link>
                       )}
-                      <Link href={`/area/produto/${h.p.slug}#dia-${h.dia}`} className="btn btn-claro"><Icone nome="calendario" className="size-5" /> Cronograma</Link>
+                      <Link href={`/area/cronograma?plano=${h.p.slug}#dia-${h.dia}`} className="btn btn-claro"><Icone nome="calendario" className="size-5" /> Cronograma</Link>
                     </div>
                   </>
                 ) : (

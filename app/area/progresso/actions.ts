@@ -15,4 +15,5 @@ export async function marcarDia(slug: string, dia: number, concluido: boolean) {
   }
   revalidatePath(`/area/produto/${slug}`);
   revalidatePath("/area");
+  revalidatePath("/area/cronograma");
 }
