@@ -66,7 +66,6 @@ footer .logo img { height: 52px; }
 
 /* ---------- topo ---------- */
 .topo {
-  transition: box-shadow .3s ease;
   position: sticky; top: 0; z-index: 20;
   background: rgba(17,17,17,.96); color: var(--off);
   backdrop-filter: saturate(140%) blur(6px);
@@ -292,15 +291,10 @@ footer a { color: #c9c6bf; }
 @media (min-width: 720px) {
   body { padding-bottom: 0; }
   .barra-fixa { display: none; }
-  /* Topo da página: logo grande em destaque. Ao rolar (.compacto): barra menor com o menu. */
-  .topo .wrap { height: 236px; transition: height .3s ease; }
-  .topo .logo { flex: 1; min-width: 0; }
-  .topo .logo img { width: 800px; max-width: 100%; height: auto; transition: width .3s ease; }
-  .topo nav { display: none; }
-  .topo.compacto .wrap { height: 88px; }
-  .topo.compacto .logo { flex: 0 0 auto; }
-  .topo.compacto .logo img { width: 300px; }
-  .topo.compacto nav { display: flex; }
+  /* Topo fixo: logo grande e estática, menu e botões na mesma linha */
+  .topo .wrap { height: 140px; gap: 28px; }
+  .topo .logo img { width: clamp(300px, 32vw, 460px); height: auto; }
+  .topo nav { display: flex; }
   .topo .topo-planos { display: inline-flex; }
   section { padding: 96px 0; }
   .abertura { padding: 96px 0 110px; }
@@ -409,4 +403,4 @@ footer a { color: #c9c6bf; }
 
 @media (max-width: 719px) { .professor .foto { max-width: 240px; margin: 0 auto; } }
 
-.topo.compacto { box-shadow: 0 10px 30px -18px rgba(0,0,0,.9); }
+@media (min-width: 720px) and (max-width: 1099px) { .topo nav { display: none; } }
