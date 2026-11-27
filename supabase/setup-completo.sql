@@ -230,7 +230,7 @@ create index if not exists leads_whatsapp_idx on public.leads (whatsapp);
 insert into public.products (slug, nome, descricao, icone, preco_centavos, acesso_ate, vitrine, ordem) values
   ('30-dias', 'Revisão estratégica de 30 dias', 'Volume completo, os 30 dias separados, 2 simulados e cronogramas.', 'livro', 14700, '2027-02-10', 'venda', 1),
   ('15-dias', 'Revisão estratégica de 15 dias', 'Caderno estratégico de 15 dias, 2 simulados e cronograma.', 'raio', 9700, '2027-02-10', 'venda', 2),
-  ('3-dias',  'Revisão de 3 dias estratégica', 'Amostra grátis do método.', 'alvo', 0, '2027-02-10', 'oculto', 9)
+  ('3-dias',  'Revisão de 3 dias estratégica', 'Amostra estratégica: os temas que a FGV mais cobra, um por matéria, em 3 dias, para estudar quando quiser.', 'alvo', 0, '2027-02-10', 'oculto', 9)
 on conflict (slug) do nothing;
 
 -- Arquivos do plano de 30 dias
@@ -358,6 +358,21 @@ alter table public.configuracoes enable row level security;
 insert into public.configuracoes (chave, valor)
 values ('datas_prova', '["2027-01-10T13:00:00-03:00"]'::jsonb)
 on conflict (chave) do nothing;
+
+-- ===== supabase/migrations/0007_gabaritos.sql =====
+-- Cada simulado passa a ter 2 PDFs: o caderno de questões (para resolver) e o gabarito comentado (após corrigir).
+update public.product_files
+set titulo = 'Simulado Estratégico ' || simulado || ' · Caderno de questões (' || case simulado when 1 then '20' else '7' end || ' dias antes)'
+where tipo = 'simulado' and storage_path in ('comum/simulado-1.pdf', 'comum/simulado-2.pdf');
+
+insert into public.product_files (product_id, titulo, storage_path, tipo, simulado, ordem)
+select p.id, v.titulo, v.caminho, 'simulado', v.n, 10 + v.n
+from public.products p, (values
+  ('Simulado Estratégico 1 · Gabarito comentado', 'comum/simulado-1-gabarito.pdf', 1),
+  ('Simulado Estratégico 2 · Gabarito comentado', 'comum/simulado-2-gabarito.pdf', 2)
+) as v(titulo, caminho, n)
+where p.slug = 'simulados'
+  and not exists (select 1 from public.product_files f where f.storage_path = v.caminho);
 
 -- ===== Primeiro administrador =====
 -- Depois de rodar este arquivo: Authentication > Users > Add user > Create new user

@@ -1,9 +1,10 @@
 {
- "exemplo": true,
+ "exemplo": false,
  "simulado": 2,
  "dias_antes_da_prova": 7,
  "meta": 40,
  "margem": 48,
+ "fonte": "792b4747-Simulado_Estrategico_2_-_Gabarito_comentado.pdf",
  "materias": [
   {
    "materia": "Ética Profissional",
@@ -281,7 +282,7 @@
    }
   },
   {
-   "materia": "ECA",
+   "materia": "Direito da Criança e do Adolescente",
    "questoes": [
     43,
     44
@@ -344,7 +345,7 @@
    }
   },
   {
-   "materia": "Processo Civil",
+   "materia": "Direito Processual Civil",
    "questoes": [
     51,
     56
@@ -402,7 +403,7 @@
    }
   },
   {
-   "materia": "Processo Penal",
+   "materia": "Direito Processual Penal",
    "questoes": [
     63,
     68
@@ -481,7 +482,7 @@
    }
   },
   {
-   "materia": "Processo do Trabalho",
+   "materia": "Direito Processual do Trabalho",
    "questoes": [
     76,
     80
@@ -514,7 +515,7 @@
   {
    "numero": 1,
    "materia": "Ética Profissional",
-   "gabarito": "A"
+   "gabarito": "C"
   },
   {
    "numero": 2,
@@ -524,27 +525,27 @@
   {
    "numero": 3,
    "materia": "Ética Profissional",
-   "gabarito": "A"
+   "gabarito": "D"
   },
   {
    "numero": 4,
    "materia": "Ética Profissional",
-   "gabarito": "C"
+   "gabarito": "B"
   },
   {
    "numero": 5,
    "materia": "Ética Profissional",
-   "gabarito": "B"
+   "gabarito": "C"
   },
   {
    "numero": 6,
    "materia": "Ética Profissional",
-   "gabarito": "C"
+   "gabarito": "A"
   },
   {
    "numero": 7,
    "materia": "Ética Profissional",
-   "gabarito": "C"
+   "gabarito": "D"
   },
   {
    "numero": 8,
@@ -554,12 +555,12 @@
   {
    "numero": 9,
    "materia": "Filosofia do Direito",
-   "gabarito": "A"
+   "gabarito": "B"
   },
   {
    "numero": 10,
    "materia": "Filosofia do Direito",
-   "gabarito": "B"
+   "gabarito": "D"
   },
   {
    "numero": 11,
@@ -569,7 +570,7 @@
   {
    "numero": 12,
    "materia": "Direito Constitucional",
-   "gabarito": "D"
+   "gabarito": "A"
   },
   {
    "numero": 13,
@@ -579,17 +580,17 @@
   {
    "numero": 14,
    "materia": "Direito Constitucional",
-   "gabarito": "D"
+   "gabarito": "B"
   },
   {
    "numero": 15,
    "materia": "Direito Constitucional",
-   "gabarito": "C"
+   "gabarito": "A"
   },
   {
    "numero": 16,
    "materia": "Direito Constitucional",
-   "gabarito": "A"
+   "gabarito": "C"
   },
   {
    "numero": 17,
@@ -604,17 +605,17 @@
   {
    "numero": 19,
    "materia": "Direito Eleitoral",
-   "gabarito": "D"
+   "gabarito": "B"
   },
   {
    "numero": 20,
    "materia": "Direito Eleitoral",
-   "gabarito": "C"
+   "gabarito": "D"
   },
   {
    "numero": 21,
    "materia": "Direito Internacional",
-   "gabarito": "D"
+   "gabarito": "B"
   },
   {
    "numero": 22,
@@ -624,52 +625,52 @@
   {
    "numero": 23,
    "materia": "Direito Financeiro",
-   "gabarito": "B"
+   "gabarito": "C"
   },
   {
    "numero": 24,
    "materia": "Direito Financeiro",
-   "gabarito": "B"
+   "gabarito": "A"
   },
   {
    "numero": 25,
    "materia": "Direito Tributário",
-   "gabarito": "B"
+   "gabarito": "A"
   },
   {
    "numero": 26,
    "materia": "Direito Tributário",
-   "gabarito": "B"
+   "gabarito": "D"
   },
   {
    "numero": 27,
    "materia": "Direito Tributário",
-   "gabarito": "A"
+   "gabarito": "B"
   },
   {
    "numero": 28,
    "materia": "Direito Tributário",
-   "gabarito": "B"
+   "gabarito": "C"
   },
   {
    "numero": 29,
    "materia": "Direito Tributário",
-   "gabarito": "C"
+   "gabarito": "A"
   },
   {
    "numero": 30,
    "materia": "Direito Administrativo",
-   "gabarito": "B"
+   "gabarito": "A"
   },
   {
    "numero": 31,
    "materia": "Direito Administrativo",
-   "gabarito": "B"
+   "gabarito": "C"
   },
   {
    "numero": 32,
    "materia": "Direito Administrativo",
-   "gabarito": "C"
+   "gabarito": "D"
   },
   {
    "numero": 33,
@@ -679,12 +680,12 @@
   {
    "numero": 34,
    "materia": "Direito Administrativo",
-   "gabarito": "D"
+   "gabarito": "A"
   },
   {
    "numero": 35,
    "materia": "Direito Ambiental",
-   "gabarito": "D"
+   "gabarito": "A"
   },
   {
    "numero": 36,
@@ -694,27 +695,27 @@
   {
    "numero": 37,
    "materia": "Direito Civil",
-   "gabarito": "C"
+   "gabarito": "B"
   },
   {
    "numero": 38,
    "materia": "Direito Civil",
-   "gabarito": "C"
+   "gabarito": "D"
   },
   {
    "numero": 39,
    "materia": "Direito Civil",
-   "gabarito": "D"
+   "gabarito": "C"
   },
   {
    "numero": 40,
    "materia": "Direito Civil",
-   "gabarito": "B"
+   "gabarito": "A"
   },
   {
    "numero": 41,
    "materia": "Direito Civil",
-   "gabarito": "D"
+   "gabarito": "B"
   },
   {
    "numero": 42,
@@ -723,18 +724,18 @@
   },
   {
    "numero": 43,
-   "materia": "ECA",
-   "gabarito": "B"
+   "materia": "Direito da Criança e do Adolescente",
+   "gabarito": "C"
   },
   {
    "numero": 44,
-   "materia": "ECA",
-   "gabarito": "D"
+   "materia": "Direito da Criança e do Adolescente",
+   "gabarito": "A"
   },
   {
    "numero": 45,
    "materia": "Direito do Consumidor",
-   "gabarito": "C"
+   "gabarito": "B"
   },
   {
    "numero": 46,
@@ -749,7 +750,7 @@
   {
    "numero": 48,
    "materia": "Direito Empresarial",
-   "gabarito": "D"
+   "gabarito": "A"
   },
   {
    "numero": 49,
@@ -759,52 +760,52 @@
   {
    "numero": 50,
    "materia": "Direito Empresarial",
-   "gabarito": "C"
+   "gabarito": "B"
   },
   {
    "numero": 51,
-   "materia": "Processo Civil",
-   "gabarito": "D"
+   "materia": "Direito Processual Civil",
+   "gabarito": "B"
   },
   {
    "numero": 52,
-   "materia": "Processo Civil",
+   "materia": "Direito Processual Civil",
    "gabarito": "D"
   },
   {
    "numero": 53,
-   "materia": "Processo Civil",
-   "gabarito": "B"
+   "materia": "Direito Processual Civil",
+   "gabarito": "A"
   },
   {
    "numero": 54,
-   "materia": "Processo Civil",
+   "materia": "Direito Processual Civil",
    "gabarito": "C"
   },
   {
    "numero": 55,
-   "materia": "Processo Civil",
+   "materia": "Direito Processual Civil",
    "gabarito": "B"
   },
   {
    "numero": 56,
-   "materia": "Processo Civil",
-   "gabarito": "C"
+   "materia": "Direito Processual Civil",
+   "gabarito": "D"
   },
   {
    "numero": 57,
    "materia": "Direito Penal",
-   "gabarito": "D"
+   "gabarito": "C"
   },
   {
    "numero": 58,
    "materia": "Direito Penal",
-   "gabarito": "C"
+   "gabarito": "A"
   },
   {
    "numero": 59,
    "materia": "Direito Penal",
-   "gabarito": "C"
+   "gabarito": "B"
   },
   {
    "numero": 60,
@@ -819,97 +820,97 @@
   {
    "numero": 62,
    "materia": "Direito Penal",
-   "gabarito": "B"
+   "gabarito": "A"
   },
   {
    "numero": 63,
-   "materia": "Processo Penal",
-   "gabarito": "D"
+   "materia": "Direito Processual Penal",
+   "gabarito": "B"
   },
   {
    "numero": 64,
-   "materia": "Processo Penal",
-   "gabarito": "C"
+   "materia": "Direito Processual Penal",
+   "gabarito": "D"
   },
   {
    "numero": 65,
-   "materia": "Processo Penal",
+   "materia": "Direito Processual Penal",
    "gabarito": "A"
   },
   {
    "numero": 66,
-   "materia": "Processo Penal",
+   "materia": "Direito Processual Penal",
    "gabarito": "C"
   },
   {
    "numero": 67,
-   "materia": "Processo Penal",
-   "gabarito": "A"
+   "materia": "Direito Processual Penal",
+   "gabarito": "B"
   },
   {
    "numero": 68,
-   "materia": "Processo Penal",
-   "gabarito": "B"
+   "materia": "Direito Processual Penal",
+   "gabarito": "D"
   },
   {
    "numero": 69,
    "materia": "Direito Previdenciário",
-   "gabarito": "A"
+   "gabarito": "B"
   },
   {
    "numero": 70,
    "materia": "Direito Previdenciário",
-   "gabarito": "A"
+   "gabarito": "D"
   },
   {
    "numero": 71,
    "materia": "Direito do Trabalho",
-   "gabarito": "A"
+   "gabarito": "B"
   },
   {
    "numero": 72,
    "materia": "Direito do Trabalho",
-   "gabarito": "C"
+   "gabarito": "A"
   },
   {
    "numero": 73,
    "materia": "Direito do Trabalho",
-   "gabarito": "B"
+   "gabarito": "D"
   },
   {
    "numero": 74,
    "materia": "Direito do Trabalho",
-   "gabarito": "A"
+   "gabarito": "C"
   },
   {
    "numero": 75,
    "materia": "Direito do Trabalho",
-   "gabarito": "B"
+   "gabarito": "A"
   },
   {
    "numero": 76,
-   "materia": "Processo do Trabalho",
+   "materia": "Direito Processual do Trabalho",
    "gabarito": "C"
   },
   {
    "numero": 77,
-   "materia": "Processo do Trabalho",
-   "gabarito": "B"
-  },
-  {
-   "numero": 78,
-   "materia": "Processo do Trabalho",
-   "gabarito": "B"
-  },
-  {
-   "numero": 79,
-   "materia": "Processo do Trabalho",
+   "materia": "Direito Processual do Trabalho",
    "gabarito": "A"
   },
   {
-   "numero": 80,
-   "materia": "Processo do Trabalho",
+   "numero": 78,
+   "materia": "Direito Processual do Trabalho",
    "gabarito": "D"
+  },
+  {
+   "numero": 79,
+   "materia": "Direito Processual do Trabalho",
+   "gabarito": "B"
+  },
+  {
+   "numero": 80,
+   "materia": "Direito Processual do Trabalho",
+   "gabarito": "C"
   }
  ]
 }

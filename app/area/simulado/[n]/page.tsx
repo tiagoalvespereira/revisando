@@ -51,9 +51,11 @@ export default async function PaginaSimulado({ params, searchParams }: { params:
   const [{ data: ultimo }, { data: arquivos }, { data: pdfs }] = await Promise.all([
     supabase.from("simulado_respostas").select("acertos, por_materia, created_at").eq("user_id", user.id).eq("simulado", n).order("created_at", { ascending: false }).limit(1).maybeSingle(),
     supabase.from("product_files").select("id, tipo, storage_path, product_id").eq("product_id", meu.id).in("tipo", ["volume", "caderno"]),
-    supabase.from("product_files").select("id").eq("simulado", n).limit(1),
+    supabase.from("product_files").select("id, storage_path").eq("simulado", n),
   ]);
-  const pdfSimulado = pdfs?.[0] ?? null;
+  // Caderno de questões (para resolver) e gabarito comentado (aparece só no resultado)
+  const pdfSimulado = pdfs?.find((f) => !f.storage_path.includes("gabarito")) ?? null;
+  const pdfGabarito = pdfs?.find((f) => f.storage_path.includes("gabarito")) ?? null;
   const principal = (arquivos as Arquivo[] | null)?.find((a) => a.tipo === "volume" || a.tipo === "caderno");
   const quando = (dataProva ? dataCurta(dataSimulado(dataProva, s.dias_antes_da_prova)) : "data a definir");
   const mostrarResultado = ultimo && refazer !== "1";
@@ -78,7 +80,10 @@ export default async function PaginaSimulado({ params, searchParams }: { params:
   return (
     <main>
       <Cabecalho sobretitulo={`Resultado · fazer em ${quando}`} titulo={`Simulado Estratégico ${n}`} voltar={{ href: "/area/simulados", rotulo: "Simulados" }}>
-        {pdfSimulado && <Link href={`/area/ler/${pdfSimulado.id}`} className="btn btn-claro btn-pequeno mt-4"><Icone nome="olho" className="size-4" /> Gabarito comentado no PDF</Link>}
+        <div className="flex flex-wrap gap-2 mt-4">
+          {pdfGabarito && <Link href={`/area/ler/${pdfGabarito.id}`} className="btn btn-laranja btn-pequeno"><Icone nome="olho" className="size-4" /> Gabarito comentado</Link>}
+          {pdfSimulado && <Link href={`/area/ler/${pdfSimulado.id}`} className="btn btn-claro btn-pequeno"><Icone nome="documento" className="size-4" /> Caderno de questões</Link>}
+        </div>
       </Cabecalho>
       <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
         {s.exemplo && <AvisoExemplo>Gabarito de exemplo: a correção ainda não usa o gabarito oficial do simulado.</AvisoExemplo>}
